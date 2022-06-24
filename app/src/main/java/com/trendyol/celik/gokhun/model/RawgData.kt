@@ -16,7 +16,7 @@ package com.trendyol.celik.gokhun.model
 
 import com.google.gson.annotations.SerializedName
 
-data class RawgData<T>(
+data class RawgData(
     @SerializedName("count")
     val count: Int,
 
