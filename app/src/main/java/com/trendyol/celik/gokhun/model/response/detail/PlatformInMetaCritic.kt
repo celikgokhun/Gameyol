@@ -1,15 +1,15 @@
-package com.trendyol.celik.gokhun.model.detail
+package com.trendyol.celik.gokhun.model.response.detail
 
 import com.google.gson.annotations.SerializedName
 
 data class PlatformInMetaCritic(
 
     @SerializedName("platform")
-    val platform: Int,
+    val platform: Int?,
 
     @SerializedName("name")
-    val name: String,
+    val name: String?,
 
     @SerializedName("slug")
-    val slug: String
+    val slug: String?
 )

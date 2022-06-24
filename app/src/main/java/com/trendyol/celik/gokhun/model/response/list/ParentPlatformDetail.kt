@@ -1,14 +1,14 @@
-package com.trendyol.celik.gokhun.model.list
+package com.trendyol.celik.gokhun.model.response.list
 
 import com.google.gson.annotations.SerializedName
 
 data class ParentPlatformDetail(
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("name")
-    val name: String,
+    val name: String?,
 
     @SerializedName("slug")
-    val slug: String
+    val slug: String?
 )

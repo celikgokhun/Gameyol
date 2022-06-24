@@ -1,17 +1,17 @@
-package com.trendyol.celik.gokhun.model.list
+package com.trendyol.celik.gokhun.model.response.list
 
 import com.google.gson.annotations.SerializedName
 
-data class Rating(
+data class RatingDetail(
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("title")
-    val title: String,
+    val title: String?,
 
     @SerializedName("count")
-    val count: Int,
+    val count: Int?,
 
     @SerializedName("percent")
-    val percent: Double
+    val percent: Double?,
 )

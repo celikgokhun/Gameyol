@@ -12,48 +12,48 @@
  *
  */
 
-package com.trendyol.celik.gokhun.model.list
+package com.trendyol.celik.gokhun.model.response.list
 
 import com.google.gson.annotations.SerializedName
 
 data class RawgData(
     @SerializedName("count")
-    val count: Int,
+    val count: Int?,
 
     @SerializedName("next")
-    val next: String,
+    val next: String?,
 
     @SerializedName("previous")
-    var previous: String,
+    var previous: String?,
 
     @SerializedName("results")
-    var result: List<Result>,
+    var result: List<Result>?,
 
     @SerializedName("seo_title")
-    var seoTitle: String,
+    var seoTitle: String?,
 
     @SerializedName("seo_description")
-    var seoDescription: String,
+    var seoDescription: String?,
 
     @SerializedName("seo_keywords")
-    var seoKeywords: String,
+    var seoKeywords: String?,
 
     @SerializedName("seo_h1")
-    var seoH1: String,
+    var seoH1: String?,
 
     @SerializedName("noindex")
-    var noIndex: Boolean,
+    var noIndex: Boolean?,
 
     @SerializedName("nofollow")
-    var noFollow: Boolean,
+    var noFollow: Boolean?,
 
     @SerializedName("description")
-    var description: String,
+    var description: String?,
 
     @SerializedName("filters")
-    var filters: Filter,
+    var filters: Filter?,
 
     @SerializedName("nofollow_collections")
-    var noFollowCollections: List<String>,
+    var noFollowCollections: List<String>?
     )
 

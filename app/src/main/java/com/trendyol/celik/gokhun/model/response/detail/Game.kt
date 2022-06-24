@@ -1,166 +1,169 @@
-package com.trendyol.celik.gokhun.model.detail
+package com.trendyol.celik.gokhun.model.response.detail
 
 import com.google.gson.annotations.SerializedName
-import com.trendyol.celik.gokhun.model.list.*
+import com.trendyol.celik.gokhun.model.response.list.*
 
 data class Game(
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("slug")
-    val slug: String,
+    val slug: String?,
+
+    @SerializedName("name")
+    val name: String?,
 
     @SerializedName("name_original")
-    val nameOriginal: String,
+    val nameOriginal: String?,
 
     @SerializedName("description")
-    val description: String,
+    val description: String?,
 
     @SerializedName("metacritic")
-    val metacritic: String,
+    val metaCritic: Int?,
 
     @SerializedName("metacritic_platforms")
-    val metacriticPlatforms: List<MetaCriticPlatforms>,
+    val metaCriticPlatforms: List<MetaCriticPlatforms>?,
 
     @SerializedName("released")
-    val released: String,
+    val released: String?,
 
     @SerializedName("tba")
-    val tba: Boolean,
+    val tba: Boolean?,
 
     @SerializedName("updated")
-    val updated: String,
+    val updated: String?,
 
     @SerializedName("background_image")
-    val backgroundImage: String,
+    val backgroundImage: String?,
 
     @SerializedName("background_image_additional")
-    val backgroundImageAdditional: String,
+    val backgroundImageAdditional: String?,
 
     @SerializedName("website")
-    val website: String,
+    val website: String?,
 
     @SerializedName("rating")
-    val rating: Double,
+    val rating: Double?,
 
     @SerializedName("rating_top")
-    val ratingTop: Int,
+    val ratingTop: Int?,
 
     @SerializedName("ratings")
-    val ratings: List<Rating>,
+    val ratings: List<Rating>?,
 
     @SerializedName("reactions")
-    val reactions: List<Int>,
+    val reactions: Any?, /// required array but not handled !
 
     @SerializedName("added")
-    val added: Int,
+    val added: Int?,
 
     @SerializedName("added_by_status")
-    val addedByStatus: AddedByStatus,
+    val addedByStatus: AddedByStatus?,
 
     @SerializedName("playtime")
-    val playtime: Int,
+    val playtime: Int?,
 
     @SerializedName("screenshots_count")
-    val screenshotsCount: Int,
+    val screenshotsCount: Int?,
 
     @SerializedName("movies_count")
-    val moviesCount: Int,
+    val moviesCount: Int?,
 
     @SerializedName("creators_count")
-    val creatorsCount: Int,
+    val creatorsCount: Int?,
 
     @SerializedName("achievements_count")
-    val achievementsCount: Int,
+    val achievementsCount: Int?,
 
     @SerializedName("parent_achievements_count")
-    val parentAchievementsCount: Int,
+    val parentAchievementsCount: Int?,
 
     @SerializedName("reddit_url")
-    val redditUrl: String,
+    val redditUrl: String?,
 
     @SerializedName("reddit_name")
-    val redditName: String,
+    val redditName: String?,
 
     @SerializedName("reddit_description")
-    val redditDescription: String,
+    val redditDescription: String?,
 
     @SerializedName("reddit_logo")
-    val redditLogo: String,
+    val redditLogo: String?,
 
     @SerializedName("reddit_count")
-    val redditCount: Int,
+    val redditCount: Int?,
 
     @SerializedName("twitch_count")
-    val twitchCount: Int,
+    val twitchCount: Int?,
 
     @SerializedName("youtube_count")
-    val youtubeCount: Int,
+    val youtubeCount: Int?,
 
     @SerializedName("reviews_text_count")
-    val reviewsTextCount: Int,
+    val reviewsTextCount: Int?,
 
     @SerializedName("ratings_count")
-    val ratingsCount: Int,
+    val ratingsCount: Int?,
 
     @SerializedName("suggestions_count")
-    val suggestionsCount: Int,
+    val suggestionsCount: Int?,
 
     @SerializedName("alternative_names")
-    val alternativeNames: List<String>,
+    val alternativeNames: List<String>?,
 
     @SerializedName("metacritic_url")
-    val metacriticUrl: String,
+    val metaCriticUrl: String?,
 
     @SerializedName("parents_count")
-    val parentsCount: Int,
+    val parentsCount: Int?,
 
     @SerializedName("additions_count")
-    val additionsCount: Int,
+    val additionsCount: Int?,
 
     @SerializedName("game_series_count")
-    val gameSeriesCount: Int,
+    val gameSeriesCount: Int?,
 
     @SerializedName("user_game")
-    val userGame: Any,
+    val userGame: Any?,
 
     @SerializedName("reviews_count")
-    val reviewsCount: Int,
+    val reviewsCount: Int?,
 
     @SerializedName("saturated_color")
-    val saturatedColor: String,
+    val saturatedColor: String?,
 
     @SerializedName("dominant_color")
-    val dominantColor: String,
+    val dominantColor: String?,
 
     @SerializedName("parent_platforms")
-    val parentPlatforms: List<ParentPlatform>,
+    val parentPlatforms: List<ParentPlatform>?,
 
     @SerializedName("platforms")
-    val platforms: List<PlatformInDetails>,
+    val platforms: List<PlatformInDetails>?,
 
     @SerializedName("stores")
-    val stores: List<StoreInDetails>,
+    val stores: List<StoreInDetails>?,
 
     @SerializedName("developers")
-    val developers: List<Developer>,
+    val developers: List<Developer>?,
 
     @SerializedName("genres")
-    val genres: List<Genre>,
+    val genres: List<Genre>?,
 
     @SerializedName("tags")
-    val tags: List<Tag>,
+    val tags: List<Tag>?,
 
     @SerializedName("publishers")
-    val publishers: List<Publisher>,
+    val publishers: List<Publisher>?,
 
     @SerializedName("esrb_rating")
-    val esrbRating: EsrbRating,
+    val esrbRating: EsrbRating?,
 
     @SerializedName("clip")
-    val clip: Any,
+    val clip: Any?,
 
     @SerializedName("description_raw")
-    val descriptionRaw: String
+    val descriptionRaw: String?
 
     )

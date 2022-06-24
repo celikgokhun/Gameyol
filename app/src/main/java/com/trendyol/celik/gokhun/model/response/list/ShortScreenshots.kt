@@ -1,11 +1,11 @@
-package com.trendyol.celik.gokhun.model.list
+package com.trendyol.celik.gokhun.model.response.list
 
 import com.google.gson.annotations.SerializedName
 
 data class ShortScreenshots(
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("image")
-    val image: String
+    val image: String?
 )

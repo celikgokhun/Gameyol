@@ -1,23 +1,23 @@
-package com.trendyol.celik.gokhun.model.list
+package com.trendyol.celik.gokhun.model.response.list
 
 import com.google.gson.annotations.SerializedName
 
 data class AddedByStatus(
     @SerializedName("yet")
-    val yet: Int,
+    val yet: Int?,
 
     @SerializedName("owned")
-    val owned: Int,
+    val owned: Int?,
 
     @SerializedName("beaten")
-    val beaten: Int,
+    val beaten: Int?,
 
     @SerializedName("toplay")
-    val toPlay: Int,
+    val toPlay: Int?,
 
     @SerializedName("dropped")
-    val dropped: Int,
+    val dropped: Int?,
 
     @SerializedName("playing")
-    val playing: Int
+    val playing: Int?
 )

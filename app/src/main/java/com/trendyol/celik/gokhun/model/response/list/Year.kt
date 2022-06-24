@@ -1,28 +1,26 @@
-package com.trendyol.celik.gokhun.model.list
+package com.trendyol.celik.gokhun.model.response.list
 
 import com.google.gson.annotations.SerializedName
 
 data class Year(
-
         @SerializedName("from")
-        val from: Int,
+        val from: Int?,
 
         @SerializedName("to")
-        val to: Int,
+        val to: Int?,
 
         @SerializedName("filter")
-        val filter: String,
+        val filter: String?,
 
         @SerializedName("decade")
-        val decade: Int,
+        val decade: Int?,
 
         @SerializedName("years")
-        val years: List<Years>,
+        val years: List<Years>?,
 
         @SerializedName("nofollow")
-        val noFollow: Boolean,
+        val noFollow: Boolean?,
 
         @SerializedName("count")
-        val count: Int
-
+        val count: Int?
 )
