@@ -51,10 +51,9 @@ data class RawgData(
     var description: String,
 
     @SerializedName("filters")
-    var filters: List<Year>,
+    var filters: Filter,
 
     @SerializedName("nofollow_collections")
     var noFollowCollections: List<String>,
-
     )
 

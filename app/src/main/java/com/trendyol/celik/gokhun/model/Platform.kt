@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Platform(
     @SerializedName("platform")
-    val platform: List<PlatformDetail>,
+    val platform: PlatformDetail,
 
     @SerializedName("released_at")
     val releasedAt: String,

@@ -10,5 +10,5 @@ data class ParentPlatformDetail(
     val name: String,
 
     @SerializedName("slug")
-    val slug: String,
+    val slug: String
 )

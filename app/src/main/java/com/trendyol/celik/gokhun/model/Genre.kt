@@ -12,6 +12,9 @@ data class Genre(
     @SerializedName("slug")
     val slug: String,
 
+    @SerializedName("games_count")
+    val gamesCount: Int,
+
     @SerializedName("image_background")
     val imageBackground: String
 

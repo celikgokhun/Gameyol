@@ -58,7 +58,7 @@ data class Result(
     val userGame: Any,
 
     @SerializedName("reviews_count")
-    val reviewsCount: Any,
+    val reviewsCount: Int,
 
     @SerializedName("saturated_color")
     val saturatedColor: String,
@@ -88,16 +88,6 @@ data class Result(
     val esrbRating: EsrbRating,
 
     @SerializedName("short_screenshots")
-    val shortScreenshots: List<ShortScreenshots>,
-
-
-
-
+    val shortScreenshots: List<ShortScreenshots>
 
     )
-
-
-
-
-
-

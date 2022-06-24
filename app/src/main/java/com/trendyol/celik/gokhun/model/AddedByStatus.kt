@@ -19,7 +19,5 @@ data class AddedByStatus(
     val dropped: Int,
 
     @SerializedName("playing")
-    val playing: Int,
-
-
+    val playing: Int
 )
