@@ -12,7 +12,7 @@
  *
  */
 
-package com.trendyol.celik.gokhun.model
+package com.trendyol.celik.gokhun.model.list
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,8 +1,8 @@
-package com.trendyol.celik.gokhun.model
+package com.trendyol.celik.gokhun.model.list
 
 import com.google.gson.annotations.SerializedName
 
-data class PlatformDetail(
+data class Tag(
     @SerializedName("id")
     val id: Int,
 
@@ -12,21 +12,12 @@ data class PlatformDetail(
     @SerializedName("slug")
     val slug: String,
 
-    @SerializedName("image")
-    val image: Any,
-
-    @SerializedName("year_end")
-    val yearEnd: Any,
-
-    @SerializedName("year_start")
-    val yearStart: Any,
+    @SerializedName("language")
+    val language: String,
 
     @SerializedName("games_count")
     val gamesCount: Int,
 
     @SerializedName("image_background")
     val imageBackground: String
-
-
-
-    )
+)

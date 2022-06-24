@@ -1,8 +1,8 @@
-package com.trendyol.celik.gokhun.model
+package com.trendyol.celik.gokhun.model.detail
 
 import com.google.gson.annotations.SerializedName
 
-data class StoreDetail(
+data class Publisher(
     @SerializedName("id")
     val id: Int,
 
@@ -11,9 +11,6 @@ data class StoreDetail(
 
     @SerializedName("slug")
     val slug: String,
-
-    @SerializedName("domain")
-    val domain: String,
 
     @SerializedName("games_count")
     val gamesCount: Int,

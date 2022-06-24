@@ -2,7 +2,7 @@ package com.trendyol.celik.gokhun.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.trendyol.celik.gokhun.model.RawgData
+import com.trendyol.celik.gokhun.model.list.RawgData
 import com.trendyol.celik.gokhun.service.RawgAPIService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -48,7 +48,6 @@ class GameListViewModel : ViewModel(){
 
     private fun observeRawgData(){
         println("  :   "+rawgData.value)
-
     }
 
     fun refreshRawgAPIData(){

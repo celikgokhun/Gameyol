@@ -1,8 +1,8 @@
-package com.trendyol.celik.gokhun.model
+package com.trendyol.celik.gokhun.model.list
 
 import com.google.gson.annotations.SerializedName
 
-data class ParentPlatformDetail(
+data class EsrbRating(
     @SerializedName("id")
     val id: Int,
 
@@ -11,4 +11,5 @@ data class ParentPlatformDetail(
 
     @SerializedName("slug")
     val slug: String
+
 )
