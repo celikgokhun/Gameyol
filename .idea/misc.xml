@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.6633663366336634" />
+        <entry key="app/src/main/res/drawable/idle.xml" value="0.1175" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_game_list.xml" value="0.17352787910369985" />
         <entry key="app/src/main/res/layout/game_row_item.xml" value="0.16847826086956522" />
       </map>
     </option>

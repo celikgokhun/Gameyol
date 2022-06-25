@@ -2,11 +2,9 @@ package com.trendyol.celik.gokhun
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.trendyol.celik.gokhun.viewmodel.GameDetailsViewModel
-import com.trendyol.celik.gokhun.viewmodel.GameListViewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.trendyol.celik.gokhun.ui.main.viewmodel.GameListViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,10 +18,9 @@ class MainActivity : AppCompatActivity() {
         gameListViewModel = ViewModelProviders.of(this).get(GameListViewModel::class.java)
         gameDetailsViewModel = ViewModelProviders.of(this).get(GameDetailsViewModel::class.java)
 
-        text.setOnClickListener {
             //gameListViewModel.refreshRawgAPIData()
-            gameDetailsViewModel.refreshGameDetailAPIData("3498")
-        }
+            //gameDetailsViewModel.refreshGameDetailAPIData("3498")
+
     }
 
 
