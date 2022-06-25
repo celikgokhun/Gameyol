@@ -3,7 +3,7 @@ package com.trendyol.celik.gokhun
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
-import com.trendyol.celik.gokhun.viewmodel.GameDetailsViewModel
+import com.trendyol.celik.gokhun.ui.detail.viewmodel.GameDetailsViewModel
 import com.trendyol.celik.gokhun.ui.main.viewmodel.GameListViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         gameDetailsViewModel = ViewModelProviders.of(this).get(GameDetailsViewModel::class.java)
 
             //gameListViewModel.refreshRawgAPIData()
-            //gameDetailsViewModel.refreshGameDetailAPIData("3498")
+            gameDetailsViewModel.refreshGameDetailAPIData("3498")
 
     }
 
