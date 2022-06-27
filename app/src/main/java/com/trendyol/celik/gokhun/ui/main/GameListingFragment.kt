@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.ui.main.viewmodel.GameListingViewModel
@@ -46,7 +47,7 @@ class GameListingFragment : Fragment() {
             adapter = gameListingAdapter
         }
 
-        recyclerViewGameList.layoutManager = LinearLayoutManager(context)
+        recyclerViewGameList.layoutManager = GridLayoutManager(context,2)
         recyclerViewGameList.adapter = gameListingAdapter
 
         swipeRefreshLayout.setOnRefreshListener {
