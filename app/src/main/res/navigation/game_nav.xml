@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/gameListFragment"
-        android:name="com.trendyol.celik.gokhun.ui.main.GameListFragment"
+        android:name="com.trendyol.celik.gokhun.ui.main.GameListingFragment"
         android:label="fragment_game_list"
-        tools:layout="@layout/fragment_game_list" >
+        tools:layout="@layout/fragment_game_listing" >
         <action
             android:id="@+id/action_gameListFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />

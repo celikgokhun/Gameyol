@@ -4,18 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.trendyol.celik.gokhun.ui.detail.viewmodel.GameDetailsViewModel
-import com.trendyol.celik.gokhun.ui.main.viewmodel.GameListViewModel
+import com.trendyol.celik.gokhun.ui.main.viewmodel.GameListingViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var gameListViewModel: GameListViewModel
+    private lateinit var gameListViewModel: GameListingViewModel
     private lateinit var gameDetailsViewModel: GameDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        gameListViewModel = ViewModelProviders.of(this).get(GameListViewModel::class.java)
+        gameListViewModel = ViewModelProviders.of(this).get(GameListingViewModel::class.java)
         gameDetailsViewModel = ViewModelProviders.of(this).get(GameDetailsViewModel::class.java)
 
             //gameListViewModel.refreshRawgAPIData()

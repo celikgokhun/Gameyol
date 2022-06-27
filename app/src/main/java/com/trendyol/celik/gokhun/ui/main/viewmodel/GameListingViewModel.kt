@@ -5,13 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.base.viewmodel.BaseAndroidViewModel
 import com.trendyol.celik.gokhun.domain.model.response.list.RawgData
 import com.trendyol.celik.gokhun.service.RawgAPIService
-import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class GameListViewModel(application: Application) : BaseAndroidViewModel(application) {
+class GameListingViewModel(application: Application) : BaseAndroidViewModel(application) {
 
     private val rawgAPIService = RawgAPIService()
 

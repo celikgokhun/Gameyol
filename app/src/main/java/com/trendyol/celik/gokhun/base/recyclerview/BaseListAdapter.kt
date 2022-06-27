@@ -1,19 +1,44 @@
 package com.trendyol.celik.gokhun.base.recyclerview
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseListAdapter<T, VH : RecyclerView.ViewHolder> constructor(
+import androidx.recyclerview.widget.*
+
+abstract class BaseListAdapter<T, VH : RecyclerView.ViewHolder>(
     diffCallback: DiffUtil.ItemCallback<T>
-) : ListAdapter<T, VH>(diffCallback) {
+) : RecyclerView.Adapter<VH>() {
 
-    override fun getItemCount(): Int = currentList.size
+    private val diffHelper = AsyncListDiffer(
+        AdapterListUpdateCallback(this),
+        AsyncDifferConfig.Builder(diffCallback)
+            .build()
+    )
+
+    init {
+        submitList(mutableListOf())
+    }
+
+    private fun getMutableList(): MutableList<T> {
+        return mutableListOf<T>().apply {
+            addAll(diffHelper.currentList)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return diffHelper.currentList.size
+    }
+
+    fun submitList(list: List<T>) {
+        diffHelper.submitList(list)
+    }
 
     @JvmOverloads
     fun submitItem(position: Int = itemCount, item: T) {
         val newList = getMutableList()
         newList.add(position, item)
         submitList(newList)
+    }
+
+    fun clearItems() {
+        submitList(mutableListOf())
     }
 
     fun removeItem(index: Int) {
@@ -23,15 +48,13 @@ abstract class BaseListAdapter<T, VH : RecyclerView.ViewHolder> constructor(
     }
 
     fun removeItem(item: T): Boolean {
-        val currentList = getMutableList()
-        return currentList.remove(item).also { submitList(currentList) }
+        val newList = getMutableList()
+        val result = newList.remove(item)
+        submitList(newList)
+        return result
     }
 
-    fun clearItems() {
-        submitList(mutableListOf())
-    }
+    fun getItems(): MutableList<T> = diffHelper.currentList
 
-    fun getItems(): List<T> = currentList
-
-    private fun getMutableList(): MutableList<T> = currentList.toMutableList()
+    protected fun getItem(position: Int): T = getItems()[position]
 }
