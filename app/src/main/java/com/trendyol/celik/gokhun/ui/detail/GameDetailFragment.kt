@@ -5,12 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.ui.detail.viewmodel.GameDetailsViewModel
-import com.trendyol.celik.gokhun.ui.listing.GameListingAdapter
-import com.trendyol.celik.gokhun.ui.listing.viewmodel.GameListingViewModel
 import kotlinx.android.synthetic.main.fragment_game_detail.*
 import javax.inject.Inject
 
