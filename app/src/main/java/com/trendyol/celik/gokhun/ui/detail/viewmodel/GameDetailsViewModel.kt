@@ -31,7 +31,7 @@ class GameDetailsViewModel: BaseViewModel(){
                         gameDetailData.value = t
                         gameDetailDataError.value = false
                         gameDetailDataLoading.value = false
-                        observeGameDetailData()
+                        //observeGameDetailData()
                     }
                     override fun onError(e: Throwable) {
                         println("Error   :  "+ e.localizedMessage )

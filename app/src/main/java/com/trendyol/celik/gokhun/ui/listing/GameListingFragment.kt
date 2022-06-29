@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.ui.listing.viewmodel.GameListingViewModel
 import kotlinx.android.synthetic.main.fragment_game_listing.*
 import javax.inject.Inject
-
 
 class GameListingFragment : Fragment() {
 
@@ -27,7 +25,7 @@ class GameListingFragment : Fragment() {
 
         gameListingAdapter = GameListingAdapter()
 
-        viewModel = ViewModelProviders.of(this).get(GameListingViewModel::class.java)
+        viewModel = ViewModelProviders.of(this)[GameListingViewModel::class.java]
         viewModel.refreshRawgAPIData()
     }
 
@@ -35,19 +33,15 @@ class GameListingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_game_listing, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerViewGameList.apply {
-            layoutManager = LinearLayoutManager(this@GameListingFragment.context)
+            layoutManager =  GridLayoutManager(context,2)
             adapter = gameListingAdapter
         }
-
-        recyclerViewGameList.layoutManager = GridLayoutManager(context,2)
-        recyclerViewGameList.adapter = gameListingAdapter
 
         swipeRefreshLayout.setOnRefreshListener {
             progressBarLoading.visibility = View.VISIBLE
@@ -58,7 +52,6 @@ class GameListingFragment : Fragment() {
         }
 
         observeLiveData()
-
     }
 
     private fun observeLiveData(){

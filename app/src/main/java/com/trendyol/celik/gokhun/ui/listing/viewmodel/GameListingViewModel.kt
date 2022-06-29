@@ -33,7 +33,7 @@ class GameListingViewModel : BaseViewModel() {
                         rawgData.value = t
                         rawgDataError.value = false
                         rawgDataLoading.value = false
-                        observeRawgData()
+                        //observeRawgData()
                     }
                     override fun onError(e: Throwable) {
                         println("Error   :  "+ e.localizedMessage )

@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.recyclerview
+package com.trendyol.celik.gokhun.base.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

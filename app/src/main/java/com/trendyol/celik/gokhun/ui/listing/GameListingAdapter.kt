@@ -3,12 +3,13 @@ package com.trendyol.celik.gokhun.ui.listing
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.trendyol.celik.gokhun.R
-import com.trendyol.celik.gokhun.base.recyclerview.BaseListAdapter
-import com.trendyol.celik.gokhun.base.recyclerview.DataClassDiffCallback
+import com.trendyol.celik.gokhun.base.adapter.BaseListAdapter
+import com.trendyol.celik.gokhun.base.adapter.DataClassDiffCallback
 import com.trendyol.celik.gokhun.domain.model.response.list.Result
 import kotlinx.android.synthetic.main.item_game_listing.view.*
 
@@ -16,9 +17,9 @@ import javax.inject.Inject
 
 class GameListingAdapter @Inject constructor() :
     BaseListAdapter<Result,
-    GameListingAdapter.GameListingItemViewHolder>(DataClassDiffCallback { it.id }) {
+    GameListingAdapter.GameListingItemViewHolder>(DataClassDiffCallback { it.id })
+{
 
-    var gameCardClickListener: ((String, String) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,10 +35,14 @@ class GameListingAdapter @Inject constructor() :
     }
 
     inner class GameListingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         init {
             itemView.setOnClickListener {
-                gameCardClickListener?.invoke(getItem(adapterPosition).id.toString(), (adapterPosition + 1).toString())
+
+                val position = getItem(adapterPosition).id.toString()
+
+                val action = GameListingFragmentDirections.actionGameListFragmentToGameDetailFragment(position)
+                Navigation.findNavController(itemView).navigate(action)
+
             }
         }
 

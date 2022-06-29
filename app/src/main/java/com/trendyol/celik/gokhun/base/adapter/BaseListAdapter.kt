@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.recyclerview
+package com.trendyol.celik.gokhun.base.adapter
 
 import androidx.recyclerview.widget.*
 
@@ -54,7 +54,7 @@ abstract class BaseListAdapter<T, VH : RecyclerView.ViewHolder>(
         return result
     }
 
-    fun getItems(): MutableList<T> = diffHelper.currentList
+    private fun getItems(): MutableList<T> = diffHelper.currentList
 
     protected fun getItem(position: Int): T = getItems()[position]
 }
