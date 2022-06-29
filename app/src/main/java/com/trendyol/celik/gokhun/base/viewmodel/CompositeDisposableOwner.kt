@@ -1,6 +1,6 @@
 package com.trendyol.celik.gokhun.base.viewmodel
 
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 interface CompositeDisposableOwner {
 

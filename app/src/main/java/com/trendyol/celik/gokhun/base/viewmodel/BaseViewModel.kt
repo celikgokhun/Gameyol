@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.base.viewmodel
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 
 open class BaseViewModel : ViewModel(), CompositeDisposableOwner {
