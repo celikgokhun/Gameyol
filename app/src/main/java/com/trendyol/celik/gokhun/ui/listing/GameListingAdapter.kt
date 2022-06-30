@@ -19,8 +19,6 @@ class GameListingAdapter @Inject constructor() :
     BaseListAdapter<Result,
     GameListingAdapter.GameListingItemViewHolder>(DataClassDiffCallback { it.id })
 {
-
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -38,9 +36,9 @@ class GameListingAdapter @Inject constructor() :
         init {
             itemView.setOnClickListener {
 
-                val position = getItem(adapterPosition).id.toString()
+                val id = getItem(adapterPosition).id.toString()
 
-                val action = GameListingFragmentDirections.actionGameListFragmentToGameDetailFragment(position)
+                val action = GameListingFragmentDirections.actionGameListFragmentToGameDetailFragment(id)
                 Navigation.findNavController(itemView).navigate(action)
 
             }
