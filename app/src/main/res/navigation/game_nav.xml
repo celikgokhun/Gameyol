@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/gameListFragment"
-        android:name="com.trendyol.celik.gokhun.ui.listing.GameListingFragment"
+        android:name="com.trendyol.celik.gokhun.ui.gamelisting.GameListingFragment"
         android:label="fragment_game_list"
         tools:layout="@layout/fragment_game_listing" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameDetailFragment"
-        android:name="com.trendyol.celik.gokhun.ui.detail.GameDetailFragment"
+        android:name="com.trendyol.celik.gokhun.ui.gamedetail.GameDetailFragment"
         android:label="fragment_game_detail"
         tools:layout="@layout/fragment_game_detail" >
         <action
