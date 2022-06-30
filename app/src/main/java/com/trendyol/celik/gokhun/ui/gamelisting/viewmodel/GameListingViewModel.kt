@@ -1,20 +1,74 @@
 package com.trendyol.celik.gokhun.ui.gamelisting.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.RawgData
-import com.trendyol.celik.gokhun.service.RawgAPIService
+import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
+import com.trendyol.celik.gokhun.domain.model.GameListingGame
+import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.observers.DisposableSingleObserver
-import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
+class GameListingViewModel @Inject constructor(
+    private val gameListingUseCase: GameListingUseCase
+) : BaseViewModel() {
 
-class GameListingViewModel : BaseViewModel() {
+    private val pageViewStateLiveData: MutableLiveData<GameListingPageViewState> = MutableLiveData()
+
+    fun getPageViewStateLiveData(): LiveData<GameListingPageViewState> = pageViewStateLiveData
+
+    fun initializeViewModel() {
+        if (pageViewStateLiveData.value == null) {
+            fetchGameList()
+        }
+    }
+
+    private fun fetchGameList() {
+        onVideoListingLoading()
+        gameListingUseCase.fetchGames()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    onGameListingResponseReady(it)
+                },
+                {
+                    onGameListingResponseFail(it)
+                }
+            )
+    }
+
+    private fun onGameListingResponseReady(gameListing: GameListingGame) {
+        if (gameListing.games.isEmpty()) {
+            pageViewStateLiveData.value = GameListingPageViewState.Error("err")
+        } else {
+            pageViewStateLiveData.value = GameListingPageViewState.ShowData(gameListing)
+        }
+
+        /*
+        pageViewStateLiveData.value = pageViewStateLiveData.value?.addNewPage(gameListing)
+            ?: GameListingPageViewState(gameListing)
+
+         */
+    }
+
+    private fun onGameListingResponseFail(throwable: Throwable) {
+        pageViewStateLiveData.value = throwable.localizedMessage?.let {
+            GameListingPageViewState.Error(
+                it
+            )
+        }
+    }
+
+    private fun onVideoListingLoading() {
+        pageViewStateLiveData.value = GameListingPageViewState.IsLoading
+    }
+
+    /*
 
     private val rawgAPIService = RawgAPIService()
 
 
-    val rawgData = MutableLiveData<RawgData>()
+    val rawgData = MutableLiveData<GameListingResponse>()
     val rawgDataError = MutableLiveData<Boolean>()
     val rawgDataLoading = MutableLiveData<Boolean>()
 
@@ -27,9 +81,9 @@ class GameListingViewModel : BaseViewModel() {
             rawgAPIService.getData()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<RawgData>()
+                .subscribeWith(object : DisposableSingleObserver<GameListingResponse>()
                 {
-                    override fun onSuccess(t: RawgData) {
+                    override fun onSuccess(t: GameListingResponse) {
                         rawgData.value = t
                         rawgDataError.value = false
                         rawgDataLoading.value = false
@@ -53,5 +107,5 @@ class GameListingViewModel : BaseViewModel() {
         getRawgDataAPI()
     }
 
-
+     */
 }

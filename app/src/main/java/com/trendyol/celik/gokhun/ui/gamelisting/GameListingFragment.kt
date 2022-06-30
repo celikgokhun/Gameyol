@@ -26,7 +26,7 @@ class GameListingFragment : Fragment() {
         gameListingAdapter = GameListingAdapter()
 
         viewModel = ViewModelProviders.of(this)[GameListingViewModel::class.java]
-        viewModel.refreshRawgAPIData()
+        // viewModel.refreshRawgAPIData()
     }
 
     override fun onCreateView(
@@ -47,19 +47,20 @@ class GameListingFragment : Fragment() {
             progressBarLoading.visibility = View.VISIBLE
             errorTextView.visibility = View.GONE
             recyclerViewGameList.visibility = View.GONE
-            viewModel.refreshRawgAPIData()
+            //viewModel.refreshRawgAPIData()
             swipeRefreshLayout.isRefreshing = false
         }
 
-        observeLiveData()
+        //observeLiveData()
     }
 
     private fun observeLiveData(){
 
+        /*
         viewModel.rawgData.observe(viewLifecycleOwner) { games ->
             games?.let {
                 recyclerViewGameList.visibility = View.VISIBLE
-                games.result?.let { it1 -> gameListingAdapter.submitList(it1) }
+                games.results?.let { it1 -> gameListingAdapter.submitList(it1) }
             }
         }
 
@@ -86,6 +87,8 @@ class GameListingFragment : Fragment() {
                 }
             }
         }
+
+         */
     }
 
 }

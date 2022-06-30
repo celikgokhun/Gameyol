@@ -2,7 +2,7 @@ package com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.
 
 import com.google.gson.annotations.SerializedName
 
-data class Result(
+data class GameResultResponse(
     @SerializedName("id")
     val id: Int?,
 

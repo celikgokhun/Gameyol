@@ -16,7 +16,7 @@ package com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.
 
 import com.google.gson.annotations.SerializedName
 
-data class RawgData(
+data class GameListingResponse(
     @SerializedName("count")
     val count: Int?,
 
@@ -24,36 +24,36 @@ data class RawgData(
     val next: String?,
 
     @SerializedName("previous")
-    var previous: String?,
+    val previous: String?,
 
     @SerializedName("results")
-    var result: List<Result>?,
+    val results: List<GameResultResponse>?,
 
     @SerializedName("seo_title")
-    var seoTitle: String?,
+    val seoTitle: String?,
 
     @SerializedName("seo_description")
-    var seoDescription: String?,
+    val seoDescription: String?,
 
     @SerializedName("seo_keywords")
-    var seoKeywords: String?,
+    val seoKeywords: String?,
 
     @SerializedName("seo_h1")
-    var seoH1: String?,
+    val seoH1: String?,
 
     @SerializedName("noindex")
-    var noIndex: Boolean?,
+    val noIndex: Boolean?,
 
     @SerializedName("nofollow")
-    var noFollow: Boolean?,
+    val noFollow: Boolean?,
 
     @SerializedName("description")
-    var description: String?,
+    val description: String?,
 
     @SerializedName("filters")
-    var filters: Filter?,
+    val filters: Filter?,
 
     @SerializedName("nofollow_collections")
-    var noFollowCollections: List<String>?
+    val noFollowCollections: List<String>?
     )
 
