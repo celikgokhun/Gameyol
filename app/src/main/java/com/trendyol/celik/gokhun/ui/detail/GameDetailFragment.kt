@@ -13,7 +13,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.ui.detail.viewmodel.GameDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_game_detail.*
-import kotlinx.android.synthetic.main.item_game_listing.view.*
+import kotlinx.android.synthetic.main.fragment_game_detail.errorTextView
+import kotlinx.android.synthetic.main.fragment_game_detail.progressBarLoading
+import kotlinx.android.synthetic.main.fragment_game_detail.swipeRefreshLayout
+
 import javax.inject.Inject
 
 class GameDetailFragment : Fragment() {
@@ -46,6 +49,14 @@ class GameDetailFragment : Fragment() {
             gameID = GameDetailFragmentArgs.fromBundle(it).gameID
             viewModel.refreshGameDetailAPIData(gameID)
         }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            progressBarLoading.visibility = View.VISIBLE
+            errorTextView.visibility = View.GONE
+            viewModel.refreshGameDetailAPIData(gameID)
+            swipeRefreshLayout.isRefreshing = false
+        }
+
         observeLiveData()
     }
 
