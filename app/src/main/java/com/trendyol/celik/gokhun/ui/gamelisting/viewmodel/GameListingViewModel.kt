@@ -6,9 +6,10 @@ import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
-
+@HiltViewModel
 class GameListingViewModel @Inject constructor(
     private val gameListingUseCase: GameListingUseCase
 ) : BaseViewModel() {

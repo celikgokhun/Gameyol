@@ -16,9 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_game_listing.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class GameListingFragment : Fragment() {
 
-    @ViewModelInjection
     @Inject
     lateinit var viewModel: GameListingViewModel
 
