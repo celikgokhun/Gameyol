@@ -1,6 +1,6 @@
 package com.trendyol.celik.gokhun.service
 
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.Game
+import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.ResponseGameDetail
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
@@ -21,7 +21,7 @@ class RawgAPIService {
         return api.fetchGameListing()
     }
 
-    fun getDetailsOfGame(id :String): Single<Game> {
+    fun fetchDetailsOfGame(id :String): Single<ResponseGameDetail> {
         return api.fetchDetailsOfGame(id)
     }
 }

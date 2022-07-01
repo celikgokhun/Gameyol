@@ -9,7 +9,9 @@ class GameListingUseCase @Inject constructor(
     private val gameListingRepository: GameListingRepository,
     private val gameListingMapper: GameListingMapper
 ) {
-    fun fetchGames(): Observable<GameListingGame> {
+    fun fetchGames(
+
+    ): Observable<GameListingGame> {
         return gameListingRepository
             .fetchGames()
             .map {

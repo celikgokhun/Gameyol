@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.domain.model
 
-data class GameResult(
-    val id: Int,
+data class Game(
+    val id: String? = null,
     val name: String,
     val backgroundImage: String
     )

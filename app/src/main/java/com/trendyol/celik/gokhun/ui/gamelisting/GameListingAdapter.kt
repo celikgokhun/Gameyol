@@ -10,13 +10,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.base.adapter.BaseListAdapter
 import com.trendyol.celik.gokhun.base.adapter.DataClassDiffCallback
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameResultResponse
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingGameResponse
+import com.trendyol.celik.gokhun.domain.model.Game
 import kotlinx.android.synthetic.main.item_game_listing.view.*
 
 import javax.inject.Inject
 
 class GameListingAdapter @Inject constructor() :
-    BaseListAdapter<GameResultResponse,
+    BaseListAdapter<Game,
     GameListingAdapter.GameListingItemViewHolder>(DataClassDiffCallback { it.id })
 {
     override fun onCreateViewHolder(
@@ -44,7 +45,7 @@ class GameListingAdapter @Inject constructor() :
             }
         }
 
-        fun bind(gameOnList: GameResultResponse) {
+        fun bind(gameOnList: Game) {
             itemView.titleTextView.text = gameOnList.name
 
             val requestOptions = RequestOptions()

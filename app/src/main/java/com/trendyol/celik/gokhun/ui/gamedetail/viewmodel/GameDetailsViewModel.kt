@@ -2,7 +2,7 @@ package com.trendyol.celik.gokhun.ui.gamedetail.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.Game
+import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.ResponseGameDetail
 import com.trendyol.celik.gokhun.service.RawgAPIService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
@@ -12,7 +12,7 @@ class GameDetailsViewModel: BaseViewModel(){
 
     private val rawgAPIService = RawgAPIService()
 
-    val gameDetailData = MutableLiveData<Game>()
+    val gameDetailData = MutableLiveData<ResponseGameDetail>()
     val gameDetailDataError = MutableLiveData<Boolean>()
     val gameDetailDataLoading = MutableLiveData<Boolean>()
 
@@ -22,12 +22,12 @@ class GameDetailsViewModel: BaseViewModel(){
         gameDetailDataLoading.value =true
 
         disposable.add(
-            rawgAPIService.getDetailsOfGame(id)
+            rawgAPIService.fetchDetailsOfGame(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<Game>()
+                .subscribeWith(object : DisposableSingleObserver<ResponseGameDetail>()
                 {
-                    override fun onSuccess(t: Game) {
+                    override fun onSuccess(t: ResponseGameDetail) {
                         gameDetailData.value = t
                         gameDetailDataError.value = false
                         gameDetailDataLoading.value = false

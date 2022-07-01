@@ -41,7 +41,7 @@ class GameListingViewModel @Inject constructor(
         if (gameListing.games.isEmpty()) {
             pageViewStateLiveData.value = GameListingPageViewState.Error("err")
         } else {
-            pageViewStateLiveData.value = GameListingPageViewState.ShowData(gameListing)
+            pageViewStateLiveData.value = GameListingPageViewState.ShowData(gameListing.games)
         }
 
         /*

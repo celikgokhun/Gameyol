@@ -1,9 +1,9 @@
 package com.trendyol.celik.gokhun.domain.gamelisting
 
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingResponse
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameResultResponse
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingGameResponse
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
-import com.trendyol.celik.gokhun.domain.model.GameResult
+import com.trendyol.celik.gokhun.domain.model.Game
 import javax.inject.Inject
 
 class GameListingMapper @Inject constructor() {
@@ -16,19 +16,17 @@ class GameListingMapper @Inject constructor() {
         )
     }
 
-    private fun mapGames(games: List<GameResultResponse?>?): List<GameResult> {
+    private fun mapGames(games: List<GameListingGameResponse?>?): List<Game> {
         return games?.mapNotNull {
             mapFromGameDetailResponseToGameDetail(it)
         }.orEmpty()
     }
 
-    private fun mapFromGameDetailResponseToGameDetail(response: GameResultResponse?): GameResult? {
-        if (response?.id == null) return null
-
-        return GameResult(
-            id = response.id,
-            name = response.name.orEmpty(),
-            backgroundImage = response.backgroundImage.orEmpty()
+    private fun mapFromGameDetailResponseToGameDetail(response: GameListingGameResponse?): Game {
+        return Game(
+            id = response?.id.toString(),
+            name = response?.name.orEmpty(),
+            backgroundImage = response?.backgroundImage.orEmpty()
         )
     }
 }
