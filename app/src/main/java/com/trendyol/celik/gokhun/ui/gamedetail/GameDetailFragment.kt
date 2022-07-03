@@ -21,6 +21,8 @@ import javax.inject.Inject
 
 class GameDetailFragment : Fragment() {
 
+    /*
+
     @Inject
     lateinit var viewModel: GameDetailsViewModel
 
@@ -42,8 +44,12 @@ class GameDetailFragment : Fragment() {
     }
 
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         arguments?.let {
             gameID = GameDetailFragmentArgs.fromBundle(it).gameID
@@ -156,6 +162,8 @@ class GameDetailFragment : Fragment() {
 
         }
     }
+
+     */
 
 
 }

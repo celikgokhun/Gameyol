@@ -1,8 +1,9 @@
-package com.trendyol.celik.gokhun.di.listing
+package com.trendyol.celik.gokhun.di.listing.data
 
 import com.trendyol.celik.gokhun.data.gamelisting.source.GameListingDataSource
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.GameListingRemoteDataSource
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.GameListingService
+import com.trendyol.celik.gokhun.service.RawgRetrofit
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -15,15 +16,12 @@ abstract class GameListingDataModule {
         gameListingRemoteDataSource: GameListingRemoteDataSource,
     ): GameListingDataSource.Remote
 
-    /*
+
     companion object {
         @Provides
         @Singleton
-        fun provideGameListingService(builder: RetrofitBuilder): GameListingService {
-            return builder.build(SocialUrlConfig()).create(GameListingService::class.java)
+        fun provideGameListingService(builder: RawgRetrofit): GameListingService.Games {
+            return builder.api
         }
     }
-
-     */
-
 }

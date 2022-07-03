@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.di.listing
+package com.trendyol.celik.gokhun.di.listing.ui
 
 import androidx.lifecycle.ViewModel
 import com.trendyol.celik.gokhun.common.di.ViewModelKey

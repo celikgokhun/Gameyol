@@ -1,15 +1,10 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.trendyol.celik.gokhun.R
-import com.trendyol.celik.gokhun.common.di.ViewModelInjection
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingGameResponse
+import com.trendyol.celik.gokhun.base.view.BaseFragment
+import com.trendyol.celik.gokhun.databinding.FragmentGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.ui.gamelisting.viewmodel.GameListingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_game_listing.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GameListingFragment : Fragment() {
+class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     @Inject
     lateinit var viewModel: GameListingViewModel
@@ -25,7 +20,7 @@ class GameListingFragment : Fragment() {
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun init() {
         setUpView()
         setupViewModel()
     }
@@ -48,6 +43,18 @@ class GameListingFragment : Fragment() {
          */
     }
 
+    /*
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_game_listing, container, false)
+    }
+
+     */
+
+
     private fun setupViewModel() {
         with(viewModel) {
             getPageViewStateLiveData().observe(viewLifecycleOwner) {
@@ -68,7 +75,6 @@ class GameListingFragment : Fragment() {
         context.let {
             Toast.makeText(it, error, Toast.LENGTH_LONG).show()
         }
-
     }
 
     private fun loadingInProgress() {
@@ -85,11 +91,4 @@ class GameListingFragment : Fragment() {
         }
     }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_game_listing, container, false)
-    }
 }
