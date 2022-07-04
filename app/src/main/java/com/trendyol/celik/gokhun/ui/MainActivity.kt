@@ -1,9 +1,9 @@
-package com.trendyol.celik.gokhun
+package com.trendyol.celik.gokhun.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.trendyol.celik.gokhun.R
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
