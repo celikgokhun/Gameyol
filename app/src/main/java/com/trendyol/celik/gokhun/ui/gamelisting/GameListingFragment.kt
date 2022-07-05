@@ -2,20 +2,23 @@ package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.trendyol.celik.gokhun.base.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.ui.gamelisting.viewmodel.GameListingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_game_listing.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
-    private val viewModel: GameListingViewModel by activityViewModels()
+    private val viewModel: GameListingViewModel by viewModels()
 
-    var gameListingAdapter= GameListingAdapter()
+    @Inject
+    lateinit var gameListingAdapter: GameListingAdapter
 
     override fun init() {
         setUpView()

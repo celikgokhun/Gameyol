@@ -15,6 +15,7 @@ import com.trendyol.celik.gokhun.domain.model.Game
 import kotlinx.android.synthetic.main.item_game_listing.view.*
 
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class GameListingAdapter @Inject constructor() :
     BaseListAdapter<Game,
