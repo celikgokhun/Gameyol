@@ -6,6 +6,7 @@ import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
+import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -16,8 +17,10 @@ class GameListingViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val pageViewStateLiveData: MutableLiveData<GameListingPageViewState> = MutableLiveData()
+    private val statusViewStateLiveData: MutableLiveData<GameListingStatusViewState> = MutableLiveData()
 
     fun getPageViewStateLiveData(): LiveData<GameListingPageViewState> = pageViewStateLiveData
+    fun getStatusViewStateLiveData(): LiveData<GameListingStatusViewState> = statusViewStateLiveData
 
     fun initializeViewModel() {
         if (pageViewStateLiveData.value == null) {
@@ -26,7 +29,6 @@ class GameListingViewModel @Inject constructor(
     }
 
     private fun fetchGameList() {
-        onVideoListingLoading()
         gameListingUseCase.fetchGames()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -41,76 +43,21 @@ class GameListingViewModel @Inject constructor(
 
     private fun onGameListingResponseReady(gameListing: List<Game>) {
         if (gameListing.isEmpty()) {
-            // to-do
+            statusViewStateLiveData.value = GameListingStatusViewState.Error("empty List")
         } else {
             pageViewStateLiveData.value = GameListingPageViewState(gameListing)
         }
-
-        /*
-        pageViewStateLiveData.value = pageViewStateLiveData.value?.addNewPage(gameListing)
-            ?: GameListingPageViewState(gameListing)
-
-         */
     }
 
     private fun onGameListingResponseFail(throwable: Throwable) {
-        /*
-        pageViewStateLiveData.value = throwable.localizedMessage?.let {
-            GameListingStatusViewState.Error(
-                it
-            )
+
+        statusViewStateLiveData.value = throwable.localizedMessage?.
+        let {
+            GameListingStatusViewState.Error(it)
         }
-
-         */
     }
 
-    private fun onVideoListingLoading() {
-        //pageViewStateLiveData.value = GameListingStatusViewState.IsLoading
+    private fun onGameListingLoading() {
+        statusViewStateLiveData.value = GameListingStatusViewState.IsLoading
     }
-
-    /*
-
-    private val rawgAPIService = RawgAPIService()
-
-
-    val rawgData = MutableLiveData<GameListingResponse>()
-    val rawgDataError = MutableLiveData<Boolean>()
-    val rawgDataLoading = MutableLiveData<Boolean>()
-
-
-    private fun getRawgDataAPI(){
-
-        rawgDataLoading.value =true
-
-        disposable.add(
-            rawgAPIService.getData()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<GameListingResponse>()
-                {
-                    override fun onSuccess(t: GameListingResponse) {
-                        rawgData.value = t
-                        rawgDataError.value = false
-                        rawgDataLoading.value = false
-                        //observeRawgData()
-                    }
-                    override fun onError(e: Throwable) {
-                        println("Error   :  "+ e.localizedMessage )
-                        rawgDataLoading.value = false
-                        rawgDataError.value = true
-                    }
-                })
-        )
-
-    }
-
-    private fun observeRawgData(){
-        println("  :   "+rawgData.value)
-    }
-
-    fun refreshRawgAPIData(){
-        getRawgDataAPI()
-    }
-
-     */
 }

@@ -1,57 +1,65 @@
 package com.trendyol.celik.gokhun.ui.gamedetail.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.ResponseGameDetail
-import com.trendyol.celik.gokhun.service.RawgRetrofit
+import com.trendyol.celik.gokhun.domain.gamedetail.GameDetailUseCase
+import com.trendyol.celik.gokhun.domain.model.GameDetail
+import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailPageViewState
+import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
+import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.observers.DisposableSingleObserver
-import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
-class GameDetailsViewModel: BaseViewModel(){
+@HiltViewModel
+class GameDetailViewModel @Inject constructor(
+    private val gameDetailUseCase: GameDetailUseCase
+) : BaseViewModel() {
 
-    /*
-    private val rawgAPIService = RawgRetrofit()
+    private val pageViewStateLiveData: MutableLiveData<GameDetailPageViewState> = MutableLiveData()
+    private val statusViewStateLiveData: MutableLiveData<GameListingStatusViewState> = MutableLiveData()
 
-    val gameDetailData = MutableLiveData<ResponseGameDetail>()
-    val gameDetailDataError = MutableLiveData<Boolean>()
-    val gameDetailDataLoading = MutableLiveData<Boolean>()
+    fun getPageViewStateLiveData(): LiveData<GameDetailPageViewState> = pageViewStateLiveData
+    fun getStatusViewStateLiveData(): LiveData<GameListingStatusViewState> = statusViewStateLiveData
 
+    fun initializeViewModel(id: String) {
+        if (pageViewStateLiveData.value == null) {
+            fetchGameDetail(id)
+        }
+    }
 
-    private fun getGameDetailDataAPI(id: String){
-
-        gameDetailDataLoading.value =true
-
-        disposable.add(
-            rawgAPIService.fetchDetailsOfGame(id)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<ResponseGameDetail>()
+    private fun fetchGameDetail(id: String) {
+        gameDetailUseCase.fetchGameDetail(id)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
                 {
-                    override fun onSuccess(t: ResponseGameDetail) {
-                        gameDetailData.value = t
-                        gameDetailDataError.value = false
-                        gameDetailDataLoading.value = false
-                        //observeGameDetailData()
-                    }
-                    override fun onError(e: Throwable) {
-                        println("Error   :  "+ e.localizedMessage )
-                        gameDetailDataLoading.value = false
-                        gameDetailDataError.value = true
-                    }
-                })
-        )
+                    onGameDetailResponseReady(it)
+                },
+                {
+                    onGameDetailResponseFail(it)
+                }
+            )
+    }
+
+    private fun onGameDetailResponseReady(gameDetail: GameDetail) {
+        if (gameDetail.equals(null)) {
+            statusViewStateLiveData.value = GameListingStatusViewState.Error("empty List")
+        } else {
+            pageViewStateLiveData.value = GameDetailPageViewState(gameDetail)
+        }
 
     }
 
-    private fun observeGameDetailData(){
-        println("  :   "+gameDetailData.value)
+    private fun onGameDetailResponseFail(throwable: Throwable) {
+        statusViewStateLiveData.value = throwable.localizedMessage?.
+        let {
+            GameListingStatusViewState.Error(it)
+        }
     }
 
-    fun refreshGameDetailAPIData(id :String){
-        getGameDetailDataAPI(id)
-    }
 
-     */
+
+
 
 }

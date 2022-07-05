@@ -1,9 +1,8 @@
-package com.trendyol.celik.gokhun.ui
+package com.trendyol.celik.gokhun.ui.gamelisting
 
 import com.trendyol.celik.gokhun.data.gamelisting.source.GameListingDataSource
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.GameListingRemoteDataSource
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.GameListingService
-import com.trendyol.celik.gokhun.ui.gamelisting.GameListingAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,12 +31,8 @@ class GameListingModule{
 
     @Singleton
     @Provides
-    fun provideRemoteDataSourceBuilder() : GameListingDataSource.Remote{
+    fun provideGameListingRemoteDataSourceBuilder() : GameListingDataSource.Remote{
         return GameListingRemoteDataSource(provideGameListingService())
     }
-    // fun fetchGames() : GameListingResponse = provideGameListingService().fetchGamesList()
-
-
-
 
 }

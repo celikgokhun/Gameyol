@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GameListingMapper @Inject constructor() {
 
     fun mapFromResponse(
-        response: GameListingResponse,
+        response: GameListingResponse
     ): List<Game> {
         return response.results?.mapNotNull {
             mapFromGameDetailResponseToGameDetail(it)

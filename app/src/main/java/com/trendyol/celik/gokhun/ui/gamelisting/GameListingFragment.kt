@@ -43,18 +43,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
          */
     }
 
-    /*
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_game_listing, container, false)
-    }
-
-     */
-
-
     private fun setupViewModel() {
         with(viewModel) {
             getPageViewStateLiveData().observe(viewLifecycleOwner) {

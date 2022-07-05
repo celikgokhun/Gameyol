@@ -3,7 +3,7 @@ package com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.d
 import com.google.gson.annotations.SerializedName
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.*
 
-data class ResponseGameDetail(
+data class GameDetailResponse(
     @SerializedName("id")
     val id: Int?,
 

@@ -2,109 +2,120 @@ package com.trendyol.celik.gokhun.ui.gamedetail
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.trendyol.celik.gokhun.R
-import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailsViewModel
+import com.trendyol.celik.gokhun.base.view.BaseFragment
+import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
+import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_game_detail.*
-import kotlinx.android.synthetic.main.fragment_game_detail.errorTextView
-import kotlinx.android.synthetic.main.fragment_game_detail.progressBarLoading
-import kotlinx.android.synthetic.main.fragment_game_detail.swipeRefreshLayout
 
-import javax.inject.Inject
+@AndroidEntryPoint
+class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
 
-class GameDetailFragment : Fragment() {
-
-    /*
-
-    @Inject
-    lateinit var viewModel: GameDetailsViewModel
+    private val viewModel: GameDetailViewModel by viewModels()
 
     private var gameID = "0"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun init() {
+        setUpView()
+        setupViewModel()
+    }
 
-        viewModel = ViewModelProviders.of(this)[GameDetailsViewModel::class.java]
+    private fun setUpView() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game_detail, container, false)
+    private fun setupViewModel() {
+        with(viewModel) {
+            getPageViewStateLiveData().observe(viewLifecycleOwner) {
+                renderPageViewState(it)
+            }
+            arguments?.let {
+                gameID = GameDetailFragmentArgs.fromBundle(it).gameID
+                initializeViewModel(gameID)
+            }
+        }
+    }
+
+    private fun renderPageViewState(viewState: GameDetailPageViewState) {
+        gameNameTextView.text = viewState.game.nameOriginal
+        descriptionTextView.text = viewState.game.description
+        releaseDateTextView.text = viewState.game.released
+
+        viewState.game.metaCritic.let {
+            metaCriticTextView.visibility = View.VISIBLE
+            metaCriticTextView.text =it.toString()
+        }
+
+
+        viewState.game.genres.let {
+            genresTextView.visibility = View.VISIBLE
+            genresTextView.text = it?.get(0).toString()
+        }
+
+        viewState.game.playtime.let {
+            playTimeTextView.visibility = View.VISIBLE
+            playTimeTextView.text = it.toString()
+        }
+
+        viewState.game.publishers.let {
+            publishersTextView.visibility = View.VISIBLE
+            publishersTextView.text = it.toString()
+        }
+
+
+        viewState.game.redditUrl.let {
+            visitRedditCardView.visibility = View.VISIBLE
+
+            visitRedditCardView.setOnClickListener{
+                viewState.game.redditUrl?.let { it1 -> goToUrl(it1) }
+            }
+
+        }
+
+        viewState.game.website.let {
+            visitWebsiteCardView.visibility = View.VISIBLE
+
+            visitWebsiteCardView.setOnClickListener{
+                viewState.game.website?.let { it1 -> goToUrl(it1) }
+            }
+        }
+
+
+
+        val requestOptions = RequestOptions()
+            .placeholder(R.drawable.idle)
+            .error(R.drawable.idle)
+
+        context?.let {
+            Glide.with(it)
+                .applyDefaultRequestOptions(requestOptions)
+                .load(viewState.game.backGroundImage)
+                .into(gameBGImageView)
+        }
+
+
+
+
     }
 
 
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    /*
 
 
         arguments?.let {
             gameID = GameDetailFragmentArgs.fromBundle(it).gameID
             viewModel.refreshGameDetailAPIData(gameID)
         }
-
-        swipeRefreshLayout.setOnRefreshListener {
-            progressBarLoading.visibility = View.VISIBLE
-            errorTextView.visibility = View.GONE
-            viewModel.refreshGameDetailAPIData(gameID)
-            swipeRefreshLayout.isRefreshing = false
-        }
-
-        observeLiveData()
     }
 
-    private fun observeLiveData(){
-        viewModel.gameDetailData.observe(viewLifecycleOwner) { game ->
-            game.name.let {
-                gameNameTextView.text = it
-            }
 
-            game.descriptionRaw.let {
-                descriptionTextView.text = it
-                println("kamil   " +it)
-            }
 
-            game.released.let {
-                releaseDateLayout.visibility = View.VISIBLE
-                releaseDateTextView.text = it
-            }
 
-            game.genres.let {
-                genresLayout.visibility = View.VISIBLE
-                genresTextView.text = it.toString()
-            }
-
-            game.playtime.let {
-                playTimeLayout.visibility = View.VISIBLE
-                playTimeTextView.text = it.toString()
-            }
-
-            game.publishers.let {
-                publishersLayout.visibility = View.VISIBLE
-                publishersTextView.text = it.toString()
-            }
-
-            game.redditUrl.let {
-                visitRedditCardView.visibility = View.VISIBLE
-
-                visitRedditCardView.setOnClickListener{
-                    game.redditUrl?.let { it1 -> goToUrl(it1) }
-                }
-
-            }
 
             game.website.let {
                 visitWebsiteCardView.visibility = View.VISIBLE
@@ -154,6 +165,10 @@ class GameDetailFragment : Fragment() {
         }
     }
 
+
+
+     */
+
     fun goToUrl(url:String){
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -162,8 +177,6 @@ class GameDetailFragment : Fragment() {
 
         }
     }
-
-     */
 
 
 }

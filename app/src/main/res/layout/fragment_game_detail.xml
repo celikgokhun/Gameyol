@@ -66,6 +66,7 @@
 
             <TextView
                 android:id="@+id/metaCriticTextView"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -329,6 +330,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/visitRedditCardView"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
                 android:layout_margin="5dp"
@@ -372,6 +374,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="5dp"
+                android:visibility="gone"
                 android:layout_margin="5dp"
                 app:cardElevation="3dp">
 
