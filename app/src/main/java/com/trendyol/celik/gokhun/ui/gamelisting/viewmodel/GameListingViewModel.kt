@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
-import com.trendyol.celik.gokhun.domain.model.GameListingGame
+import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
+
 @HiltViewModel
 class GameListingViewModel @Inject constructor(
     private val gameListingUseCase: GameListingUseCase
@@ -38,11 +39,11 @@ class GameListingViewModel @Inject constructor(
             )
     }
 
-    private fun onGameListingResponseReady(gameListing: GameListingGame) {
-        if (gameListing.games.isEmpty()) {
-            pageViewStateLiveData.value = GameListingPageViewState.Error("err")
+    private fun onGameListingResponseReady(gameListing: List<Game>) {
+        if (gameListing.isEmpty()) {
+            // to-do
         } else {
-            pageViewStateLiveData.value = GameListingPageViewState.ShowData(gameListing.games)
+            pageViewStateLiveData.value = GameListingPageViewState(gameListing)
         }
 
         /*
@@ -53,15 +54,18 @@ class GameListingViewModel @Inject constructor(
     }
 
     private fun onGameListingResponseFail(throwable: Throwable) {
+        /*
         pageViewStateLiveData.value = throwable.localizedMessage?.let {
-            GameListingPageViewState.Error(
+            GameListingStatusViewState.Error(
                 it
             )
         }
+
+         */
     }
 
     private fun onVideoListingLoading() {
-        pageViewStateLiveData.value = GameListingPageViewState.IsLoading
+        //pageViewStateLiveData.value = GameListingStatusViewState.IsLoading
     }
 
     /*

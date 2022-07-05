@@ -6,9 +6,8 @@ import retrofit2.http.GET
 
 interface GameListingService {
     // to get list
-    interface Games {
-        @GET("games?key=f6c5c10dcd914fc4aa2b69b347ff02e7")
-        fun fetchGamesList(
-        ): Single<GameListingResponse>
-    }
+    @GET("games?key=f6c5c10dcd914fc4aa2b69b347ff02e7")
+    fun fetchGamesList(
+    ): Single<GameListingResponse>
+
 }

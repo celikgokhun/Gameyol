@@ -2,23 +2,20 @@ package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.trendyol.celik.gokhun.base.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.ui.gamelisting.viewmodel.GameListingViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_game_listing.*
 import javax.inject.Inject
 
-@AndroidEntryPoint
 class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
-    @Inject
-    lateinit var viewModel: GameListingViewModel
+    private val viewModel: GameListingViewModel by activityViewModels()
 
-    @Inject
-    lateinit var gameListingAdapter: GameListingAdapter
+    var gameListingAdapter= GameListingAdapter()
 
     override fun init() {
         setUpView()
@@ -64,11 +61,18 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         }
     }
 
+    /*
     private fun renderPageViewState(viewState: GameListingPageViewState) = when (viewState) {
-        is GameListingPageViewState.IsLoading -> loadingInProgress()
-        is GameListingPageViewState.IsDoneLoading -> loadingIsDone()
-        is GameListingPageViewState.ShowData -> displayGames(viewState.games)
-        is GameListingPageViewState.Error -> showError(viewState.error)
+        is GameListingStatusViewState.IsLoading -> loadingInProgress()
+        is GameListingStatusViewState.IsDoneLoading -> loadingIsDone()
+        is GameListingStatusViewState.ShowData -> displayGames(viewState.games)
+        is GameListingStatusViewState.Error -> showError(viewState.error)
+    }
+
+     */
+
+    private fun renderPageViewState(viewState: GameListingPageViewState) {
+        gameListingAdapter.submitList(viewState.games)
     }
 
     private fun showError(error: String) {

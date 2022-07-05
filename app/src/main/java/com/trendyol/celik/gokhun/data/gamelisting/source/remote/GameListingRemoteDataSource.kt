@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class GameListingRemoteDataSource @Inject constructor(
-    private val gameListingService: GameListingService.Games,
+    private val gameListingService: GameListingService,
 ) : GameListingDataSource.Remote {
 
     override fun fetchGames(

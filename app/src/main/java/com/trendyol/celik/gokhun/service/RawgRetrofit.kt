@@ -10,13 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RawgRetrofit {
 
-    private val BASE_URL = "https://api.rawg.io/api/"
-    val api = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-        .build()
-        .create(GameListingService.Games::class.java)
+
 
     /*
     fun fetchGameList(): Single<GameListingResponse> {
