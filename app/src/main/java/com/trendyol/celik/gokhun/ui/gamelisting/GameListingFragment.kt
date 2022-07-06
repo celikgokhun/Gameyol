@@ -26,17 +26,17 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun setUpView() {
-        recyclerViewGameList.apply {
+        with(binding.recyclerViewGameList) {
             layoutManager =  GridLayoutManager(context,2)
             adapter = gameListingAdapter
         }
 
         /*
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             progressBarLoading.visibility = View.VISIBLE
             errorTextView.visibility = View.GONE
-            recyclerViewGameList.visibility = View.GONE
-            //viewModel.refreshRawgAPIData()
+            //recyclerViewGameList.visibility = View.GONE
+            setupViewModel()
             swipeRefreshLayout.isRefreshing = false
         }
 

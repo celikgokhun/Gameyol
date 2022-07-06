@@ -9,6 +9,7 @@ import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.observers.DisposableObserver
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +32,24 @@ class GameListingViewModel @Inject constructor(
     private fun fetchGameList() {
         gameListingUseCase.fetchGames()
             .observeOn(AndroidSchedulers.mainThread())
+            .safeSubscribe(object : DisposableObserver<List<Game>>()
+            {
+                override fun onNext(t: List<Game>) {
+                    onGameListingResponseReady(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    onGameListingResponseFail(e)
+                }
+
+                override fun onComplete() {
+
+                }
+
+            })
+
+
+                /*
             .subscribe(
                 {
                     onGameListingResponseReady(it)
@@ -39,6 +58,8 @@ class GameListingViewModel @Inject constructor(
                     onGameListingResponseFail(it)
                 }
             )
+
+                 */
     }
 
     private fun onGameListingResponseReady(gameListing: List<Game>) {

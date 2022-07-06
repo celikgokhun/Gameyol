@@ -1,19 +1,12 @@
 package com.trendyol.celik.gokhun.base.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import java.lang.reflect.ParameterizedType
-import javax.inject.Inject
 
 abstract class BaseFragment<VB : ViewBinding> :
     Fragment() {
