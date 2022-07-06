@@ -11,7 +11,6 @@ import com.trendyol.celik.gokhun.base.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
 import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_game_detail.*
 
 @AndroidEntryPoint
 class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
@@ -21,12 +20,7 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
     private var gameID = "0"
 
     override fun init() {
-        setUpView()
         setupViewModel()
-    }
-
-    private fun setUpView() {
-
     }
 
     private fun setupViewModel() {
@@ -42,50 +36,54 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
     }
 
     private fun renderPageViewState(viewState: GameDetailPageViewState) {
-        gameNameTextView.text = viewState.game.nameOriginal
-        descriptionTextView.text = viewState.game.description
-        releaseDateTextView.text = viewState.game.released
+        binding.gameNameTextView.text = viewState.game.nameOriginal
+        binding.descriptionTextView.text = viewState.game.description
+        binding.releaseDateTextView.text = viewState.game.released
 
         viewState.game.metaCritic.let {
-            metaCriticTextView.visibility = View.VISIBLE
-            metaCriticTextView.text =it.toString()
+            binding.metaCriticTextView.visibility = View.VISIBLE
+            binding.metaCriticTextView.text =it.toString()
         }
 
 
         viewState.game.genres.let {
-            genresTextView.visibility = View.VISIBLE
-            genresTextView.text = it?.get(0).toString()
+            binding.genresLayout.visibility = View.VISIBLE
+            binding.genresTextView.text = it?.get(0).toString()
         }
 
         viewState.game.playtime.let {
-            playTimeTextView.visibility = View.VISIBLE
-            playTimeTextView.text = it.toString()
+            binding.playTimeLayout.visibility = View.VISIBLE
+            binding.playTimeTextView.text = it.toString()
         }
 
         viewState.game.publishers.let {
-            publishersTextView.visibility = View.VISIBLE
-            publishersTextView.text = it.toString()
+            binding.publishersLayout.visibility = View.VISIBLE
+            binding.publishersTextView.text = it.toString()
         }
 
 
         viewState.game.redditUrl.let {
-            visitRedditCardView.visibility = View.VISIBLE
-
-            visitRedditCardView.setOnClickListener{
+            if (it != null) {
+                if (it.isNotEmpty()){
+                    binding.visitRedditCardView.visibility = View.VISIBLE
+                }
+            }
+            // binding.visitRedditCardView.visibility = View.VISIBLE
+            binding.visitRedditCardView.setOnClickListener{
                 viewState.game.redditUrl?.let { it1 -> goToUrl(it1) }
             }
-
         }
 
         viewState.game.website.let {
-            visitWebsiteCardView.visibility = View.VISIBLE
-
-            visitWebsiteCardView.setOnClickListener{
+            if (it != null) {
+                if (it.isNotEmpty()){
+                    binding.visitWebsiteCardView.visibility = View.VISIBLE
+                }
+            }
+            binding.visitWebsiteCardView.setOnClickListener{
                 viewState.game.website?.let { it1 -> goToUrl(it1) }
             }
         }
-
-
 
         val requestOptions = RequestOptions()
             .placeholder(R.drawable.idle)
@@ -95,88 +93,17 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
             Glide.with(it)
                 .applyDefaultRequestOptions(requestOptions)
                 .load(viewState.game.backGroundImage)
-                .into(gameBGImageView)
-        }
-
-
-
-
-    }
-
-
-    /*
-
-
-        arguments?.let {
-            gameID = GameDetailFragmentArgs.fromBundle(it).gameID
-            viewModel.refreshGameDetailAPIData(gameID)
+                .into(binding.gameBGImageView)
         }
     }
 
-
-
-
-
-            game.website.let {
-                visitWebsiteCardView.visibility = View.VISIBLE
-
-                visitWebsiteCardView.setOnClickListener{
-                    game.website?.let { it1 -> goToUrl(it1) }
-                }
-            }
-
-
-
-            val requestOptions = RequestOptions()
-                .placeholder(R.drawable.idle)
-                .error(R.drawable.idle)
-
-            context?.let {
-                Glide.with(it)
-                    .applyDefaultRequestOptions(requestOptions)
-                    .load(game.backgroundImage)
-                    .into(gameBGImageView)
-            }
-
-        }
-
-        viewModel.gameDetailDataError.observe(viewLifecycleOwner) { error ->
-            error?.let {
-                if (it) {
-                    // recyclerViewGameList.visibility = View.GONE --- adjust visibility
-                    progressBarLoading.visibility = View.GONE
-                    errorTextView.visibility = View.VISIBLE
-                } else {
-                    errorTextView.visibility = View.GONE
-                }
-            }
-        }
-
-        viewModel.gameDetailDataLoading.observe(viewLifecycleOwner) { loading ->
-            loading?.let {
-                if (it) {
-                    // recyclerViewGameList.visibility = View.GONE --- adjust visibility
-                    errorTextView.visibility = View.GONE
-                    progressBarLoading.visibility = View.VISIBLE
-                } else {
-                    progressBarLoading.visibility = View.GONE
-                }
-            }
-        }
-    }
-
-
-
-     */
-
-    fun goToUrl(url:String){
+    private fun goToUrl(url:String){
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }catch (e:Exception){
-
+            // TO-DO
         }
     }
-
 
 }

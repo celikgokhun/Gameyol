@@ -9,7 +9,6 @@ import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.observers.DisposableObserver
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,26 +29,9 @@ class GameListingViewModel @Inject constructor(
     }
 
     private fun fetchGameList() {
+        //onGameListingLoading(true)
         gameListingUseCase.fetchGames()
             .observeOn(AndroidSchedulers.mainThread())
-            .safeSubscribe(object : DisposableObserver<List<Game>>()
-            {
-                override fun onNext(t: List<Game>) {
-                    onGameListingResponseReady(t)
-                }
-
-                override fun onError(e: Throwable) {
-                    onGameListingResponseFail(e)
-                }
-
-                override fun onComplete() {
-
-                }
-
-            })
-
-
-                /*
             .subscribe(
                 {
                     onGameListingResponseReady(it)
@@ -58,27 +40,34 @@ class GameListingViewModel @Inject constructor(
                     onGameListingResponseFail(it)
                 }
             )
-
-                 */
     }
 
     private fun onGameListingResponseReady(gameListing: List<Game>) {
         if (gameListing.isEmpty()) {
-            statusViewStateLiveData.value = GameListingStatusViewState.Error("empty List")
+            statusViewStateLiveData.value = GameListingStatusViewState.Empty
         } else {
-            pageViewStateLiveData.value = GameListingPageViewState(gameListing)
+            statusViewStateLiveData.value = GameListingStatusViewState.Success(gameListing)
         }
+        pageViewStateLiveData.value =  GameListingPageViewState(gameListing)
     }
 
     private fun onGameListingResponseFail(throwable: Throwable) {
-
-        statusViewStateLiveData.value = throwable.localizedMessage?.
-        let {
-            GameListingStatusViewState.Error(it)
-        }
+        statusViewStateLiveData.value = GameListingStatusViewState.Error(throwable)
     }
 
-    private fun onGameListingLoading() {
-        statusViewStateLiveData.value = GameListingStatusViewState.IsLoading
+
+    private fun onGameListingLoading(isLoading: Boolean) {
+        if(isLoading){
+            statusViewStateLiveData.value = GameListingStatusViewState.Loading
+        }else{
+            statusViewStateLiveData.value = GameListingStatusViewState.Empty
+        }
+
     }
 }
+
+
+
+
+
+

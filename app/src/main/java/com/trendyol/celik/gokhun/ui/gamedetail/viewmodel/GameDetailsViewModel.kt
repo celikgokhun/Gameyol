@@ -44,7 +44,7 @@ class GameDetailViewModel @Inject constructor(
 
     private fun onGameDetailResponseReady(gameDetail: GameDetail) {
         if (gameDetail.equals(null)) {
-            statusViewStateLiveData.value = GameListingStatusViewState.Error("empty List")
+            statusViewStateLiveData.value = GameListingStatusViewState.Empty
         } else {
             pageViewStateLiveData.value = GameDetailPageViewState(gameDetail)
         }
@@ -54,7 +54,7 @@ class GameDetailViewModel @Inject constructor(
     private fun onGameDetailResponseFail(throwable: Throwable) {
         statusViewStateLiveData.value = throwable.localizedMessage?.
         let {
-            GameListingStatusViewState.Error(it)
+            GameListingStatusViewState.Error(throwable)
         }
     }
 

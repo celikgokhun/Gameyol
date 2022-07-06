@@ -9,7 +9,6 @@ import com.trendyol.celik.gokhun.databinding.FragmentGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.ui.gamelisting.viewmodel.GameListingViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_game_listing.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +44,9 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun setupViewModel() {
         with(viewModel) {
+            getStatusViewStateLiveData().observe(viewLifecycleOwner) {
+                //renderStatusViewState(it)
+            }
             getPageViewStateLiveData().observe(viewLifecycleOwner) {
                 renderPageViewState(it)
             }
@@ -52,37 +54,43 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         }
     }
 
-    /*
-    private fun renderPageViewState(viewState: GameListingPageViewState) = when (viewState) {
-        is GameListingStatusViewState.IsLoading -> loadingInProgress()
-        is GameListingStatusViewState.IsDoneLoading -> loadingIsDone()
-        is GameListingStatusViewState.ShowData -> displayGames(viewState.games)
-        is GameListingStatusViewState.Error -> showError(viewState.error)
+    private fun renderStatusViewState(viewState: GameListingStatusViewState) = when (viewState) {
+        is GameListingStatusViewState.Loading -> loadingInProgress()
+        is GameListingStatusViewState.Empty -> emptyState()
+        is GameListingStatusViewState.Success -> displayGames(viewState.games)
+        is GameListingStatusViewState.Error -> errorHandle(viewState.throwable)
     }
-
-     */
 
     private fun renderPageViewState(viewState: GameListingPageViewState) {
         gameListingAdapter.submitList(viewState.games)
     }
 
-    private fun showError(error: String) {
-        context.let {
-            Toast.makeText(it, error, Toast.LENGTH_LONG).show()
+    private fun errorHandle(error: Throwable) {
+        with(binding){
+            errorTextView.visibility = View.VISIBLE
+            errorTextView.text = error.localizedMessage
         }
     }
 
     private fun loadingInProgress() {
-        progressBarLoading.visibility = View.VISIBLE
+        with(binding){
+            progressBarLoading.visibility = View.VISIBLE
+        }
     }
 
-    private fun loadingIsDone() {
-        progressBarLoading.visibility = View.GONE
+    private fun emptyState() {
+        with(binding){
+            errorTextView.visibility = View.VISIBLE
+            errorTextView.text = "List Empty Now!" //// ???
+        }
     }
 
     private fun displayGames(games: List<Game>?) {
         games?.let {
             gameListingAdapter.submitList(it)
+
+            println("Malml   "+it)
+            binding.recyclerViewGameList.visibility = View.VISIBLE
         }
     }
 
