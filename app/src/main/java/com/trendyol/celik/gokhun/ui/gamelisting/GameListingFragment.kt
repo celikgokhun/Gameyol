@@ -1,7 +1,9 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.trendyol.celik.gokhun.base.view.BaseFragment
@@ -10,6 +12,7 @@ import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.ui.gamelisting.viewmodel.GameListingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import android.widget.SearchView.OnQueryTextListener as new
 
 @AndroidEntryPoint
 class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
@@ -25,27 +28,26 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun setUpView() {
-        with(binding.recyclerViewGameList) {
-            layoutManager =  GridLayoutManager(context,2)
-            adapter = gameListingAdapter
-        }
+        with(binding) {
+            recyclerViewGameList.layoutManager =  GridLayoutManager(context,2)
+            recyclerViewGameList.adapter = gameListingAdapter
 
-        /*
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            progressBarLoading.visibility = View.VISIBLE
-            errorTextView.visibility = View.GONE
-            //recyclerViewGameList.visibility = View.GONE
-            setupViewModel()
-            swipeRefreshLayout.isRefreshing = false
-        }
 
-         */
+            swipeRefreshLayout.setOnRefreshListener {
+                setUpView()
+                setupViewModel()
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
+
+
+
+        }
     }
 
     private fun setupViewModel() {
         with(viewModel) {
             getStatusViewStateLiveData().observe(viewLifecycleOwner) {
-                //renderStatusViewState(it)
+                renderStatusViewState(it)
             }
             getPageViewStateLiveData().observe(viewLifecycleOwner) {
                 renderPageViewState(it)
@@ -86,12 +88,31 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun displayGames(games: List<Game>?) {
+
         games?.let {
             gameListingAdapter.submitList(it)
 
-            println("Malml   "+it)
             binding.recyclerViewGameList.visibility = View.VISIBLE
+            binding.searchView.clearFocus()
+            binding.searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+                override fun onQueryTextChange(key: String): Boolean {
+                    val filteredList: MutableList<Game> = mutableListOf()
+                    for (game in it){
+                        if (game.name.lowercase().contains(key.lowercase()) ){
+                            filteredList.add(game)
+                            gameListingAdapter.submitList(filteredList)
+                        }
+                    }
+                    return true
+                }
+            })
+
         }
     }
+
+
 
 }

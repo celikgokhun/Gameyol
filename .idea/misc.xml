@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.18693009118541035" />
         <entry key="app/src/main/res/drawable/idle.xml" value="0.1175" />
+        <entry key="app/src/main/res/drawable/search.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2740740740740741" />
         <entry key="app/src/main/res/layout/fragment_game_detail.xml" value="0.23789473684210527" />
         <entry key="app/src/main/res/layout/fragment_game_list.xml" value="0.17352787910369985" />
-        <entry key="app/src/main/res/layout/fragment_game_listing.xml" value="0.16783216783216784" />
+        <entry key="app/src/main/res/layout/fragment_game_listing.xml" value="0.1" />
         <entry key="app/src/main/res/layout/game_row_item.xml" value="0.16847826086956522" />
         <entry key="app/src/main/res/layout/item_game_listing.xml" value="0.1" />
       </map>
