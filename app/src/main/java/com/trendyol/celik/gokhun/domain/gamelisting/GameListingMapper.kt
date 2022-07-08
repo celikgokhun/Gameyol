@@ -3,15 +3,23 @@ package com.trendyol.celik.gokhun.domain.gamelisting
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingResponse
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingGameResponse
 import com.trendyol.celik.gokhun.domain.model.Game
+import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import javax.inject.Inject
 
 class GameListingMapper @Inject constructor() {
 
-    fun mapFromResponse(
-        response: GameListingResponse
-    ): List<Game> {
-        return response.results?.mapNotNull {
+    fun mapFromResponse(response: GameListingResponse?): GameListingGame {
+        return GameListingGame(
+            games = mapGames(response?.results),
+            pagination = response?.next
+        )
+    }
+
+    private fun mapGames(games: List<GameListingGameResponse?>?): List<Game> {
+        return games?.mapNotNull {
             mapFromGameDetailResponseToGameDetail(it)
+        }?.filter {
+            it.id != null
         }.orEmpty()
     }
 

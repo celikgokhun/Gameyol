@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Observable
 
 interface GameListingDataSource {
     interface Remote {
-        fun fetchGames():
-                Observable<GameListingResponse>
+        fun fetchGames(
+        ): Observable<GameListingResponse>
     }
 }

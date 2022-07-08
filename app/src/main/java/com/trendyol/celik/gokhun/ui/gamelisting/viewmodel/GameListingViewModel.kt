@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
 import com.trendyol.celik.gokhun.domain.model.Game
+import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,8 +43,8 @@ class GameListingViewModel @Inject constructor(
             )
     }
 
-    private fun onGameListingResponseReady(gameListing: List<Game>) {
-        if (gameListing.isEmpty()) {
+    private fun onGameListingResponseReady(gameListing: GameListingGame) {
+        if (gameListing.games.isEmpty()) {
             statusViewStateLiveData.value = GameListingStatusViewState.Empty
         } else {
             statusViewStateLiveData.value = GameListingStatusViewState.Success(gameListing)
@@ -55,6 +56,9 @@ class GameListingViewModel @Inject constructor(
         statusViewStateLiveData.value = GameListingStatusViewState.Error(throwable)
     }
 
+    fun onNextPage() {
+        fetchGameList()
+    }
 
     private fun onGameListingLoading(isLoading: Boolean) {
         if(isLoading){
@@ -65,9 +69,3 @@ class GameListingViewModel @Inject constructor(
 
     }
 }
-
-
-
-
-
-

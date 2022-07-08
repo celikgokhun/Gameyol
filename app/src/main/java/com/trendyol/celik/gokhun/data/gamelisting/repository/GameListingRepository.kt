@@ -8,9 +8,11 @@ import javax.inject.Inject
 class GameListingRepository @Inject constructor(
     private val gameListingDataSource: GameListingDataSource.Remote
 ) {
-    fun fetchGames() : Observable<GameListingResponse> {
+    fun fetchGames(
+    ) : Observable<GameListingResponse> {
         return gameListingDataSource
         .fetchGames()
+            .map{it}
     }
 
 }
