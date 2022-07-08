@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
-import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
+import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.subscribe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -34,26 +34,34 @@ class GameListingViewModel @Inject constructor(
         gameListingUseCase.fetchGames()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {
+                onSuccess = {
                     onGameListingResponseReady(it)
                 },
-                {
-                    onGameListingResponseFail(it)
+                onLoading = {
+                    onGameListingLoading()
+                },
+                onError = { throwable ->
+                    onGameListingResponseFail(throwable)
                 }
             )
+            .also { disposable.add(it) }
     }
 
     private fun fetchNextGameList(next: String?) {
         gameListingUseCase.fetchNextGames(next)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {
+                onSuccess = {
                     onGameListingResponseReady(it)
                 },
-                {
-                    onGameListingResponseFail(it)
+                onLoading = {
+                    onGameListingLoading()
+                },
+                onError = { throwable ->
+                    onGameListingResponseFail(throwable)
                 }
             )
+            .also { disposable.add(it) }
     }
 
     private fun onGameListingResponseReady(gameListing: GameListingGame) {
@@ -76,12 +84,7 @@ class GameListingViewModel @Inject constructor(
         }
     }
 
-    private fun onGameListingLoading(isLoading: Boolean) {
-        if(isLoading){
-            statusViewStateLiveData.value = GameListingStatusViewState.Loading
-        }else{
-            statusViewStateLiveData.value = GameListingStatusViewState.Empty
-        }
-
+    private fun onGameListingLoading() {
+        statusViewStateLiveData.value = GameListingStatusViewState.Loading
     }
 }

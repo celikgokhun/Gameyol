@@ -1,5 +1,7 @@
 package com.trendyol.celik.gokhun.domain.gamelisting
 
+import com.trendyol.celik.gokhun.base.extensions.Resource
+import com.trendyol.celik.gokhun.base.extensions.mapOnData
 import com.trendyol.celik.gokhun.data.gamelisting.repository.GameListingRepository
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import io.reactivex.rxjava3.core.Observable
@@ -9,18 +11,18 @@ class GameListingUseCase @Inject constructor(
     private val gameListingRepository: GameListingRepository,
     private val gameListingMapper: GameListingMapper
 ) {
-    fun fetchGames(): Observable<GameListingGame> {
+    fun fetchGames(): Observable<Resource<GameListingGame>> {
         return gameListingRepository
             .fetchGames()
-            .map {
+            .mapOnData {
                 gameListingMapper.mapFromResponse(it)
             }
     }
 
-    fun fetchNextGames(next: String?): Observable<GameListingGame> {
+    fun fetchNextGames(next: String?): Observable<Resource<GameListingGame>> {
         return gameListingRepository
             .fetchNextGames(next)
-            .map {
+            .mapOnData {
                 gameListingMapper.mapFromResponse(it)
             }
     }

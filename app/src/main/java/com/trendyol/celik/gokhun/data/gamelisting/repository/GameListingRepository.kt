@@ -1,5 +1,7 @@
 package com.trendyol.celik.gokhun.data.gamelisting.repository
 
+import com.trendyol.celik.gokhun.base.extensions.Resource
+import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.remote
 import com.trendyol.celik.gokhun.data.gamelisting.source.GameListingDataSource
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingResponse
 import io.reactivex.rxjava3.core.Observable
@@ -9,18 +11,18 @@ class GameListingRepository @Inject constructor(
     private val gameListingDataSource: GameListingDataSource.Remote
 ) {
     fun fetchGames(
-    ) : Observable<GameListingResponse> {
+    ) : Observable<Resource<GameListingResponse>> {
         return gameListingDataSource
         .fetchGames()
-            .map{it}
+        .remote()
     }
 
     fun fetchNextGames(
         next : String?
-    ) : Observable<GameListingResponse> {
+    ) : Observable<Resource<GameListingResponse>> {
         return gameListingDataSource
             .fetchNextGames(next)
-            .map{it}
+            .remote()
     }
 
 }
