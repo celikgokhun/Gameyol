@@ -97,7 +97,7 @@ object ResourceReactiveExtensions {
      * This function returns [Resource.Success.data] or throws [Resource.Error.exception]
      * by ignoring [Resource.Loading]s
      */
-    
+
     suspend fun <T> ObservableSource<Resource<T>>.awaitData(): T = suspendCancellableCoroutine { cont ->
         subscribe(object : Observer<Resource<T>> {
             private lateinit var subscription: Disposable

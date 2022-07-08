@@ -1,6 +1,8 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
+import androidx.core.view.isEmpty
+import androidx.core.view.isNotEmpty
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -70,7 +72,11 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun renderPageViewState(viewState: GameListingPageViewState) {
-        gameListingAdapter.submitList(viewState.gameListing.games)
+        with(binding) {
+            progressBarLoading.visibility = View.GONE
+        }
+            gameListingAdapter.submitList(viewState.gameListing.games)
+
     }
 
     private fun errorHandle(error: Throwable) {
@@ -83,6 +89,10 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private fun loadingInProgress() {
         with(binding){
             progressBarLoading.visibility = View.VISIBLE
+            if (recyclerViewGameList.isEmpty()){
+                recyclerViewGameList.visibility = View.GONE
+            }
+
         }
     }
 

@@ -7,7 +7,7 @@ data class GameListingPageViewState(
 ) {
     fun addNewPage(newPage: GameListingGame): GameListingPageViewState {
         val newList = gameListing.games + newPage.games
-        return copy(gameListing.copy(games = newList, pagination = newPage.pagination))
+        return copy(gameListing = gameListing.copy(games = newList, pagination = newPage.pagination))
     }
 
     val getPageQueries = gameListing.pagination
