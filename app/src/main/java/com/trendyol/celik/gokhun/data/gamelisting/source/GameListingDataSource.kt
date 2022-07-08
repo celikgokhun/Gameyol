@@ -7,5 +7,9 @@ interface GameListingDataSource {
     interface Remote {
         fun fetchGames(
         ): Observable<GameListingResponse>
+
+        fun fetchNextGames(
+            next: String?
+        ): Observable<GameListingResponse>
     }
 }

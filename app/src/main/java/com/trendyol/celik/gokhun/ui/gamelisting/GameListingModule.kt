@@ -34,5 +34,4 @@ class GameListingModule{
     fun provideGameListingRemoteDataSourceBuilder() : GameListingDataSource.Remote{
         return GameListingRemoteDataSource(provideGameListingService())
     }
-
 }

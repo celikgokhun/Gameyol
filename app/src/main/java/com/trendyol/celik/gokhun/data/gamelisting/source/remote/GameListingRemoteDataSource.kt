@@ -15,4 +15,12 @@ class GameListingRemoteDataSource @Inject constructor(
             .fetchGamesList()
             .toObservable()
     }
+
+    override fun fetchNextGames(
+        next: String?
+    ): Observable<GameListingResponse> {
+        return gameListingService
+            .fetchNextGamesList(next!!.split("&page=")[1].toInt())
+            .toObservable()
+    }
 }

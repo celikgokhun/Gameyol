@@ -43,13 +43,27 @@ class GameListingViewModel @Inject constructor(
             )
     }
 
+    private fun fetchNextGameList(next: String?) {
+        gameListingUseCase.fetchNextGames(next)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    onGameListingResponseReady(it)
+                },
+                {
+                    onGameListingResponseFail(it)
+                }
+            )
+    }
+
     private fun onGameListingResponseReady(gameListing: GameListingGame) {
         if (gameListing.games.isEmpty()) {
             statusViewStateLiveData.value = GameListingStatusViewState.Empty
         } else {
             statusViewStateLiveData.value = GameListingStatusViewState.Success(gameListing)
         }
-        pageViewStateLiveData.value =  GameListingPageViewState(gameListing)
+        pageViewStateLiveData.value = pageViewStateLiveData.value?.addNewPage(gameListing)
+            ?: GameListingPageViewState(gameListing)
     }
 
     private fun onGameListingResponseFail(throwable: Throwable) {
@@ -57,7 +71,9 @@ class GameListingViewModel @Inject constructor(
     }
 
     fun onNextPage() {
-        fetchGameList()
+        pageViewStateLiveData.value?.getPageQueries?.let {
+            fetchNextGameList(it)
+        }
     }
 
     private fun onGameListingLoading(isLoading: Boolean) {

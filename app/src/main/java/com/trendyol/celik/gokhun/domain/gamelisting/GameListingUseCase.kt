@@ -16,4 +16,12 @@ class GameListingUseCase @Inject constructor(
                 gameListingMapper.mapFromResponse(it)
             }
     }
+
+    fun fetchNextGames(next: String?): Observable<GameListingGame> {
+        return gameListingRepository
+            .fetchNextGames(next)
+            .map {
+                gameListingMapper.mapFromResponse(it)
+            }
+    }
 }

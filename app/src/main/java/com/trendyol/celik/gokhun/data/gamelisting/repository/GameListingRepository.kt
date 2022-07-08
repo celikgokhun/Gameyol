@@ -15,4 +15,12 @@ class GameListingRepository @Inject constructor(
             .map{it}
     }
 
+    fun fetchNextGames(
+        next : String?
+    ) : Observable<GameListingResponse> {
+        return gameListingDataSource
+            .fetchNextGames(next)
+            .map{it}
+    }
+
 }

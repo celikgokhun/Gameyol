@@ -35,42 +35,20 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 binding.swipeRefreshLayout.isRefreshing = false
             }
 
-            val isLoading = false
-            val isLastPage = false
-            var isScrolling = false
-
             recyclerViewGameList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    val layoutManager = recyclerView.layoutManager as GridLayoutManager
-                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                    val visibleItemCount = layoutManager.childCount
-                    val totalItemCount = layoutManager.itemCount
+                    if (dy > 0) {
 
-                    val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
-                    val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
-                    val isNotAtBeginning = firstVisibleItemPosition >= 0
-                    val isTotalMoreThanVisible = totalItemCount >= 20
-                    val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
-                            isTotalMoreThanVisible && isScrolling
+                        val layoutManager = recyclerViewGameList.layoutManager as GridLayoutManager
+                        val visibleItemCount = layoutManager.findLastCompletelyVisibleItemPosition()+1
+                        if (visibleItemCount == layoutManager.itemCount){
+                            viewModel.onNextPage()
+                        }
 
-                    if(shouldPaginate) {
-                        //viewModel.get
-                        isScrolling = false
-                        println("dipledik")
-                    } else {
-                        viewModel.onNextPage()
                     }
                 }
-
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if(newState == recyclerViewGameList.scrollState) {
-                        isScrolling = true
-                    }
-                }
-
 
             })
 
@@ -97,7 +75,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun renderPageViewState(viewState: GameListingPageViewState) {
-        gameListingAdapter.submitList(viewState.games.games)
+        gameListingAdapter.submitList(viewState.gameListing.games)
     }
 
     private fun errorHandle(error: Throwable) {
