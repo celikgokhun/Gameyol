@@ -30,13 +30,14 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="start"
+                android:padding="5dp"
                 android:text="@string/title_place_holder"
-                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:minLines="2"
                 android:lines="2"
-                android:textStyle="bold"/>
+                android:ellipsize="end"
+                />
 
         </LinearLayout>
 

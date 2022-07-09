@@ -2,7 +2,10 @@ package com.trendyol.celik.gokhun.ui.gamedetail
 
 import android.content.Intent
 import android.net.Uri
+import android.text.Html
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +16,7 @@ import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.jsoup.Jsoup
 
 @AndroidEntryPoint
 class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
@@ -83,7 +87,7 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
         binding.progressBarLoading.visibility = View.GONE
         game?.let {
             binding.gameNameTextView.text = it.nameOriginal
-            binding.descriptionTextView.text = it.description
+            binding.descriptionTextView.text = Html.fromHtml(it.description, Html.FROM_HTML_MODE_LEGACY).toString()
             binding.releaseDateTextView.text = it.released
 
             it.metaCritic.let {
@@ -93,17 +97,25 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
 
             it.genres.let {
                 binding.genresLayout.visibility = View.VISIBLE
-                binding.genresTextView.text = it?.get(0).toString()
+                var allGenres =""
+                for (item in it!!){
+                    allGenres = allGenres + " " + item.name +", "
+                }
+                binding.genresTextView.text = allGenres.dropLast(2)
             }
 
             it.playtime.let {
                 binding.playTimeLayout.visibility = View.VISIBLE
-                binding.playTimeTextView.text = it.toString()
+                binding.playTimeTextView.text = it.toString() +" hours"
             }
 
             it.publishers.let {
                 binding.publishersLayout.visibility = View.VISIBLE
-                binding.publishersTextView.text = it.toString()
+                var allPublishers =""
+                for (item in it!!){
+                    allPublishers = allPublishers + " " + item?.name +", "
+                }
+                binding.publishersTextView.text = allPublishers.dropLast(2)
             }
 
             it.redditUrl.let {

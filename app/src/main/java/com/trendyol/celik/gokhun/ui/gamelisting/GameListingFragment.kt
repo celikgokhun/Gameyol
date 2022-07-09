@@ -135,7 +135,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     return false
                 }
                 override fun onQueryTextChange(key: String): Boolean {
-
+                    /*
                     val filteredList: MutableList<Game> = mutableListOf()
                     filteredList.clear()
                     if (key.isNotEmpty()){
@@ -158,6 +158,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                         binding.errorTextView.visibility = View.GONE
                         gameListingAdapter.submitList(it)
                     }
+
+                     */
 
                     return true
                 }
