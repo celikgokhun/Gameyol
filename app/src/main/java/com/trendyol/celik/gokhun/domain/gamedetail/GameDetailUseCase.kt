@@ -1,5 +1,7 @@
 package com.trendyol.celik.gokhun.domain.gamedetail
 
+import com.trendyol.celik.gokhun.base.extensions.Resource
+import com.trendyol.celik.gokhun.base.extensions.mapOnData
 import com.trendyol.celik.gokhun.data.gamedetail.repository.GameDetailRepository
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import io.reactivex.rxjava3.core.Observable
@@ -9,9 +11,11 @@ class GameDetailUseCase @Inject constructor(
     private val gameDetailRepository: GameDetailRepository,
     private val gameDetailMapper: GameDetailMapper
 ) {
-    fun fetchGameDetail(id :String): Observable<GameDetail> {
+    fun fetchGameDetail(id :String): Observable<Resource<GameDetail>> {
         return gameDetailRepository
             .fetchGameDetail(id)
-            .map { gameDetailMapper.mapFromResponse(it) }
+            .mapOnData {
+                gameDetailMapper.mapFromResponse(it)
+            }
     }
 }

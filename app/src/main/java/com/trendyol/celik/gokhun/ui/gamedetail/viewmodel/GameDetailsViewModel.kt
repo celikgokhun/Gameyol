@@ -6,7 +6,8 @@ import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamedetail.GameDetailUseCase
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailPageViewState
-import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
+import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.subscribe
+import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailStatusViewState
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -18,10 +19,10 @@ class GameDetailViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val pageViewStateLiveData: MutableLiveData<GameDetailPageViewState> = MutableLiveData()
-    private val statusViewStateLiveData: MutableLiveData<GameListingStatusViewState> = MutableLiveData()
+    private val statusViewStateLiveData: MutableLiveData<GameDetailStatusViewState> = MutableLiveData()
 
     fun getPageViewStateLiveData(): LiveData<GameDetailPageViewState> = pageViewStateLiveData
-    fun getStatusViewStateLiveData(): LiveData<GameListingStatusViewState> = statusViewStateLiveData
+    fun getStatusViewStateLiveData(): LiveData<GameDetailStatusViewState> = statusViewStateLiveData
 
     fun initializeViewModel(id: String) {
         if (pageViewStateLiveData.value == null) {
@@ -33,10 +34,13 @@ class GameDetailViewModel @Inject constructor(
         gameDetailUseCase.fetchGameDetail(id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {
+                onSuccess ={
                     onGameDetailResponseReady(it)
                 },
-                {
+                onLoading = {
+                    onGameDetailLoading()
+                },
+                onError = {
                     onGameDetailResponseFail(it)
                 }
             )
@@ -44,18 +48,19 @@ class GameDetailViewModel @Inject constructor(
 
     private fun onGameDetailResponseReady(gameDetail: GameDetail) {
         if (gameDetail.equals(null)) {
-            statusViewStateLiveData.value = GameListingStatusViewState.Empty
+            statusViewStateLiveData.value = GameDetailStatusViewState.Empty
         } else {
-            pageViewStateLiveData.value = GameDetailPageViewState(gameDetail)
+            statusViewStateLiveData.value = GameDetailStatusViewState.Success(gameDetail)
         }
 
     }
 
     private fun onGameDetailResponseFail(throwable: Throwable) {
-        statusViewStateLiveData.value = throwable.localizedMessage?.
-        let {
-            GameListingStatusViewState.Error(throwable)
-        }
+        statusViewStateLiveData.value = GameDetailStatusViewState.Error(throwable)
+    }
+
+    private fun onGameDetailLoading() {
+        statusViewStateLiveData.value = GameDetailStatusViewState.Loading
     }
 
 

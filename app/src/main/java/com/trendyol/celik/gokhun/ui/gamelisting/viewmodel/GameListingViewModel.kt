@@ -30,7 +30,6 @@ class GameListingViewModel @Inject constructor(
     }
 
     private fun fetchGameList() {
-        // onGameListingLoading(true)
         gameListingUseCase.fetchGames()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
