@@ -4,8 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.text.Html
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.base.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
 import com.trendyol.celik.gokhun.domain.model.GameDetail
@@ -78,6 +80,7 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
         binding.gameDetailLayout.visibility = View.VISIBLE
         binding.errorTextView.visibility = View.GONE
         binding.progressBarLoading.visibility = View.GONE
+
         game?.let {
             binding.gameNameTextView.text = it.nameOriginal
             binding.descriptionTextView.text = Html.fromHtml(it.description, Html.FROM_HTML_MODE_LEGACY).toString()
@@ -86,11 +89,30 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
 
 
             it.metaCritic.let {
-                if(it?.toString().equals("null")){
+                if(it.toString() == "null"){
                     binding.metaCriticTextView.visibility = View.GONE
                 }
-                binding.metaCriticTextView.visibility = View.VISIBLE
-                binding.metaCriticTextView.text =it.toString()
+
+                else{
+                    binding.metaCriticTextView.visibility = View.VISIBLE
+                    binding.metaCriticTextView.text =it.toString()
+
+                    if (it.toString().toInt() in 1..49) {
+                        binding.metaCriticTextView.setBackgroundResource(R.drawable.red_mc_bg)
+                        binding.metaCriticTextView.setTextColor(ContextCompat.getColor(context!!, R.color.red))
+                    }
+
+                    if (it.toString().toInt() in 50..75) {
+                        binding.metaCriticTextView.setBackgroundResource(R.drawable.yellow_mc_bg)
+                        binding.metaCriticTextView.setTextColor(ContextCompat.getColor(context!!, R.color.yellow))
+                    }
+                    if (it.toString().toInt() in 75..101) {
+                        binding.metaCriticTextView.setBackgroundResource(R.drawable.green_mc_bg)
+                        binding.metaCriticTextView.setTextColor(ContextCompat.getColor(context!!, R.color.green))
+                    }
+
+                    binding.metaCriticTextView.text =it.toString()
+                }
             }
 
             it.genres.let {
@@ -212,4 +234,6 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
 
         return "$month $day, $year"
     }
+
+
 }

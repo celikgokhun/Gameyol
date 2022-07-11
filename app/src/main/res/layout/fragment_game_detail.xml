@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <LinearLayout
             android:id="@+id/gameDetailLayout"
             android:layout_width="match_parent"
@@ -42,9 +40,11 @@
                     android:gravity="center"
                     android:paddingHorizontal="5dp"
                     android:lines="1"
+                    android:layout_marginTop="3dp"
                     android:minLines="1"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:ellipsize="end"
                     />
 
                 <Space
@@ -60,8 +60,9 @@
                     android:lines="1"
                     android:paddingHorizontal="8dp"
                     android:minLines="1"
-                    android:textSize="18sp"
-                    android:visibility="gone" />
+                    android:layout_marginVertical="5dp"
+                    android:textSize="11sp"
+                    android:visibility="visible" />
 
 
             </LinearLayout>
@@ -77,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     app:cardCornerRadius="5dp"
-                    android:backgroundTint="@color/gray"
+                    android:backgroundTint="@color/grey"
                     app:cardElevation="3dp">
 
                     <LinearLayout
@@ -105,6 +106,7 @@
                             android:padding="5dp"
                             android:maxLines="4"
                             android:ellipsize="end"
+                            android:textColor="@color/lightGray"
                             android:text="@string/title_place_holder"
                             android:textSize="12sp" />
 
@@ -116,7 +118,7 @@
                     android:id="@+id/informationCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/gray"
+                    android:backgroundTint="@color/grey"
                     android:layout_margin="5dp"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="3dp">
@@ -153,6 +155,7 @@
                                 android:minLines="1"
                                 android:layout_marginStart="5dp"
                                 android:text="ReleaseDate:"
+                                android:textColor="@color/lightGray"
                                 android:textSize="12sp" />
 
                             <Space
@@ -175,16 +178,19 @@
 
                         </LinearLayout>
 
-                        <androidx.constraintlayout.widget.Guideline
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" />
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@color/anthracite"
+                            />
 
                         <LinearLayout
                             android:id="@+id/genresLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -195,6 +201,7 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:text="Genres:"
+                                android:textColor="@color/lightGray"
                                 android:layout_marginStart="5dp"
                                 android:textSize="12sp" />
 
@@ -218,16 +225,20 @@
 
                         </LinearLayout>
 
-                        <androidx.constraintlayout.widget.Guideline
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal" />
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@color/anthracite"
+                            />
+
 
                         <LinearLayout
                             android:id="@+id/playTimeLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -238,6 +249,7 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:text="Play Time:"
+                                android:textColor="@color/lightGray"
                                 android:layout_marginStart="5dp"
                                 android:textSize="12sp" />
 
@@ -261,12 +273,20 @@
 
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@color/anthracite"
+                            />
+
 
                         <LinearLayout
                             android:id="@+id/publishersLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginVertical="2dp"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -278,6 +298,7 @@
                                 android:minLines="1"
                                 android:layout_marginStart="5dp"
                                 android:text="Publishers:"
+                                android:textColor="@color/lightGray"
                                 android:textSize="12sp" />
 
                             <Space
@@ -309,7 +330,7 @@
                     android:id="@+id/visitRedditCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/gray"
+                    android:backgroundTint="@color/grey"
                     android:layout_margin="5dp"
                     android:visibility="gone"
                     app:cardCornerRadius="5dp"
@@ -351,7 +372,7 @@
                     android:id="@+id/visitWebsiteCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/gray"
+                    android:backgroundTint="@color/grey"
                     android:layout_margin="5dp"
                     android:visibility="gone"
                     app:cardCornerRadius="5dp"
@@ -392,8 +413,6 @@
 
 
             </LinearLayout>
-
-
 
         </LinearLayout>
 
