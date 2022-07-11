@@ -3,6 +3,7 @@ package com.trendyol.celik.gokhun.ui.gamedetail
 import android.content.Intent
 import android.net.Uri
 import android.text.Html
+import android.text.method.ScrollingMovementMethod
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
@@ -32,6 +34,19 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
                 setUpView()
                 setupViewModel()
                 binding.swipeRefreshLayout.isRefreshing = false
+            }
+
+            var toggle = false
+            descriptionCardView.setOnClickListener {
+                if (toggle){
+                    descriptionTextView.setLines(15)
+                    descriptionTextView.movementMethod = ScrollingMovementMethod()
+                    toggle = false
+
+                }else {
+                    descriptionTextView.setLines(4)
+                    toggle = true
+                }
             }
 
         }

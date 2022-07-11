@@ -34,10 +34,11 @@
                 android:gravity="start"
                 android:padding="5dp"
                 android:text="@string/title_place_holder"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 android:minLines="2"
                 android:lines="2"
                 android:ellipsize="end"
+
                 />
 
         </LinearLayout>

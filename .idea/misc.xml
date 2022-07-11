@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/search_view_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/yellow_mc_bg.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/layout/description_dialog.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/layout/fragment_game_detail.xml" value="0.2029520295202952" />
         <entry key="app/src/main/res/layout/fragment_game_list.xml" value="0.17352787910369985" />
         <entry key="app/src/main/res/layout/fragment_game_listing.xml" value="0.16847826086956522" />

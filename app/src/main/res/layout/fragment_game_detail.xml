@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeRefreshLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -106,6 +105,7 @@
                             android:padding="5dp"
                             android:maxLines="4"
                             android:ellipsize="end"
+                            android:scrollbars="vertical"
                             android:textColor="@color/lightGray"
                             android:text="@string/title_place_holder"
                             android:textSize="12sp" />
