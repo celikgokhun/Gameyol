@@ -4,19 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.text.Html
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.trendyol.celik.gokhun.base.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import org.jsoup.Jsoup
 
 @AndroidEntryPoint
 class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
@@ -74,7 +68,6 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
     }
 
     private fun emptyState() {
-        println("boş kanka")
         with(binding){
             errorTextView.visibility = View.VISIBLE
             errorTextView.text = "Game Info Empty!" //// ???

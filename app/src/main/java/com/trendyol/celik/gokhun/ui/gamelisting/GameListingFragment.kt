@@ -31,8 +31,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             recyclerViewGameList.adapter = gameListingAdapter
 
             swipeRefreshLayout.setOnRefreshListener {
-                setUpView()
-                setupViewModel()
+                //setUpView()
+                //setupViewModel()
                 binding.swipeRefreshLayout.isRefreshing = false
             }
 
@@ -71,8 +71,10 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun renderPageViewState(viewState: GameListingPageViewState) {
-        with(binding) {
-            progressBarLoading.visibility = View.GONE
+        if (viewState.gameListing.games.isNotEmpty()){
+            with(binding) {
+                progressBarLoading.visibility = View.GONE
+            }
         }
     }
 
@@ -135,6 +137,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     return false
                 }
                 override fun onQueryTextChange(key: String): Boolean {
+
                     /*
                     val filteredList: MutableList<Game> = mutableListOf()
                     filteredList.clear()

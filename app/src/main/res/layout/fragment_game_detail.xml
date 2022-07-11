@@ -77,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     app:cardCornerRadius="5dp"
+                    android:backgroundTint="@color/gray"
                     app:cardElevation="3dp">
 
                     <LinearLayout
@@ -99,7 +100,7 @@
                             android:id="@+id/descriptionTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
+                            android:layout_marginTop="1dp"
                             android:gravity="start"
                             android:padding="5dp"
                             android:maxLines="4"
@@ -115,6 +116,7 @@
                     android:id="@+id/informationCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/gray"
                     android:layout_margin="5dp"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="3dp">
@@ -194,6 +196,7 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:text="Genres:"
+                                android:layout_marginStart="5dp"
                                 android:textSize="12sp" />
 
                             <Space
@@ -274,6 +277,7 @@
                                 android:layout_weight="1"
                                 android:lines="1"
                                 android:minLines="1"
+                                android:layout_marginStart="5dp"
                                 android:text="Publishers"
                                 android:textSize="12sp" />
 
@@ -306,6 +310,7 @@
                     android:id="@+id/visitRedditCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/gray"
                     android:layout_margin="5dp"
                     android:visibility="gone"
                     app:cardCornerRadius="5dp"
@@ -347,6 +352,7 @@
                     android:id="@+id/visitWebsiteCardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/gray"
                     android:layout_margin="5dp"
                     android:visibility="gone"
                     app:cardCornerRadius="5dp"
