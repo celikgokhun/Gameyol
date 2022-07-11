@@ -31,8 +31,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             recyclerViewGameList.adapter = gameListingAdapter
 
             swipeRefreshLayout.setOnRefreshListener {
-                //setUpView()
-                //setupViewModel()
+                setUpView()
+                setupViewModel()
                 binding.swipeRefreshLayout.isRefreshing = false
             }
 
@@ -91,7 +91,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             if (recyclerViewGameList.isEmpty()){
                 recyclerViewGameList.visibility = View.GONE
             }
-
         }
     }
 

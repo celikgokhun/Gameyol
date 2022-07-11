@@ -81,9 +81,14 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
         game?.let {
             binding.gameNameTextView.text = it.nameOriginal
             binding.descriptionTextView.text = Html.fromHtml(it.description, Html.FROM_HTML_MODE_LEGACY).toString()
-            binding.releaseDateTextView.text = it.released
+
+            binding.releaseDateTextView.text = it.released?.let { it1 -> formatDate(it1) }
+
 
             it.metaCritic.let {
+                if(it?.toString().equals("null")){
+                    binding.metaCriticTextView.visibility = View.GONE
+                }
                 binding.metaCriticTextView.visibility = View.VISIBLE
                 binding.metaCriticTextView.text =it.toString()
             }
@@ -157,4 +162,54 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
         }
     }
 
+    private fun formatDate(rawDate: String): String {
+
+        val day = rawDate.split("-")[2]
+        var month = rawDate.split("-")[1]
+        val year = rawDate.split("-")[0]
+
+        when (month) {
+            "01" -> {
+                month = "Jan"
+            }
+            "02" -> {
+                month = "Feb"
+            }
+            "03" -> {
+                month = "Mar"
+            }
+            "04" -> {
+                month = "Apr"
+            }
+            "05" -> {
+                month = "May"
+            }
+            "06" -> {
+                month = "Jun"
+            }
+            "07" -> {
+                month = "Jul"
+            }
+            "08" -> {
+                month = "Aug"
+            }
+            "09" -> {
+                month = "Sep"
+            }
+            "10" -> {
+                month = "Okt"
+            }
+            "11" -> {
+                month = "Nov"
+            }
+            "12" -> {
+                month = "Dec"
+            }
+            else -> {
+                month = "Error"
+            }
+        }
+
+        return "$month $day, $year"
+    }
 }

@@ -152,7 +152,7 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:layout_marginStart="5dp"
-                                android:text="ReleaseDate"
+                                android:text="ReleaseDate:"
                                 android:textSize="12sp" />
 
                             <Space
@@ -170,7 +170,6 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:layout_marginEnd="5dp"
-                                android:text="kamilr"
                                 android:textSize="15sp" />
 
 
@@ -238,7 +237,7 @@
                                 android:layout_weight="1"
                                 android:lines="1"
                                 android:minLines="1"
-                                android:text="Play Time"
+                                android:text="Play Time:"
                                 android:layout_marginStart="5dp"
                                 android:textSize="12sp" />
 
@@ -278,7 +277,7 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:layout_marginStart="5dp"
-                                android:text="Publishers"
+                                android:text="Publishers:"
                                 android:textSize="12sp" />
 
                             <Space
