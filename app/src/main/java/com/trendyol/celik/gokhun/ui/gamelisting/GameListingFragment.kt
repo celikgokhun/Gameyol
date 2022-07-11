@@ -17,6 +17,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private val viewModel: GameListingViewModel by viewModels()
 
+    private var fullGameList: MutableList<Game> = mutableListOf()
+
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
 
@@ -103,7 +105,9 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun displayGames(games: List<Game>?) {
         games?.let {
-            gameListingAdapter.submitList(it)
+
+            fullGameList = (fullGameList + it).toMutableList()
+            gameListingAdapter.submitList(fullGameList)
 
             binding.recyclerViewGameList.visibility = View.VISIBLE
             binding.searchView.clearFocus()
@@ -113,7 +117,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     val filteredList: MutableList<Game> = mutableListOf()
                     filteredList.clear()
                     if (key?.isNotEmpty() == true){
-                        for (game in it){
+                        for (game in fullGameList){
                             if (game.name.lowercase().contains(key.lowercase()) ){
                                 binding.recyclerViewGameList.visibility = View.VISIBLE
                                 binding.errorTextView.visibility = View.GONE
@@ -130,39 +134,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     else{
                         binding.recyclerViewGameList.visibility = View.VISIBLE
                         binding.errorTextView.visibility = View.GONE
-                        gameListingAdapter.submitList(it)
+                        gameListingAdapter.submitList(fullGameList)
                     }
 
                     return false
                 }
                 override fun onQueryTextChange(key: String): Boolean {
-
-                    /*
-                    val filteredList: MutableList<Game> = mutableListOf()
-                    filteredList.clear()
-                    if (key.isNotEmpty()){
-                        for (game in it){
-                            if (game.name.lowercase().contains(key.lowercase()) ){
-                                binding.recyclerViewGameList.visibility = View.VISIBLE
-                                binding.errorTextView.visibility = View.GONE
-                                filteredList.add(game)
-                                gameListingAdapter.submitList(filteredList)
-                            }
-                            if (filteredList.isEmpty()){
-                                binding.recyclerViewGameList.visibility = View.GONE
-                                binding.errorTextView.visibility = View.VISIBLE
-                                binding.errorTextView.text = "No game has been found !"
-                            }
-                        }
-                    }
-                    else{
-                        binding.recyclerViewGameList.visibility = View.VISIBLE
-                        binding.errorTextView.visibility = View.GONE
-                        gameListingAdapter.submitList(it)
-                    }
-
-                     */
-
+                    gameListingAdapter.submitList(fullGameList)
                     return true
                 }
             })
