@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.gamelisting
+package com.trendyol.celik.gokhun
 
 import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.remote
 import com.trendyol.celik.gokhun.data.gamelisting.repository.GameListingRepository
@@ -56,7 +56,7 @@ class GameListingUseCaseTest {
     @Test
     fun `given successful response, when fetchNextGames called, then should return game listing`() {
         // Given
-        val next :String? = "2"
+        val next = "2"
         val response = GameListingResponse(
             null,null,null,
             null,null,null,
