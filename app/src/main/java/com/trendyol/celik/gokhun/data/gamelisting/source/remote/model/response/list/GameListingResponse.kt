@@ -40,6 +40,6 @@ data class GameListingResponse(
     val filters: Filter?,
 
     @SerializedName("nofollow_collections")
-    val noFollowCollections: List<String>?
+    val noFollowCollections: List<String?>?
     )
 

@@ -119,7 +119,8 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
 
 
             it.metaCritic.let {
-                if(it.toString() == "null"){
+
+                if(it == null){
                     binding.metaCriticTextView.visibility = View.GONE
                 }
 

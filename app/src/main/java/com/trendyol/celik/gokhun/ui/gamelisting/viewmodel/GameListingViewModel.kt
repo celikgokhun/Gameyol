@@ -8,13 +8,15 @@ import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
 import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.subscribe
+import com.trendyol.celik.gokhun.domain.gamesearch.GameSearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 @HiltViewModel
 class GameListingViewModel @Inject constructor(
-    private val gameListingUseCase: GameListingUseCase
+    private val gameListingUseCase: GameListingUseCase,
+    private val gameSearchUseCase: GameSearchUseCase
 ) : BaseViewModel() {
 
     private val pageViewStateLiveData: MutableLiveData<GameListingPageViewState> = MutableLiveData()
@@ -63,6 +65,24 @@ class GameListingViewModel @Inject constructor(
             .also { disposable.add(it) }
     }
 
+
+    private fun fetchGameSearch(search: String?) {
+        gameSearchUseCase.fetchGameSearch(search)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                onSuccess = {
+                    onGameListingResponseReady(it)
+                },
+                onLoading = {
+                    onGameListingLoading()
+                },
+                onError = { throwable ->
+                    onGameListingResponseFail(throwable)
+                }
+            )
+            .also { disposable.add(it) }
+    }
+
     private fun onGameListingResponseReady(gameListing: GameListingGame) {
         if (gameListing.games.isEmpty()) {
             statusViewStateLiveData.value = GameListingStatusViewState.Empty
@@ -78,6 +98,7 @@ class GameListingViewModel @Inject constructor(
     }
 
     fun onNextPage() {
+        println("ahmet")
         pageViewStateLiveData.value?.getPageQueries?.let {
             fetchNextGameList(it)
         }
@@ -85,5 +106,13 @@ class GameListingViewModel @Inject constructor(
 
     private fun onGameListingLoading() {
         statusViewStateLiveData.value = GameListingStatusViewState.Loading
+    }
+
+    fun searchGame(search: String) {
+        println("vide mode")
+        pageViewStateLiveData.value?.getPageQueries?.let {
+            fetchGameSearch(search)
+        }
+
     }
 }

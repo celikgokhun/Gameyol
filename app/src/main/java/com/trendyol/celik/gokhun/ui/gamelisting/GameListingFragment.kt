@@ -50,6 +50,41 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     }
                 }
             })
+
+            searchView.clearFocus()
+            binding.searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(key: String?): Boolean {
+
+                    fullGameList.clear()
+                    if (key?.isNotEmpty() == true){
+
+                        viewModel.searchGame(key)
+                        binding.recyclerViewGameList.visibility = View.VISIBLE
+                        binding.errorTextView.visibility = View.GONE
+                        gameListingAdapter.submitList(fullGameList)
+
+                        if (fullGameList.isEmpty()){
+                            binding.recyclerViewGameList.visibility = View.GONE
+                            binding.errorTextView.visibility = View.VISIBLE
+                            binding.errorTextView.text = "No game has been found !"
+                        }
+
+                    }
+                    else{
+                        binding.recyclerViewGameList.visibility = View.VISIBLE
+                        binding.errorTextView.visibility = View.GONE
+                        gameListingAdapter.submitList(fullGameList)
+                    }
+
+                    return false
+                }
+                override fun onQueryTextChange(key: String): Boolean {
+                    if(key.isEmpty()){
+                        gameListingAdapter.submitList(fullGameList)
+                    }
+                    return true
+                }
+            })
         }
     }
 
@@ -105,46 +140,9 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun displayGames(games: List<Game>?) {
         games?.let {
-
             fullGameList = (fullGameList + it).toMutableList()
             gameListingAdapter.submitList(fullGameList)
-
             binding.recyclerViewGameList.visibility = View.VISIBLE
-            binding.searchView.clearFocus()
-            binding.searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(key: String?): Boolean {
-
-                    val filteredList: MutableList<Game> = mutableListOf()
-                    filteredList.clear()
-                    if (key?.isNotEmpty() == true){
-                        for (game in fullGameList){
-                            if (game.name.lowercase().contains(key.lowercase()) ){
-                                binding.recyclerViewGameList.visibility = View.VISIBLE
-                                binding.errorTextView.visibility = View.GONE
-                                filteredList.add(game)
-                                gameListingAdapter.submitList(filteredList)
-                            }
-                            if (filteredList.isEmpty()){
-                                binding.recyclerViewGameList.visibility = View.GONE
-                                binding.errorTextView.visibility = View.VISIBLE
-                                binding.errorTextView.text = "No game has been found !"
-                            }
-                        }
-                    }
-                    else{
-                        binding.recyclerViewGameList.visibility = View.VISIBLE
-                        binding.errorTextView.visibility = View.GONE
-                        gameListingAdapter.submitList(fullGameList)
-                    }
-
-                    return false
-                }
-                override fun onQueryTextChange(key: String): Boolean {
-                    gameListingAdapter.submitList(fullGameList)
-                    return true
-                }
-            })
-
         }
     }
 
