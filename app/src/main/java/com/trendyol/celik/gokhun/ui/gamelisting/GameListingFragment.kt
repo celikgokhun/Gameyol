@@ -53,6 +53,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
             searchView.clearFocus()
             binding.searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
+
                 override fun onQueryTextSubmit(key: String?): Boolean {
 
                     fullGameList.clear()
@@ -78,6 +79,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
                     return false
                 }
+
                 override fun onQueryTextChange(key: String): Boolean {
                     if(key.isEmpty()){
                         gameListingAdapter.submitList(fullGameList)

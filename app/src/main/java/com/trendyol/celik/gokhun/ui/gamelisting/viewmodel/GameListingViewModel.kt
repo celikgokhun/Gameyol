@@ -98,7 +98,6 @@ class GameListingViewModel @Inject constructor(
     }
 
     fun onNextPage() {
-        println("ahmet")
         pageViewStateLiveData.value?.getPageQueries?.let {
             fetchNextGameList(it)
         }
@@ -109,7 +108,6 @@ class GameListingViewModel @Inject constructor(
     }
 
     fun searchGame(search: String) {
-        println("vide mode")
         pageViewStateLiveData.value?.getPageQueries?.let {
             fetchGameSearch(search)
         }

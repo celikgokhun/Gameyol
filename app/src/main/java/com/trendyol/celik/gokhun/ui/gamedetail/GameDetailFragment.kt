@@ -147,26 +147,42 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
             }
 
             it.genres.let {
-                binding.genresLayout.visibility = View.VISIBLE
-                var allGenres =""
-                for (item in it!!){
-                    allGenres = allGenres + " " + item.name +", "
+                if (it != null){
+                    if (it.isNotEmpty()){
+                        binding.genresLayout.visibility = View.VISIBLE
+                        var allGenres =""
+                        for (item in it!!){
+                            allGenres = allGenres + " " + item.name +", "
+                        }
+                        binding.genresTextView.text = allGenres.dropLast(2)
+                    }
                 }
-                binding.genresTextView.text = allGenres.dropLast(2)
+
             }
 
             it.playtime.let {
-                binding.playTimeLayout.visibility = View.VISIBLE
-                binding.playTimeTextView.text = it.toString() +" hours"
+                if(it.toString().toInt() < 1) {
+                    binding.playTimeLayout.visibility = View.VISIBLE
+                    binding.playTimeTextView.text = it.toString() +" hour"
+                }else{
+                    binding.playTimeLayout.visibility = View.VISIBLE
+                    binding.playTimeTextView.text = it.toString() +" hours"
+                }
+
             }
 
             it.publishers.let {
-                binding.publishersLayout.visibility = View.VISIBLE
-                var allPublishers =""
-                for (item in it!!){
-                    allPublishers = allPublishers + " " + item?.name +", "
+                if (it != null){
+                    if (it.isNotEmpty()){
+                        binding.publishersLayout.visibility = View.VISIBLE
+                        var allPublishers =""
+                        for (item in it!!){
+                            allPublishers = allPublishers + " " + item?.name +", "
+                        }
+                        binding.publishersTextView.text = allPublishers.dropLast(2)
+                    }
                 }
-                binding.publishersTextView.text = allPublishers.dropLast(2)
+
             }
 
             it.redditUrl.let {
