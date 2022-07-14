@@ -49,6 +49,21 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
                 }
             }
 
+            var isFavourite = false
+            gameFavouriteImageView.setOnClickListener{
+                if (isFavourite){
+                    gameFavouriteImageView.setImageResource(R.drawable.favourite)
+
+                    //gameFavourite.copy()
+                    //viewModel.insertGame(gameFavourite)
+
+                    isFavourite = false
+                }else{
+                    gameFavouriteImageView.setImageResource(R.drawable.favourite_not)
+                    isFavourite = true
+                }
+            }
+
         }
     }
 

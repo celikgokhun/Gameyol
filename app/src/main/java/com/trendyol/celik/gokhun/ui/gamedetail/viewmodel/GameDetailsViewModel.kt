@@ -8,7 +8,6 @@ import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailPageViewState
 import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.subscribe
 import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailStatusViewState
-import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -62,9 +61,4 @@ class GameDetailViewModel @Inject constructor(
     private fun onGameDetailLoading() {
         statusViewStateLiveData.value = GameDetailStatusViewState.Loading
     }
-
-
-
-
-
 }
