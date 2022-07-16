@@ -1,14 +1,22 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
+import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.view.View
+import android.widget.GridLayout.HORIZONTAL
+import android.widget.LinearLayout.HORIZONTAL
 import androidx.core.view.isEmpty
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.trendyol.celik.gokhun.base.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
+import com.trendyol.celik.gokhun.domain.model.Platform
 import com.trendyol.celik.gokhun.ui.gamelisting.viewmodel.GameListingViewModel
+import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingAdapter
+import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingPageViewState
+import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingStatusViewState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,9 +26,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private val viewModel: GameListingViewModel by viewModels()
 
     private var fullGameList: MutableList<Game> = mutableListOf()
+    private var fullPlatformList: MutableList<Platform> = mutableListOf()
 
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
+
+    @Inject
+    lateinit var platformListingAdapter: PlatformListingAdapter
 
     override fun init() {
         setUpView()
@@ -31,13 +43,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         with(binding) {
             recyclerViewGameList.layoutManager =  GridLayoutManager(context,2)
             recyclerViewGameList.adapter = gameListingAdapter
-
-            swipeRefreshLayout.setOnRefreshListener {
-                setUpView()
-                setupViewModel()
-                binding.swipeRefreshLayout.isRefreshing = false
-            }
-
             recyclerViewGameList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -50,6 +55,9 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     }
                 }
             })
+
+            recyclerViewPlatformList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recyclerViewPlatformList.adapter = platformListingAdapter
 
             searchView.clearFocus()
             binding.searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -87,6 +95,12 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     return true
                 }
             })
+
+            swipeRefreshLayout.setOnRefreshListener {
+                setUpView()
+                setupViewModel()
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 
@@ -98,7 +112,33 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             getPageViewStateLiveData().observe(viewLifecycleOwner) {
                 renderPageViewState(it)
             }
+
+            getStatusViewPlatformStateLiveData().observe(viewLifecycleOwner) {
+                //renderStatusViewPlatformState(it)
+
+                renderPageViewPlatformState(it)
+            }
+            getPageViewPlatformStateLiveData().observe(viewLifecycleOwner) {
+                //renderPageViewPlatformState(it)
+
+                renderStatusViewPlatformState(it)
+            }
             initializeViewModel()
+        }
+    }
+
+    private fun renderPageViewPlatformState(viewState: PlatformListingStatusViewState) = when (viewState) {
+        is PlatformListingStatusViewState.Loading -> loadingInProgress()
+        is PlatformListingStatusViewState.Empty -> emptyState()
+        is PlatformListingStatusViewState.Success -> displayPlatforms(viewState.platforms?.platforms)
+        is PlatformListingStatusViewState.Error -> errorHandle(viewState.throwable)
+    }
+
+    private fun renderStatusViewPlatformState(viewState: PlatformListingPageViewState) {
+        if (viewState.platformListing.platforms.isNotEmpty()){
+            with(binding) {
+                progressBarLoading.visibility = View.GONE
+            }
         }
     }
 
@@ -145,6 +185,14 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             fullGameList = (fullGameList + it).toMutableList()
             gameListingAdapter.submitList(fullGameList)
             binding.recyclerViewGameList.visibility = View.VISIBLE
+        }
+    }
+
+    private fun displayPlatforms(games: List<Platform>?) {
+        games?.let {
+            fullPlatformList = (fullPlatformList + it).toMutableList()
+            platformListingAdapter.submitList(fullPlatformList)
+            binding.recyclerViewPlatformList.visibility = View.VISIBLE
         }
     }
 
