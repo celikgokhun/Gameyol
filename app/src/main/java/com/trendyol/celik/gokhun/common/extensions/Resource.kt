@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.extensions
+package com.trendyol.celik.gokhun.common.extensions
 
 sealed class Resource<T> {
 

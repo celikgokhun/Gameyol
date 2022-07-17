@@ -1,5 +1,6 @@
 package com.trendyol.celik.gokhun.ui.gamedetail
 
+import com.trendyol.celik.gokhun.common.util.Constants.BASE_URL
 import com.trendyol.celik.gokhun.data.gamedetail.source.GameDetailDataSource
 import com.trendyol.celik.gokhun.data.gamedetail.source.remote.GameDetailRemoteDataSource
 import com.trendyol.celik.gokhun.data.gamedetail.source.remote.GameDetailService
@@ -15,8 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class GameDetailModule {
-
-    private val BASE_URL = "https://api.rawg.io/api/"
 
     @Singleton
     @Provides

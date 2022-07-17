@@ -116,7 +116,7 @@
                             android:gravity="start"
                             android:lines="1"
                             android:minLines="1"
-                            android:text="Description"
+                            android:text="@string/description"
                             android:padding="5dp"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -158,9 +158,9 @@
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:lines="1"
-                            android:paddingStart="5dp"
+                            android:paddingHorizontal="5dp"
                             android:minLines="1"
-                            android:text="Information"
+                            android:text="@string/information"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:layout_marginStart="5dp"
-                                android:text="ReleaseDate:"
+                                android:text="@string/releaseDate"
                                 android:textColor="@color/lightGray"
                                 android:textSize="12sp" />
 
@@ -225,7 +225,7 @@
                                 android:layout_weight="1"
                                 android:lines="1"
                                 android:minLines="1"
-                                android:text="Genres:"
+                                android:text="@string/genres"
                                 android:textColor="@color/lightGray"
                                 android:layout_marginStart="5dp"
                                 android:textSize="12sp" />
@@ -273,7 +273,7 @@
                                 android:layout_weight="1"
                                 android:lines="1"
                                 android:minLines="1"
-                                android:text="Play Time:"
+                                android:text="@string/play_time"
                                 android:textColor="@color/lightGray"
                                 android:layout_marginStart="5dp"
                                 android:textSize="12sp" />
@@ -322,7 +322,7 @@
                                 android:lines="1"
                                 android:minLines="1"
                                 android:layout_marginStart="5dp"
-                                android:text="Publishers:"
+                                android:text="@string/publishers"
                                 android:textColor="@color/lightGray"
                                 android:textSize="12sp" />
 
@@ -372,7 +372,7 @@
                             android:gravity="center"
                             android:lines="1"
                             android:minLines="1"
-                            android:text="Visit reddit"
+                            android:text="@string/visit_reddit"
                             android:padding="8dp"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -414,7 +414,7 @@
                             android:gravity="center"
                             android:lines="1"
                             android:minLines="1"
-                            android:text="Visit website"
+                            android:text="@string/visit_website"
                             android:padding="8dp"
                             android:textSize="16sp"
                             android:textStyle="bold" />

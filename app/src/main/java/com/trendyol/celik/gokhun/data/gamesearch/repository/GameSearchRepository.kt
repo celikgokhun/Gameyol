@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.data.gamesearch.repository
 
-import com.trendyol.celik.gokhun.base.extensions.Resource
-import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.remote
+import com.trendyol.celik.gokhun.common.extensions.Resource
+import com.trendyol.celik.gokhun.common.extensions.ResourceReactiveExtensions.remote
 import com.trendyol.celik.gokhun.data.gamesearch.source.GameSearchDataSource
 import com.trendyol.celik.gokhun.data.gamesearch.source.remote.model.GameSearchResponse
 import io.reactivex.rxjava3.core.Observable

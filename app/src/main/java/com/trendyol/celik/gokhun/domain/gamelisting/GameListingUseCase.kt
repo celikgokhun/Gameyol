@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.domain.gamelisting
 
-import com.trendyol.celik.gokhun.base.extensions.Resource
-import com.trendyol.celik.gokhun.base.extensions.mapOnData
+import com.trendyol.celik.gokhun.common.extensions.Resource
+import com.trendyol.celik.gokhun.common.extensions.mapOnData
 import com.trendyol.celik.gokhun.data.gamelisting.repository.GameListingRepository
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import io.reactivex.rxjava3.core.Observable

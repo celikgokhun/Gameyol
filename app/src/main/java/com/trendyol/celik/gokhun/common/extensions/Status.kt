@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.extensions
+package com.trendyol.celik.gokhun.common.extensions
 
 sealed class Status {
 
@@ -7,9 +7,5 @@ sealed class Status {
     data class Error(val exception: Throwable) : Status()
 
     object Loading : Status()
-
-    object LoadingWithContent : Status()
-
-    object Empty : Status()
 
 }

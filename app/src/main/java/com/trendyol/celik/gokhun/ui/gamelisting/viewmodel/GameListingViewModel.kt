@@ -2,12 +2,12 @@ package com.trendyol.celik.gokhun.ui.gamelisting.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
+import com.trendyol.celik.gokhun.common.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingPageViewState
 import com.trendyol.celik.gokhun.ui.gamelisting.GameListingStatusViewState
-import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.subscribe
+import com.trendyol.celik.gokhun.common.extensions.ResourceReactiveExtensions.subscribe
 import com.trendyol.celik.gokhun.domain.gamesearch.GameSearchUseCase
 import com.trendyol.celik.gokhun.domain.model.PlatformListingPlatform
 import com.trendyol.celik.gokhun.domain.platformlisting.PlatformListingUseCase

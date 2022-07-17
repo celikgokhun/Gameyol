@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.domain.gamedetail
 
-import com.trendyol.celik.gokhun.base.extensions.Resource
-import com.trendyol.celik.gokhun.base.extensions.mapOnData
+import com.trendyol.celik.gokhun.common.extensions.Resource
+import com.trendyol.celik.gokhun.common.extensions.mapOnData
 import com.trendyol.celik.gokhun.data.gamedetail.repository.GameDetailRepository
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import io.reactivex.rxjava3.core.Observable

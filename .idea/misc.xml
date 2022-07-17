@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/favorite.xml" value="0.1785" />
         <entry key="app/src/main/res/drawable/favourite.xml" value="0.103" />
         <entry key="app/src/main/res/drawable/favourite_not.xml" value="0.1785" />
+        <entry key="app/src/main/res/drawable/gray_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/green_mc_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1785" />
         <entry key="app/src/main/res/drawable/idle.xml" value="0.1175" />
@@ -18,7 +19,7 @@
         <entry key="app/src/main/res/drawable/yellow_mc_bg.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2740740740740741" />
         <entry key="app/src/main/res/layout/description_dialog.xml" value="0.20729166666666668" />
-        <entry key="app/src/main/res/layout/fragment_game_detail.xml" value="0.4042505524695141" />
+        <entry key="app/src/main/res/layout/fragment_game_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_game_list.xml" value="0.17352787910369985" />
         <entry key="app/src/main/res/layout/fragment_game_listing.xml" value="0.4371840103812839" />
         <entry key="app/src/main/res/layout/game_row_item.xml" value="0.16847826086956522" />

@@ -3,12 +3,10 @@ package com.trendyol.celik.gokhun.ui.platformlisting
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.trendyol.celik.gokhun.base.adapter.BaseListAdapter
-import com.trendyol.celik.gokhun.base.adapter.DataClassDiffCallback
-import com.trendyol.celik.gokhun.databinding.ItemGameListingBinding
+import com.trendyol.celik.gokhun.common.adapter.BaseListAdapter
+import com.trendyol.celik.gokhun.common.adapter.DataClassDiffCallback
 import com.trendyol.celik.gokhun.databinding.ItemPlatformListingBinding
 import com.trendyol.celik.gokhun.domain.model.Platform
-import com.trendyol.celik.gokhun.ui.gamelisting.GameListingAdapter
 import javax.inject.Inject
 
 class PlatformListingAdapter @Inject constructor() :
@@ -32,7 +30,6 @@ class PlatformListingAdapter @Inject constructor() :
         init {
             with(binding) {
                 root.setOnClickListener {
-                    TODO()
                 }
             }
         }

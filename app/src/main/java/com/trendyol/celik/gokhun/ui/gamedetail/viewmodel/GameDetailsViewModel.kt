@@ -2,11 +2,11 @@ package com.trendyol.celik.gokhun.ui.gamedetail.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.trendyol.celik.gokhun.base.viewmodel.BaseViewModel
+import com.trendyol.celik.gokhun.common.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamedetail.GameDetailUseCase
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailPageViewState
-import com.trendyol.celik.gokhun.base.extensions.ResourceReactiveExtensions.subscribe
+import com.trendyol.celik.gokhun.common.extensions.ResourceReactiveExtensions.subscribe
 import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

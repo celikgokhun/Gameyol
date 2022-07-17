@@ -1,15 +1,12 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
-import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.view.View
-import android.widget.GridLayout.HORIZONTAL
-import android.widget.LinearLayout.HORIZONTAL
 import androidx.core.view.isEmpty
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.trendyol.celik.gokhun.base.view.BaseFragment
+import com.trendyol.celik.gokhun.common.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.domain.model.Platform
@@ -63,33 +60,19 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             binding.searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
                 override fun onQueryTextSubmit(key: String?): Boolean {
-
                     fullGameList.clear()
-                    if (key?.isNotEmpty() == true){
-
-                        viewModel.searchGame(key)
-                        binding.recyclerViewGameList.visibility = View.VISIBLE
-                        binding.errorTextView.visibility = View.GONE
-                        gameListingAdapter.submitList(fullGameList)
-
-                        if (fullGameList.isEmpty()){
-                            binding.recyclerViewGameList.visibility = View.GONE
-                            binding.errorTextView.visibility = View.VISIBLE
-                            binding.errorTextView.text = "No game has been found !"
-                        }
-
-                    }
-                    else{
-                        binding.recyclerViewGameList.visibility = View.VISIBLE
-                        binding.errorTextView.visibility = View.GONE
-                        gameListingAdapter.submitList(fullGameList)
-                    }
+                    println("key dolu")
+                    key?.let { viewModel.searchGame(it) }
+                    binding.recyclerViewGameList.visibility = View.VISIBLE
+                    binding.errorTextView.visibility = View.GONE
+                    gameListingAdapter.submitList(fullGameList)
 
                     return false
                 }
 
                 override fun onQueryTextChange(key: String): Boolean {
                     if(key.isEmpty()){
+                        println("key is empty")
                         gameListingAdapter.submitList(fullGameList)
                     }
                     return true
@@ -99,6 +82,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             swipeRefreshLayout.setOnRefreshListener {
                 setUpView()
                 setupViewModel()
+                gameListingAdapter.submitList(fullGameList)
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         }
@@ -114,27 +98,24 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             }
 
             getStatusViewPlatformStateLiveData().observe(viewLifecycleOwner) {
-                //renderStatusViewPlatformState(it)
+                renderStatusViewPlatformState(it)
 
-                renderPageViewPlatformState(it)
             }
             getPageViewPlatformStateLiveData().observe(viewLifecycleOwner) {
-                //renderPageViewPlatformState(it)
-
-                renderStatusViewPlatformState(it)
+                renderPageViewPlatformState(it)
             }
             initializeViewModel()
         }
     }
 
-    private fun renderPageViewPlatformState(viewState: PlatformListingStatusViewState) = when (viewState) {
+    private fun renderStatusViewPlatformState(viewState: PlatformListingStatusViewState) = when (viewState) {
         is PlatformListingStatusViewState.Loading -> loadingInProgress()
         is PlatformListingStatusViewState.Empty -> emptyState()
         is PlatformListingStatusViewState.Success -> displayPlatforms(viewState.platforms?.platforms)
         is PlatformListingStatusViewState.Error -> errorHandle(viewState.throwable)
     }
 
-    private fun renderStatusViewPlatformState(viewState: PlatformListingPageViewState) {
+    private fun renderPageViewPlatformState(viewState: PlatformListingPageViewState) {
         if (viewState.platformListing.platforms.isNotEmpty()){
             with(binding) {
                 progressBarLoading.visibility = View.GONE

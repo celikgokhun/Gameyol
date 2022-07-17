@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.viewmodel
+package com.trendyol.celik.gokhun.common.viewmodel
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 

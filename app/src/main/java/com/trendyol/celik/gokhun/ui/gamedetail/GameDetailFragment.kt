@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.trendyol.celik.gokhun.R
-import com.trendyol.celik.gokhun.base.view.BaseFragment
+import com.trendyol.celik.gokhun.common.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailViewModel

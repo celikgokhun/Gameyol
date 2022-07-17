@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.adapter
+package com.trendyol.celik.gokhun.common.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter

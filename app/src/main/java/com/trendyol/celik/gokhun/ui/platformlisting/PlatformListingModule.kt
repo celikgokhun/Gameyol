@@ -1,5 +1,6 @@
 package com.trendyol.celik.gokhun.ui.platformlisting
 
+import com.trendyol.celik.gokhun.common.util.Constants.BASE_URL
 import com.trendyol.celik.gokhun.data.platformlisting.source.PlatformListingDataSource
 import com.trendyol.celik.gokhun.data.platformlisting.source.remote.PlatformListingRemoteDataSource
 import com.trendyol.celik.gokhun.data.platformlisting.source.remote.PlatformListingService
@@ -15,8 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class PlatformListingModule{
-
-    private val BASE_URL = "https://api.rawg.io/api/"
 
     @Singleton
     @Provides

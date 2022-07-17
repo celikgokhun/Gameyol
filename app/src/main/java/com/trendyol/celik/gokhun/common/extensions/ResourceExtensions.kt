@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.extensions
+package com.trendyol.celik.gokhun.common.extensions
 
 import io.reactivex.rxjava3.core.Observable
 
@@ -30,17 +30,4 @@ private fun <T> Observable<T>.doOnNextPredicate(
     block: (T) -> Unit
 ): Observable<T> {
     return this.doOnNext { if (predicate.invoke(it)) block(it) }
-}
-
-inline fun <T, reified R : Throwable> Resource<T>.resolveError(resolver: (R) -> Throwable): Resource<T> {
-    return when (this) {
-        is Resource.Loading, is Resource.Success -> this
-        is Resource.Error -> {
-            val exception = exception
-            if (exception !is R) return this
-
-            val resolvedException = resolver(exception)
-            return Resource.Error(resolvedException)
-        }
-    }
 }

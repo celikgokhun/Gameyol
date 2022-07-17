@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.trendyol.celik.gokhun.R
-import com.trendyol.celik.gokhun.base.adapter.BaseListAdapter
-import com.trendyol.celik.gokhun.base.adapter.DataClassDiffCallback
+import com.trendyol.celik.gokhun.common.adapter.BaseListAdapter
+import com.trendyol.celik.gokhun.common.adapter.DataClassDiffCallback
 import com.trendyol.celik.gokhun.databinding.ItemGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
 

@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.base.view
+package com.trendyol.celik.gokhun.common.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
