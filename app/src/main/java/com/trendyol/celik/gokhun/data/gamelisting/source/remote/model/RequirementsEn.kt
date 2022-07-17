@@ -1,10 +1,10 @@
-package com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail
+package com.trendyol.celik.gokhun.data.gamelisting.source.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Requirements(
+data class RequirementsEn(
     @SerializedName("minimum")
-    val releasedAt: String?,
+    val minimum: String?,
 
     @SerializedName("recommended")
     val recommended: String?

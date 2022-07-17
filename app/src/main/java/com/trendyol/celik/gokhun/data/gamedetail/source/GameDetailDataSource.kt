@@ -1,6 +1,6 @@
 package com.trendyol.celik.gokhun.data.gamedetail.source
 
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.GameDetailResponse
+import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.GameDetailResponse
 import io.reactivex.rxjava3.core.Observable
 
 interface GameDetailDataSource {

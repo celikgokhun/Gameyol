@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.data.gamedetail.source.remote
 
 import com.trendyol.celik.gokhun.common.util.Constants
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.GameDetailResponse
+import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.GameDetailResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

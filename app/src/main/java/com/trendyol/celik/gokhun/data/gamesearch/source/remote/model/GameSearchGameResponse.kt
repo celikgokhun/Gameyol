@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.data.gamesearch.source.remote.model
 
 import com.google.gson.annotations.SerializedName
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.*
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.*
 
 data class GameSearchGameResponse(
     @SerializedName("slug")

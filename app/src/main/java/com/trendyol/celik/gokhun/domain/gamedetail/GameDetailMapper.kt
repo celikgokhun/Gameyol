@@ -1,6 +1,6 @@
 package com.trendyol.celik.gokhun.domain.gamedetail
 
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.GameDetailResponse
+import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.GameDetailResponse
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import javax.inject.Inject
 

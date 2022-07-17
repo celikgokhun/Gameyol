@@ -2,7 +2,7 @@ package com.trendyol.celik.gokhun
 
 import com.trendyol.celik.gokhun.common.extensions.ResourceReactiveExtensions.remote
 import com.trendyol.celik.gokhun.data.gamedetail.repository.GameDetailRepository
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.GameDetailResponse
+import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.GameDetailResponse
 import com.trendyol.celik.gokhun.domain.gamedetail.GameDetailMapper
 import com.trendyol.celik.gokhun.domain.gamedetail.GameDetailUseCase
 import io.mockk.MockKAnnotations

@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.domain.gamelisting
 
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingResponse
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingGameResponse
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.GameListingResponse
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.GameListingGameResponse
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import javax.inject.Inject

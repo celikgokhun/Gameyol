@@ -1,8 +1,8 @@
-package com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list
+package com.trendyol.celik.gokhun.data.gamelisting.source.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class StoreDetail(
+data class Tag(
     @SerializedName("id")
     val id: Int?,
 
@@ -12,8 +12,8 @@ data class StoreDetail(
     @SerializedName("slug")
     val slug: String?,
 
-    @SerializedName("domain")
-    val domain: String?,
+    @SerializedName("language")
+    val language: String?,
 
     @SerializedName("games_count")
     val gamesCount: Int?,

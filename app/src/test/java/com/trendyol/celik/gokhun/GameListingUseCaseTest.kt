@@ -2,7 +2,7 @@ package com.trendyol.celik.gokhun
 
 import com.trendyol.celik.gokhun.common.extensions.ResourceReactiveExtensions.remote
 import com.trendyol.celik.gokhun.data.gamelisting.repository.GameListingRepository
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.GameListingResponse
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.GameListingResponse
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingMapper
 import com.trendyol.celik.gokhun.domain.gamelisting.GameListingUseCase
 import io.reactivex.rxjava3.core.Observable

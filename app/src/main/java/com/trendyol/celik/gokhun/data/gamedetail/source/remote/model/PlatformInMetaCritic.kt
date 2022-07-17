@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail
+package com.trendyol.celik.gokhun.data.gamedetail.source.remote.model
 
 import com.google.gson.annotations.SerializedName
 

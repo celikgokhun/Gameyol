@@ -1,7 +1,7 @@
 package com.trendyol.celik.gokhun.domain.model
 
-import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.response.detail.Publisher
-import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.response.list.Genre
+import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.Publisher
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.Genre
 
 data class GameDetail (
     val id: Int?,
@@ -10,7 +10,7 @@ data class GameDetail (
     val metaCritic: Int?,
     val description: String?,
     val released: String?,
-    val genres: List<Genre>?,
+    val genres: List<Genre?>?,
     val playtime: Int?,
     val publishers: List<Publisher?>?,
     val redditUrl: String?,
