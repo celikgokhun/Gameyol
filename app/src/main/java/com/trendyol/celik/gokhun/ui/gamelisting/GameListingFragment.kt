@@ -2,6 +2,7 @@ package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
 import androidx.core.view.isEmpty
+import androidx.core.view.marginLeft
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private var fullGameList: MutableList<Game> = mutableListOf()
 
     private var isSearchedSomething : Boolean = false
+    private var isSubmitted : Boolean = false
 
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
@@ -35,7 +37,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         setUpView()
         setupViewModel()
     }
-
 
     private fun setUpView() {
         with(binding) {
@@ -73,24 +74,24 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 clearFocus()
                 setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(key: String?): Boolean {
-                        fullGameList.clear()
-                        key?.let {
-                            viewModel.searchGame(it)
-                            isSearchedSomething = true
+
+                        if (!isSubmitted){
+                            fullGameList.clear()
+                            key?.let {
+                                println("ardık kanka   " +  key)
+                                viewModel.searchGame(it)
+                                isSearchedSomething = true
+                            }
+                            isSubmitted = true
                         }
-
-                        recyclerViewGameList.visibility = View.GONE
-                        errorTextView.visibility = View.GONE
-                        progressBarLoading.visibility = View.GONE
-                        gameListingAdapter.submitList(fullGameList)
-
                         return false
                     }
 
                     override fun onQueryTextChange(key: String): Boolean {
-                        if(key.isEmpty()){
-                            isSearchedSomething = false
-                        }
+                        println("boşladık kanka")
+                        isSearchedSomething = false
+                        isSubmitted = false
+
                         return true
                     }
 
@@ -146,16 +147,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private fun loadingInProgress() {
         with(binding){
             progressBarLoading.visibility = View.VISIBLE
-            if (recyclerViewGameList.isEmpty()){
-                recyclerViewGameList.visibility = View.GONE
-            }
         }
     }
 
     private fun emptyState() {
         with(binding){
             errorTextView.visibility = View.VISIBLE
-            errorTextView.text = "List Empty Now!"
+            errorTextView.text = "List is Empty!"
             progressBarLoading.visibility = View.GONE
             recyclerViewGameList.visibility = View.GONE
             recyclerViewPlatformList.visibility = View.GONE
