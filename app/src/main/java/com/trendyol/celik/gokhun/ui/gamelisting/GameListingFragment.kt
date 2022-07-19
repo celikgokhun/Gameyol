@@ -38,52 +38,56 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun setUpView() {
         with(binding) {
-            recyclerViewGameList.layoutManager =  GridLayoutManager(context,2)
-            recyclerViewGameList.adapter = gameListingAdapter
-            recyclerViewGameList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dy > 0) {
-                        val layoutManager = recyclerViewGameList.layoutManager as GridLayoutManager
-                        val visibleItemCount = layoutManager.findLastCompletelyVisibleItemPosition()+1
-                        if (visibleItemCount == layoutManager.itemCount){
-                            viewModel.onNextPage()
+            with(recyclerViewGameList){
+                layoutManager =  GridLayoutManager(context,2)
+                adapter = gameListingAdapter
+                addOnScrollListener(object : RecyclerView.OnScrollListener(){
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        if (dy > 0) {
+                            val layoutManager = layoutManager as GridLayoutManager
+                            val visibleItemCount = layoutManager.findLastCompletelyVisibleItemPosition()+1
+                            if (visibleItemCount == layoutManager.itemCount){
+                                viewModel.onNextPage()
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
 
-            recyclerViewPlatformList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            recyclerViewPlatformList.adapter = platformListingAdapter
+            with(recyclerViewPlatformList){
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = platformListingAdapter
+            }
 
-            searchView.clearFocus()
-            binding.searchView.setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
-
-                override fun onQueryTextSubmit(key: String?): Boolean {
-                    fullGameList.clear()
-                    println("key dolu")
-                    key?.let { viewModel.searchGame(it) }
-                    binding.recyclerViewGameList.visibility = View.VISIBLE
-                    binding.errorTextView.visibility = View.GONE
-                    gameListingAdapter.submitList(fullGameList)
-
-                    return false
-                }
-
-                override fun onQueryTextChange(key: String): Boolean {
-                    if(key.isEmpty()){
-                        println("key is empty")
+            with(searchView){
+                clearFocus()
+                setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(key: String?): Boolean {
+                        fullGameList.clear()
+                        println("key dolu")
+                        key?.let { viewModel.searchGame(it) }
+                        recyclerViewGameList.visibility = View.VISIBLE
+                        errorTextView.visibility = View.GONE
                         gameListingAdapter.submitList(fullGameList)
-                    }
-                    return true
-                }
-            })
 
-            swipeRefreshLayout.setOnRefreshListener {
-                setUpView()
-                setupViewModel()
-                gameListingAdapter.submitList(fullGameList)
-                binding.swipeRefreshLayout.isRefreshing = false
+                        return false
+                    }
+
+                    override fun onQueryTextChange(key: String): Boolean {
+
+                        return true
+                    }
+                })
+            }
+
+            with(swipeRefreshLayout){
+                setOnRefreshListener {
+                    setUpView()
+                    setupViewModel()
+                    gameListingAdapter.submitList(fullGameList)
+                    isRefreshing = false
+                }
             }
         }
     }

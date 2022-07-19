@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.trendyol.celik.gokhun.common.viewmodel.BaseViewModel
 import com.trendyol.celik.gokhun.domain.gamedetail.GameDetailUseCase
 import com.trendyol.celik.gokhun.domain.model.GameDetail
-import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailPageViewState
 import com.trendyol.celik.gokhun.common.extensions.ResourceReactiveExtensions.subscribe
 import com.trendyol.celik.gokhun.ui.gamedetail.GameDetailStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,16 +16,12 @@ class GameDetailViewModel @Inject constructor(
     private val gameDetailUseCase: GameDetailUseCase
 ) : BaseViewModel() {
 
-    private val pageViewStateLiveData: MutableLiveData<GameDetailPageViewState> = MutableLiveData()
-    private val statusViewStateLiveData: MutableLiveData<GameDetailStatusViewState> = MutableLiveData()
+    private val stateLiveData: MutableLiveData<GameDetailStatusViewState> = MutableLiveData()
 
-    fun getPageViewStateLiveData(): LiveData<GameDetailPageViewState> = pageViewStateLiveData
-    fun getStatusViewStateLiveData(): LiveData<GameDetailStatusViewState> = statusViewStateLiveData
+    fun getStateLiveData(): LiveData<GameDetailStatusViewState> = stateLiveData
 
     fun initializeViewModel(id: String) {
-        if (pageViewStateLiveData.value == null) {
-            fetchGameDetail(id)
-        }
+        fetchGameDetail(id)
     }
 
     private fun fetchGameDetail(id: String) {
@@ -47,18 +42,18 @@ class GameDetailViewModel @Inject constructor(
 
     private fun onGameDetailResponseReady(gameDetail: GameDetail) {
         if (gameDetail.equals(null)) {
-            statusViewStateLiveData.value = GameDetailStatusViewState.Empty
+            stateLiveData.value = GameDetailStatusViewState.Empty
         } else {
-            statusViewStateLiveData.value = GameDetailStatusViewState.Success(gameDetail)
+            stateLiveData.value = GameDetailStatusViewState.Success(gameDetail)
         }
 
     }
 
     private fun onGameDetailResponseFail(throwable: Throwable) {
-        statusViewStateLiveData.value = GameDetailStatusViewState.Error(throwable)
+        stateLiveData.value = GameDetailStatusViewState.Error(throwable)
     }
 
     private fun onGameDetailLoading() {
-        statusViewStateLiveData.value = GameDetailStatusViewState.Loading
+        stateLiveData.value = GameDetailStatusViewState.Loading
     }
 }

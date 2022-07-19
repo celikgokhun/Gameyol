@@ -43,16 +43,13 @@ class GameListingAdapter @Inject constructor() :
         }
 
         fun bind(game: Game) {
-            binding.titleTextView.text = game.name
+            with(binding){
+                titleTextView.text = game.name
 
-            val requestOptions = RequestOptions()
-                .placeholder(R.drawable.idle)
-                .error(R.drawable.idle)
-
-            Glide.with(itemView.context)
-                .applyDefaultRequestOptions(requestOptions)
-                .load(game.backgroundImage)
-                .into(binding.coverImageView)
+                Glide.with(itemView.context)
+                    .load(game.backgroundImage)
+                    .into(coverImageView)
+            }
         }
     }
 }

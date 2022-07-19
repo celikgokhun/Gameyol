@@ -28,6 +28,7 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
 
     private fun setUpView() {
         with(binding) {
+
             with(swipeRefreshLayout){
                 setOnRefreshListener {
                     setUpView()
@@ -68,12 +69,10 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
 
     private fun setupViewModel() {
         with(viewModel) {
-            getStatusViewStateLiveData().observe(viewLifecycleOwner) {
+            getStateLiveData().observe(viewLifecycleOwner) {
                 renderStatusViewState(it)
             }
-            getPageViewStateLiveData().observe(viewLifecycleOwner) {
-                //renderPageViewState(it)
-            }
+
             arguments?.let {
                 gameID = GameDetailFragmentArgs.fromBundle(it).gameID
                 initializeViewModel(gameID)

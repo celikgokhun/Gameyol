@@ -10,22 +10,10 @@ abstract class BaseListAdapter<T, VH : RecyclerView.ViewHolder> constructor(
 
     override fun getItemCount(): Int = currentList.size
 
-    @JvmOverloads
-    fun submitItem(position: Int = itemCount, item: T) {
-        val newList = getMutableList()
-        newList.add(position, item)
-        submitList(newList)
-    }
-
     fun removeItem(index: Int) {
         val newList = getMutableList()
         newList.removeAt(index)
         submitList(newList)
-    }
-
-    fun removeItem(item: T): Boolean {
-        val currentList = getMutableList()
-        return currentList.remove(item).also { submitList(currentList) }
     }
 
     fun clearItems() {

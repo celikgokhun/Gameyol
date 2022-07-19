@@ -5,10 +5,13 @@ import android.net.Uri
 import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.data.gamedetail.source.remote.model.Publisher
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.Genre
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.Platform
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.PlatformDetail
+import com.trendyol.celik.gokhun.data.gamesearch.source.remote.model.PlatformGameSearch
 
 object Constants {
     const val BASE_URL = "https://api.rawg.io/api/"
-    const val API_KEY = "f6c5c10dcd914fc4aa2b69b347ff02e7"
+    const val API_KEY = "6f262e4de4dc466b9096608fab0df26e"
 }
 
 fun formatDate(rawDate: String): String {
@@ -78,11 +81,34 @@ fun elementExtractorPublisher(publisherList: List<Publisher?>?): String{
     return allPublishers.dropLast(2)
 }
 
+fun elementExtractorPlatform(platformList: List<Platform?>?): String{
+    var platformDetailsList: List<PlatformDetail?>?
+    var allPlatforms =""
+    for (item in platformList!!){
+        platformDetailsList = listOf(item?.platform)
+        for (item in platformDetailsList){
+            allPlatforms = allPlatforms + " " + item?.name + ", "
+        }
+    }
+    return allPlatforms.dropLast(2)
+}
+
+fun elementExtractorPlatformForSearch(platformList: List<PlatformGameSearch?>?): String{
+    var allPlatforms =""
+    for (item in platformList!!){
+        allPlatforms = allPlatforms + " " + item?.slug + ", "
+    }
+    return allPlatforms.dropLast(2)
+}
+
 fun formatPlayTime(hour: Int?): String{
     var result = ""
-    if(hour.toString().toInt() < 1) {
+    if(hour.toString().toInt() == 1) {
         result = hour.toString() +" hour"
-    }else{
+    } else if( hour.toString().toInt() == 0 ){
+        result = hour.toString()
+    }
+    else{
         result = hour.toString() +" hours"
     }
     return result
