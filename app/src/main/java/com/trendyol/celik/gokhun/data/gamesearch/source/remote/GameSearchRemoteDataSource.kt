@@ -17,4 +17,20 @@ class GameSearchRemoteDataSource @Inject constructor(
             .toObservable()
     }
 
+    override fun fetchGameSearchNext(
+        next: String?
+    ): Observable<GameSearchResponse> {
+        return gameSearchService
+            .fetchSearchNextGame(
+                next!!
+                    .split("&page=")[1]
+                    .split("&")[0]
+                    .toInt(),
+
+                next
+                    .split("&search=")[1])
+
+            .toObservable()
+    }
+
 }

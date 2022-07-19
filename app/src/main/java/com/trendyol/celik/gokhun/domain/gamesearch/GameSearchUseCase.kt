@@ -19,4 +19,12 @@ class GameSearchUseCase  @Inject constructor(
                 gameSearchMapper.mapFromResponse(it)
             }
     }
+
+    fun fetchGameSearchNext(next: String?): Observable<Resource<GameListingGame>> {
+        return gameSearchRepository
+            .fetchSearchGameNext(next)
+            .mapOnData {
+                gameSearchMapper.mapFromResponse(it)
+            }
+    }
 }

@@ -10,6 +10,13 @@ interface GameSearchService {
 
     @GET("games?key=${Constants.API_KEY}")
     fun fetchSearchGame(
+        @Query("search") search: String?= null
+    ): Single<GameSearchResponse>
+
+    @GET("games?key=${Constants.API_KEY}")
+    fun fetchSearchNextGame(
+        @Query("page") page: Int?= null,
         @Query("search") search: String?= null,
     ): Single<GameSearchResponse>
+
 }

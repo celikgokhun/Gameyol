@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:src="@drawable/idle"
+                android:scaleType="fitCenter"
                 android:contentDescription="@string/cover"/>
 
             <TextView

@@ -20,7 +20,12 @@ class GameListingRemoteDataSource @Inject constructor(
         next: String?
     ): Observable<GameListingResponse> {
         return gameListingService
-            .fetchNextGamesList(next!!.split("&page=")[1].split("&")[0].toInt())
+            .fetchNextGamesList(
+                next!!
+                    .split("&page=")[1]
+                    .split("&")[0]
+                    .toInt())
+
             .toObservable()
     }
 }

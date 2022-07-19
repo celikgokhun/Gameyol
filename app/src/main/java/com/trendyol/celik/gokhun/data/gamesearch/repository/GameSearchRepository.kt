@@ -19,5 +19,15 @@ class GameSearchRepository @Inject constructor(
             .remote()
     }
 
+    fun fetchSearchGameNext(
+        next: String?
+    ) : Observable<Resource<GameSearchResponse>> {
+        return gameSearchDataSource
+            .fetchGameSearchNext(next)
+            .remote()
+    }
+
+
+
 
 }

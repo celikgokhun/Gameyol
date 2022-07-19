@@ -25,6 +25,9 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private var fullGameList: MutableList<Game> = mutableListOf()
     private var fullPlatformList: MutableList<Platform> = mutableListOf()
 
+    private var isSearchedSomething : Boolean = false
+    private var search : String = ""
+
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
 
@@ -36,8 +39,10 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         setupViewModel()
     }
 
+
     private fun setUpView() {
         with(binding) {
+
             with(recyclerViewGameList){
                 layoutManager =  GridLayoutManager(context,2)
                 adapter = gameListingAdapter
@@ -48,7 +53,15 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                             val layoutManager = layoutManager as GridLayoutManager
                             val visibleItemCount = layoutManager.findLastCompletelyVisibleItemPosition()+1
                             if (visibleItemCount == layoutManager.itemCount){
-                                viewModel.onNextPage()
+
+                                if(searchView.query.isEmpty()){
+                                    viewModel.onNextGamePage()
+                                }
+                                if (isSearchedSomething){
+                                    viewModel.onNextSearchGame()
+                                    println("")
+                                }
+
                             }
                         }
                     }
@@ -65,10 +78,15 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(key: String?): Boolean {
                         fullGameList.clear()
-                        println("key dolu")
-                        key?.let { viewModel.searchGame(it) }
-                        recyclerViewGameList.visibility = View.VISIBLE
+                        key?.let {
+                            viewModel.searchGame(it)
+                            isSearchedSomething = true
+                            search = key
+                        }
+
+                        recyclerViewGameList.visibility = View.GONE
                         errorTextView.visibility = View.GONE
+                        progressBarLoading.visibility = View.GONE
                         gameListingAdapter.submitList(fullGameList)
 
                         return false
@@ -97,16 +115,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             getStatusViewStateLiveData().observe(viewLifecycleOwner) {
                 renderStatusViewState(it)
             }
-            getPageViewStateLiveData().observe(viewLifecycleOwner) {
-                renderPageViewState(it)
-            }
-
             getStatusViewPlatformStateLiveData().observe(viewLifecycleOwner) {
                 renderStatusViewPlatformState(it)
-
-            }
-            getPageViewPlatformStateLiveData().observe(viewLifecycleOwner) {
-                renderPageViewPlatformState(it)
             }
             initializeViewModel()
         }
@@ -119,13 +129,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         is PlatformListingStatusViewState.Error -> errorHandle(viewState.throwable)
     }
 
-    private fun renderPageViewPlatformState(viewState: PlatformListingPageViewState) {
-        if (viewState.platformListing.platforms.isNotEmpty()){
-            with(binding) {
-                progressBarLoading.visibility = View.GONE
-            }
-        }
-    }
 
     private fun renderStatusViewState(viewState: GameListingStatusViewState) = when (viewState) {
         is GameListingStatusViewState.Loading -> loadingInProgress()
@@ -134,13 +137,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         is GameListingStatusViewState.Error -> errorHandle(viewState.throwable)
     }
 
-    private fun renderPageViewState(viewState: GameListingPageViewState) {
-        if (viewState.gameListing.games.isNotEmpty()){
-            with(binding) {
-                progressBarLoading.visibility = View.GONE
-            }
-        }
-    }
 
     private fun errorHandle(error: Throwable) {
         with(binding){
@@ -161,7 +157,10 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private fun emptyState() {
         with(binding){
             errorTextView.visibility = View.VISIBLE
-            errorTextView.text = "List Empty Now!" //// ???
+            errorTextView.text = "List Empty Now!"
+            progressBarLoading.visibility = View.GONE
+            recyclerViewGameList.visibility = View.GONE
+            recyclerViewPlatformList.visibility = View.GONE
         }
     }
 
@@ -169,7 +168,12 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         games?.let {
             fullGameList = (fullGameList + it).toMutableList()
             gameListingAdapter.submitList(fullGameList)
-            binding.recyclerViewGameList.visibility = View.VISIBLE
+
+            with(binding){
+                recyclerViewGameList.visibility = View.VISIBLE
+                errorTextView.visibility = View.GONE
+                progressBarLoading.visibility = View.GONE
+            }
         }
     }
 

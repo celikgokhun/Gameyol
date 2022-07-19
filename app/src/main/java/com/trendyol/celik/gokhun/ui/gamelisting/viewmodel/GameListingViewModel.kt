@@ -15,6 +15,7 @@ import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingPageViewState
 import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.newSingleThreadContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,13 +28,11 @@ class GameListingViewModel @Inject constructor(
     private val pageViewStateLiveData: MutableLiveData<GameListingPageViewState> = MutableLiveData()
     private val statusViewStateLiveData: MutableLiveData<GameListingStatusViewState> = MutableLiveData()
 
-    fun getPageViewStateLiveData(): LiveData<GameListingPageViewState> = pageViewStateLiveData
     fun getStatusViewStateLiveData(): LiveData<GameListingStatusViewState> = statusViewStateLiveData
 
     private val pageViewPlatformStateLiveData: MutableLiveData<PlatformListingPageViewState> = MutableLiveData()
     private val statusViewPlatformStateLiveData: MutableLiveData<PlatformListingStatusViewState> = MutableLiveData()
 
-    fun getPageViewPlatformStateLiveData(): LiveData<PlatformListingPageViewState> = pageViewPlatformStateLiveData
     fun getStatusViewPlatformStateLiveData(): LiveData<PlatformListingStatusViewState> = statusViewPlatformStateLiveData
 
     fun initializeViewModel() {
@@ -111,6 +110,23 @@ class GameListingViewModel @Inject constructor(
             .also { disposable.add(it) }
     }
 
+    private fun fetchGameSearchNext(next: String?) {
+        gameSearchUseCase.fetchGameSearchNext(next)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                onSuccess = {
+                    onGameListingResponseReady(it)
+                },
+                onLoading = {
+                    onGameListingLoading()
+                },
+                onError = { throwable ->
+                    onGameListingResponseFail(throwable)
+                }
+            )
+            .also { disposable.add(it) }
+    }
+
     private fun onPlatformListingResponseReady(platformListing: PlatformListingPlatform) {
         if (platformListing.platforms.isEmpty()) {
             statusViewPlatformStateLiveData.value = PlatformListingStatusViewState.Empty
@@ -147,7 +163,7 @@ class GameListingViewModel @Inject constructor(
         statusViewStateLiveData.value = GameListingStatusViewState.Loading
     }
 
-    fun onNextPage() {
+    fun onNextGamePage() {
         pageViewStateLiveData.value?.getPageQueries?.let {
             fetchNextGameList(it)
         }
@@ -157,6 +173,11 @@ class GameListingViewModel @Inject constructor(
         pageViewStateLiveData.value?.getPageQueries?.let {
             fetchGameSearch(search)
         }
+    }
 
+    fun onNextSearchGame() {
+        pageViewStateLiveData.value?.getPageQueries?.let {
+            fetchGameSearchNext(it)
+        }
     }
 }
