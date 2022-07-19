@@ -12,7 +12,6 @@ import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.domain.model.Platform
 import com.trendyol.celik.gokhun.ui.gamelisting.viewmodel.GameListingViewModel
 import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingAdapter
-import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingPageViewState
 import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingStatusViewState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,10 +22,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private val viewModel: GameListingViewModel by viewModels()
 
     private var fullGameList: MutableList<Game> = mutableListOf()
-    private var fullPlatformList: MutableList<Platform> = mutableListOf()
 
     private var isSearchedSomething : Boolean = false
-    private var search : String = ""
 
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
@@ -59,7 +56,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                                 }
                                 if (isSearchedSomething){
                                     viewModel.onNextSearchGame()
-                                    println("")
                                 }
 
                             }
@@ -81,7 +77,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                         key?.let {
                             viewModel.searchGame(it)
                             isSearchedSomething = true
-                            search = key
                         }
 
                         recyclerViewGameList.visibility = View.GONE
@@ -93,9 +88,12 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     }
 
                     override fun onQueryTextChange(key: String): Boolean {
-
+                        if(key.isEmpty()){
+                            isSearchedSomething = false
+                        }
                         return true
                     }
+
                 })
             }
 
@@ -179,8 +177,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun displayPlatforms(games: List<Platform>?) {
         games?.let {
-            fullPlatformList = (fullPlatformList + it).toMutableList()
-            platformListingAdapter.submitList(fullPlatformList)
+            platformListingAdapter.submitList(it)
             binding.recyclerViewPlatformList.visibility = View.VISIBLE
         }
     }
