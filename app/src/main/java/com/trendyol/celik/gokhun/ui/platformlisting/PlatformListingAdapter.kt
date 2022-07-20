@@ -13,12 +13,17 @@ import javax.inject.Inject
 
 class PlatformListingAdapter @Inject constructor() :
     BaseListAdapter<Platform,
-            PlatformListingAdapter.PlatformListingItemViewHolder>(DataClassDiffCallback { it.name })
-{
+            PlatformListingAdapter.PlatformListingItemViewHolder>(
+    DataClassDiffCallback { it.name }
+) {
+
+    var onPlatformClick: ((String) -> Unit)? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int):
-            PlatformListingAdapter.PlatformListingItemViewHolder {
+        viewType: Int
+    ): PlatformListingAdapter.PlatformListingItemViewHolder {
+
         return PlatformListingItemViewHolder(
             ItemPlatformListingBinding
                 .inflate(LayoutInflater.from(parent.context),
@@ -36,7 +41,7 @@ class PlatformListingAdapter @Inject constructor() :
         init {
             with(binding) {
                 root.setOnClickListener {
-                    println("burdayız panaa " + getItem(bindingAdapterPosition).name)
+                    onPlatformClick?.invoke(getItem(bindingAdapterPosition).name)
                 }
             }
         }

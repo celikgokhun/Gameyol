@@ -76,6 +76,7 @@ class GameListingViewModel @Inject constructor(
     }
 
     private fun fetchGameSearch(search: String?) {
+        println("here fetch")
         gameSearchUseCase.fetchGameSearch(search)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -89,7 +90,7 @@ class GameListingViewModel @Inject constructor(
                     onGameListingResponseFail(throwable)
                 }
             )
-            .also { disposable.add(it) }
+            .also { disposable.add(it)  }
     }
 
     private fun fetchPlatform() {

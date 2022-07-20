@@ -22,7 +22,11 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private var fullGameList: MutableList<Game> = mutableListOf()
 
+    private var filteredGameList: MutableList<Game> = mutableListOf()
+
     private var isSearchedSomething : Boolean = false
+
+    private var platform : String =""
 
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
@@ -55,7 +59,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                                 if (isSearchedSomething){
                                     viewModel.onNextSearchGame()
                                 }
-
                             }
                         }
                     }
@@ -64,7 +67,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
             with(recyclerViewPlatformList){
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+                adapter = platformListingAdapter.apply {
+                   onPlatformClick = ::filterGamesByPlatform
+                }
+
                 adapter = platformListingAdapter
+
             }
 
             with(searchView){
@@ -83,10 +92,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                         isSearchedSomething = false
                         return true
                     }
-
                 })
             }
-
             with(swipeRefreshLayout){
                 setOnRefreshListener {
                     setUpView()
@@ -144,14 +151,15 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             errorTextView.text = "List is Empty!"
             progressBarLoading.visibility = View.GONE
             recyclerViewGameList.visibility = View.GONE
-            recyclerViewPlatformList.visibility = View.GONE
         }
     }
 
     private fun displayGames(games: List<Game>?) {
         games?.let {
             fullGameList = (fullGameList + it).toMutableList()
+            gameListingAdapter.submitList(emptyList())
             gameListingAdapter.submitList(fullGameList)
+            gameListingAdapter.notifyDataSetChanged()
 
             with(binding){
                 recyclerViewGameList.visibility = View.VISIBLE
@@ -160,6 +168,29 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             }
         }
     }
+
+    private fun filterGamesByPlatform(platformName: String) {
+        platform = platformName
+        filteredGameList.clear()
+
+        if(platform.isNotEmpty()){
+            for (item in fullGameList){
+                if (item.platforms.contains(platform)){
+                    filteredGameList.add(item)
+                }
+            }
+            gameListingAdapter.submitList(filteredGameList)
+            gameListingAdapter.notifyDataSetChanged()
+        } else {
+            if (filteredGameList.isEmpty()){
+                emptyState()
+            }
+        }
+
+
+
+    }
+
 
     private fun displayPlatforms(games: List<Platform>?) {
         games?.let {
