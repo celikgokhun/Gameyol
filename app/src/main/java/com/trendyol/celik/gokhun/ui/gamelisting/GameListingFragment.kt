@@ -1,8 +1,6 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
-import androidx.core.view.isEmpty
-import androidx.core.view.marginLeft
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +23,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     private var fullGameList: MutableList<Game> = mutableListOf()
 
     private var isSearchedSomething : Boolean = false
-    private var isSubmitted : Boolean = false
 
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
@@ -74,24 +71,16 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 clearFocus()
                 setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(key: String?): Boolean {
-
-                        if (!isSubmitted){
-                            fullGameList.clear()
-                            key?.let {
-                                println("ardık kanka   " +  key)
-                                viewModel.searchGame(it)
-                                isSearchedSomething = true
-                            }
-                            isSubmitted = true
+                        fullGameList.clear()
+                        key?.let {
+                            viewModel.searchGame(it)
+                            isSearchedSomething = true
                         }
                         return false
                     }
 
                     override fun onQueryTextChange(key: String): Boolean {
-                        println("boşladık kanka")
                         isSearchedSomething = false
-                        isSubmitted = false
-
                         return true
                     }
 
@@ -102,7 +91,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 setOnRefreshListener {
                     setUpView()
                     setupViewModel()
-                    gameListingAdapter.submitList(fullGameList)
                     isRefreshing = false
                 }
             }
@@ -179,6 +167,5 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             binding.recyclerViewPlatformList.visibility = View.VISIBLE
         }
     }
-
 
 }

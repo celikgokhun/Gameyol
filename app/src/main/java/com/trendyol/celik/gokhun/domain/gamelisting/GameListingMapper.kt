@@ -1,5 +1,6 @@
 package com.trendyol.celik.gokhun.domain.gamelisting
 
+import com.trendyol.celik.gokhun.common.util.elementExtractorPlatform
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.GameListingResponse
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.GameListingGameResponse
 import com.trendyol.celik.gokhun.domain.model.Game
@@ -28,7 +29,8 @@ class GameListingMapper @Inject constructor() {
         return Game(
             id = response?.id.toString(),
             name = response?.name.orEmpty(),
-            backgroundImage = response?.backgroundImage.orEmpty()
+            backgroundImage = response?.backgroundImage.orEmpty(),
+            platforms = elementExtractorPlatform(response?.platforms.orEmpty())
         )
     }
 }

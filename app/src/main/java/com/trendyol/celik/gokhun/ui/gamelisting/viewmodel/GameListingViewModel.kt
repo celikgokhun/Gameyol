@@ -15,7 +15,6 @@ import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingPageViewState
 import com.trendyol.celik.gokhun.ui.platformlisting.PlatformListingStatusViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import kotlinx.coroutines.newSingleThreadContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -170,9 +169,7 @@ class GameListingViewModel @Inject constructor(
     }
 
     fun searchGame(search: String) {
-        pageViewStateLiveData.value?.getPageQueries?.let {
-            fetchGameSearch(search)
-        }
+        fetchGameSearch(search)
     }
 
     fun onNextSearchGame() {

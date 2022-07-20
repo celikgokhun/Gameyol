@@ -1,5 +1,6 @@
 package com.trendyol.celik.gokhun.domain.gamesearch
 
+import com.trendyol.celik.gokhun.common.util.elementExtractorPlatform
 import com.trendyol.celik.gokhun.data.gamesearch.source.remote.model.GameSearchGameResponse
 import com.trendyol.celik.gokhun.data.gamesearch.source.remote.model.GameSearchResponse
 import com.trendyol.celik.gokhun.domain.model.Game
@@ -27,7 +28,8 @@ class GameSearchMapper @Inject constructor() {
         return Game(
             id = response?.id.toString(),
             name = response?.name.orEmpty(),
-            backgroundImage = response?.backgroundImage.orEmpty()
+            backgroundImage = response?.backgroundImage.orEmpty(),
+            platforms = "Ahmet"
         )
     }
 }
