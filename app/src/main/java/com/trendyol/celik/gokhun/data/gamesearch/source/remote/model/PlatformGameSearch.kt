@@ -1,14 +1,9 @@
 package com.trendyol.celik.gokhun.data.gamesearch.source.remote.model
 
 import com.google.gson.annotations.SerializedName
+import com.google.gson.internal.LinkedTreeMap
 
 data class PlatformGameSearch(
-    @SerializedName("id")
-    val id: Int?,
-
-    @SerializedName("name")
-    val name: String?,
-
-    @SerializedName("slug")
-    val slug: String?
+    @SerializedName("platform")
+    val platform: LinkedTreeMap<String, String>
 )

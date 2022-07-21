@@ -99,8 +99,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
             with(swipeRefreshLayout){
                 setOnRefreshListener {
-                    setUpView()
-                    setupViewModel()
+                    displayGames(fullGameList)
                     isRefreshing = false
                 }
             }
@@ -143,7 +142,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun loadingInProgress() {
-        println("yükleme")
         with(binding.progressBarLoading){
             visibility = View.VISIBLE
         }
@@ -160,8 +158,9 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun displayGames(games: List<Game>?) {
+        fullGameList.clear()
         games?.let {
-            println(games.get(5).platforms) // here
+            println("log  " + games[0].platforms) // ***************************
             fullGameList = (fullGameList + it).toMutableList()
 
             with(gameListingAdapter){
@@ -169,14 +168,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 notifyDataSetChanged()
             }
 
+
+
             with(binding){
                 recyclerViewGameList.visibility = View.VISIBLE
                 errorTextView.visibility = View.GONE
                 progressBarLoading.visibility = View.GONE
             }
-        }
-        if (games?.isEmpty() == true){
-            emptyState()
         }
     }
 
@@ -186,12 +184,11 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
         if(platform.isNotEmpty()){
             for (item in fullGameList){
-                if (item.platforms.contains(platform)){
+                if (item.platforms.lowercase().contains(platform.lowercase())){
                     filteredGameList.add(item)
                 }
             }
             with(gameListingAdapter){
-                println("here  ")
                 submitList(filteredGameList)
                 notifyDataSetChanged()
             }

@@ -11,7 +11,7 @@ import com.trendyol.celik.gokhun.data.gamesearch.source.remote.model.PlatformGam
 
 object Constants {
     const val BASE_URL = "https://api.rawg.io/api/"
-    const val API_KEY = "6f262e4de4dc466b9096608fab0df26e"
+    const val API_KEY = "6c748fe3d2ca45b9a0a910aab0324c19"
 }
 
 fun formatDate(rawDate: String): String {
@@ -79,26 +79,6 @@ fun elementExtractorPublisher(publisherList: List<Publisher?>?): String{
         allPublishers = allPublishers + " " + item?.name +", "
     }
     return allPublishers.dropLast(2)
-}
-
-fun elementExtractorPlatform(platformList: List<Platform?>?): String{
-    var platformDetailsList: List<PlatformDetail?>?
-    var allPlatforms =""
-    for (item in platformList!!){
-        platformDetailsList = listOf(item?.platform)
-        for (item in platformDetailsList){
-            allPlatforms = allPlatforms + " " + item?.name + ", "
-        }
-    }
-    return allPlatforms.dropLast(2)
-}
-
-fun elementExtractorPlatformForSearch(platformList: List<PlatformGameSearch?>?): String{
-    var allPlatforms =""
-    for (item in platformList!!){
-        allPlatforms = allPlatforms + " " + item?.name + ", "
-    }
-    return allPlatforms.dropLast(2)
 }
 
 fun formatPlayTime(hour: Int?): String{

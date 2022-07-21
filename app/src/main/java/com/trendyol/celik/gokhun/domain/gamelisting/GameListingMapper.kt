@@ -1,8 +1,9 @@
 package com.trendyol.celik.gokhun.domain.gamelisting
 
-import com.trendyol.celik.gokhun.common.util.elementExtractorPlatform
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.GameListingResponse
 import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.GameListingGameResponse
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.Platform
+import com.trendyol.celik.gokhun.data.gamelisting.source.remote.model.PlatformDetail
 import com.trendyol.celik.gokhun.domain.model.Game
 import com.trendyol.celik.gokhun.domain.model.GameListingGame
 import javax.inject.Inject
@@ -30,7 +31,19 @@ class GameListingMapper @Inject constructor() {
             id = response?.id.toString(),
             name = response?.name.orEmpty(),
             backgroundImage = response?.backgroundImage.orEmpty(),
-            platforms = elementExtractorPlatform(response?.platforms.orEmpty())
+            platforms = mapPlatforms(response?.platforms.orEmpty())
         )
+    }
+
+    private fun mapPlatforms(platformList: List<Platform?>?): String{
+        var platformDetailsList: List<PlatformDetail?>?
+        var allPlatforms =""
+        for (item in platformList!!){
+            platformDetailsList = listOf(item?.platform)
+            for (item in platformDetailsList){
+                allPlatforms = allPlatforms + " " + item?.name + ", "
+            }
+        }
+        return allPlatforms.dropLast(2).lowercase()
     }
 }

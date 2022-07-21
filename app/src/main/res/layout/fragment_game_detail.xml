@@ -28,6 +28,7 @@
                     android:id="@+id/gameBGImageView"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginTop="30dp"
                     android:contentDescription="@string/cover"
                     android:src="@drawable/idle"
                     app:layout_constraintBottom_toBottomOf="parent"
