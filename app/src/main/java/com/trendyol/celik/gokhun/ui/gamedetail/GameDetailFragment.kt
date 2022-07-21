@@ -6,7 +6,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.common.util.*
 import com.trendyol.celik.gokhun.common.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
@@ -48,19 +47,6 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
                     }else {
                         setLines(4)
                         toggle = true
-                    }
-                }
-            }
-
-            with(gameFavouriteImageView){
-                var isFavourite = false
-                setOnClickListener{
-                    if (isFavourite){
-                        setImageResource(R.drawable.favourite)
-                        isFavourite = false
-                    }else{
-                        setImageResource(R.drawable.favourite_not)
-                        isFavourite = true
                     }
                 }
             }
@@ -186,9 +172,13 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
     }
 
     private fun errorHandle(error: Throwable) {
-        with(binding.errorTextView){
-            visibility = View.VISIBLE
-            text = error.localizedMessage
+        with(binding){
+            progressBarLoading.visibility = View.GONE
+            with(errorTextView){
+                visibility = View.VISIBLE
+                text = error.localizedMessage
+            }
         }
+
     }
 }

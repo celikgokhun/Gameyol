@@ -84,6 +84,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     override fun onQueryTextSubmit(key: String?): Boolean {
                         fullGameList.clear()
                         key?.let {
+                            fullGameList.clear()
                             viewModel.searchGame(it)
                             isSearchedSomething = true
                         }
@@ -99,6 +100,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
             with(swipeRefreshLayout){
                 setOnRefreshListener {
+                    init()
                     displayGames(fullGameList)
                     isRefreshing = false
                 }
@@ -135,6 +137,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun errorHandle(error: Throwable) {
+        binding.progressBarLoading.visibility = View.GONE
         with(binding.errorTextView){
             visibility = View.VISIBLE
             text = error.localizedMessage
@@ -148,7 +151,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun emptyState() {
-        println("bos")
         with(binding){
             errorTextView.visibility = View.VISIBLE
             errorTextView.text = "List is Empty!"
@@ -158,17 +160,12 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
     }
 
     private fun displayGames(games: List<Game>?) {
-        fullGameList.clear()
         games?.let {
-            println("log  " + games[0].platforms) // ***************************
             fullGameList = (fullGameList + it).toMutableList()
-
             with(gameListingAdapter){
                 submitList(fullGameList)
                 notifyDataSetChanged()
             }
-
-
 
             with(binding){
                 recyclerViewGameList.visibility = View.VISIBLE

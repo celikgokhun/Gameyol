@@ -1,4 +1,4 @@
-package com.trendyol.celik.gokhun
+package com.trendyol.celik.gokhun.gamedetail
 
 import com.trendyol.celik.gokhun.common.extensions.ResourceReactiveExtensions.remote
 import com.trendyol.celik.gokhun.data.gamedetail.repository.GameDetailRepository
