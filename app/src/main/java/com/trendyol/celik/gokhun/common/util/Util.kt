@@ -96,7 +96,7 @@ fun elementExtractorPlatform(platformList: List<Platform?>?): String{
 fun elementExtractorPlatformForSearch(platformList: List<PlatformGameSearch?>?): String{
     var allPlatforms =""
     for (item in platformList!!){
-        allPlatforms = allPlatforms + " " + item?.slug + ", "
+        allPlatforms = allPlatforms + " " + item?.name + ", "
     }
     return allPlatforms.dropLast(2)
 }

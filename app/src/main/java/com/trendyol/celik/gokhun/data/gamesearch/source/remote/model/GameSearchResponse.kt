@@ -10,7 +10,7 @@ data class GameSearchResponse(
     val next: String?,
 
     @SerializedName("previous")
-    val previous: String?,
+    val previous: Any?,
 
     @SerializedName("results")
     val results: List<GameSearchGameResponse?>?,

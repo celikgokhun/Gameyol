@@ -66,19 +66,21 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             }
 
             with(recyclerViewPlatformList){
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.HORIZONTAL,
+                    false)
 
                 adapter = platformListingAdapter.apply {
                    onPlatformClick = ::filterGamesByPlatform
                 }
-
                 adapter = platformListingAdapter
-
             }
 
             with(searchView){
                 clearFocus()
-                setOnQueryTextListener(object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                setOnQueryTextListener(
+                    object :androidx.appcompat.widget.SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(key: String?): Boolean {
                         fullGameList.clear()
                         key?.let {
@@ -94,6 +96,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     }
                 })
             }
+
             with(swipeRefreshLayout){
                 setOnRefreshListener {
                     setUpView()
@@ -106,10 +109,12 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun setupViewModel() {
         with(viewModel) {
-            getStatusViewStateLiveData().observe(viewLifecycleOwner) {
+            getStatusViewStateLiveData()
+                .observe(viewLifecycleOwner) {
                 renderStatusViewState(it)
             }
-            getStatusViewPlatformStateLiveData().observe(viewLifecycleOwner) {
+            getStatusViewPlatformStateLiveData()
+                .observe(viewLifecycleOwner) {
                 renderStatusViewPlatformState(it)
             }
             initializeViewModel()
@@ -123,7 +128,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         is PlatformListingStatusViewState.Error -> errorHandle(viewState.throwable)
     }
 
-
     private fun renderStatusViewState(viewState: GameListingStatusViewState) = when (viewState) {
         is GameListingStatusViewState.Loading -> loadingInProgress()
         is GameListingStatusViewState.Empty -> emptyState()
@@ -131,21 +135,22 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         is GameListingStatusViewState.Error -> errorHandle(viewState.throwable)
     }
 
-
     private fun errorHandle(error: Throwable) {
-        with(binding){
-            errorTextView.visibility = View.VISIBLE
-            errorTextView.text = error.localizedMessage
+        with(binding.errorTextView){
+            visibility = View.VISIBLE
+            text = error.localizedMessage
         }
     }
 
     private fun loadingInProgress() {
-        with(binding){
-            progressBarLoading.visibility = View.VISIBLE
+        println("yükleme")
+        with(binding.progressBarLoading){
+            visibility = View.VISIBLE
         }
     }
 
     private fun emptyState() {
+        println("bos")
         with(binding){
             errorTextView.visibility = View.VISIBLE
             errorTextView.text = "List is Empty!"
@@ -156,16 +161,22 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun displayGames(games: List<Game>?) {
         games?.let {
+            println(games.get(5).platforms) // here
             fullGameList = (fullGameList + it).toMutableList()
-            gameListingAdapter.submitList(emptyList())
-            gameListingAdapter.submitList(fullGameList)
-            gameListingAdapter.notifyDataSetChanged()
+
+            with(gameListingAdapter){
+                submitList(fullGameList)
+                notifyDataSetChanged()
+            }
 
             with(binding){
                 recyclerViewGameList.visibility = View.VISIBLE
                 errorTextView.visibility = View.GONE
                 progressBarLoading.visibility = View.GONE
             }
+        }
+        if (games?.isEmpty() == true){
+            emptyState()
         }
     }
 
@@ -179,18 +190,18 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     filteredGameList.add(item)
                 }
             }
-            gameListingAdapter.submitList(filteredGameList)
-            gameListingAdapter.notifyDataSetChanged()
+            with(gameListingAdapter){
+                println("here  ")
+                submitList(filteredGameList)
+                notifyDataSetChanged()
+            }
+
         } else {
             if (filteredGameList.isEmpty()){
                 emptyState()
             }
         }
-
-
-
     }
-
 
     private fun displayPlatforms(games: List<Platform>?) {
         games?.let {

@@ -37,6 +37,7 @@
                 android:id="@+id/recyclerViewPlatformList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
                 android:orientation="vertical"/>
 
             <androidx.appcompat.widget.SearchView

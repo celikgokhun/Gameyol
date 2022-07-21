@@ -76,7 +76,6 @@ class GameListingViewModel @Inject constructor(
     }
 
     private fun fetchGameSearch(search: String?) {
-        println("here fetch")
         gameSearchUseCase.fetchGameSearch(search)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

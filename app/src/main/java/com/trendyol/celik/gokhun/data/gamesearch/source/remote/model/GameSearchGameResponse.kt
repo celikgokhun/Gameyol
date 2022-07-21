@@ -29,10 +29,13 @@ data class GameSearchGameResponse(
     val backgroundImage: String?,
 
     @SerializedName("rating")
-    val rating: Double?,
+    val rating: Any?,
 
     @SerializedName("rating_top")
     val rating_top: Int?,
+
+    @SerializedName("ratings")
+    val ratings: List<Any?>?,
 
     @SerializedName("ratings_count")
     val ratingsCount: Int?,
@@ -89,7 +92,7 @@ data class GameSearchGameResponse(
     val shortScreenshots: List<ShortScreenshots?>?,
 
     @SerializedName("parent_platforms")
-    val parentPlatforms: List<ParentPlatformDetail>?,
+    val parentPlatforms: List<ParentPlatformDetail?>?,
 
     @SerializedName("genres")
     val genres: List<Genre?>?
