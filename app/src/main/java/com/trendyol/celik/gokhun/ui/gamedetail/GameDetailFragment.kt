@@ -5,12 +5,15 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.trendyol.celik.gokhun.common.util.*
 import com.trendyol.celik.gokhun.common.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameDetailBinding
 import com.trendyol.celik.gokhun.domain.model.GameDetail
 import com.trendyol.celik.gokhun.ui.gamedetail.viewmodel.GameDetailViewModel
+import com.trendyol.celik.gokhun.ui.gamelisting.GameListingFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -50,6 +53,16 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
                     }
                 }
             }
+
+
+            with(buttonBack){
+                setOnClickListener {
+                    val action = GameDetailFragmentDirections.actionGameDetailFragmentToGameListFragment()
+                    view?.findNavController()?.navigate(action)
+
+                }
+            }
+
         }
     }
 

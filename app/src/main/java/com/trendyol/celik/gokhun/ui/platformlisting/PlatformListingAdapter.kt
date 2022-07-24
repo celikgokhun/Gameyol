@@ -41,7 +41,8 @@ class PlatformListingAdapter @Inject constructor() :
         init {
             with(binding) {
                 root.setOnClickListener {
-                    onPlatformClick?.invoke(getItem(bindingAdapterPosition).name)
+                    onPlatformClick?.invoke(getItem(bindingAdapterPosition)
+                        .name.replace(" ","").lowercase())
                 }
             }
         }

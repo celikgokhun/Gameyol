@@ -18,6 +18,9 @@ class GameListingAdapter @Inject constructor() :
     BaseListAdapter<Game,
             GameListingAdapter.GameListingItemViewHolder>(DataClassDiffCallback { it.id })
 {
+
+    var onGameClick: (() -> Unit)? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int):
@@ -38,6 +41,7 @@ class GameListingAdapter @Inject constructor() :
                     val id = getItem(bindingAdapterPosition).id.toString()
                     val action = GameListingFragmentDirections.actionGameListFragmentToGameDetailFragment(id)
                     Navigation.findNavController(itemView).navigate(action)
+                    onGameClick?.invoke()
                 }
             }
         }

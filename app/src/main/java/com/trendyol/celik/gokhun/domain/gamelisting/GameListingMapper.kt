@@ -41,7 +41,8 @@ class GameListingMapper @Inject constructor() {
         for (item in platformList!!){
             platformDetailsList = listOf(item?.platform)
             for (item in platformDetailsList){
-                allPlatforms = allPlatforms + " " + item?.name + ", "
+                allPlatforms = "$allPlatforms " + item?.
+                name?.replace(" ","") + ", "
             }
         }
         return allPlatforms.dropLast(2).lowercase()

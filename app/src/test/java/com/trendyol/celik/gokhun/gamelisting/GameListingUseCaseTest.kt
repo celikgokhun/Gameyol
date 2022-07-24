@@ -75,4 +75,6 @@ class GameListingUseCaseTest {
         // Then
         verify { gameListingRepository.fetchNextGames(next) }
     }
+
+
 }

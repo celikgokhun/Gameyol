@@ -45,6 +45,10 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             with(recyclerViewGameList){
                 layoutManager =  GridLayoutManager(context,2)
                 adapter = gameListingAdapter
+
+                adapter = gameListingAdapter.apply {
+                    onGameClick = ::clearLists
+                }
                 addOnScrollListener(object : RecyclerView.OnScrollListener(){
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
@@ -101,8 +105,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             with(swipeRefreshLayout){
                 setOnRefreshListener {
                     init()
-                    displayGames(fullGameList)
                     isRefreshing = false
+                }
+            }
+
+            with(buttonBack){
+                setOnClickListener {
+                    activity?.onBackPressed()
                 }
             }
         }
@@ -119,6 +128,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 renderStatusViewPlatformState(it)
             }
             initializeViewModel()
+        }
+    }
+
+    private fun clearLists(){
+        if (fullGameList.size<8){
+            fullGameList.clear()
+            filteredGameList.clear()
         }
     }
 
@@ -161,6 +177,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun displayGames(games: List<Game>?) {
         games?.let {
+            println("log   : " + games[0].platforms)
             fullGameList = (fullGameList + it).toMutableList()
             with(gameListingAdapter){
                 submitList(fullGameList)
@@ -181,7 +198,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
         if(platform.isNotEmpty()){
             for (item in fullGameList){
-                if (item.platforms.lowercase().contains(platform.lowercase())){
+                if (item.platforms.contains(platform)){
                     filteredGameList.add(item)
                 }
             }
