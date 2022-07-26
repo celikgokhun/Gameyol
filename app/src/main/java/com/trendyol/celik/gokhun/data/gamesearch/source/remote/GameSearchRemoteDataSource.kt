@@ -17,6 +17,16 @@ class GameSearchRemoteDataSource @Inject constructor(
             .toObservable()
     }
 
+
+    override fun fetchGameSearchByPlatform(
+        search: String?,
+        parentPlatform: String?
+    ): Observable<GameSearchResponse> {
+        return gameSearchService
+            .fetchSearchGameByPlatform(search, parentPlatform)
+            .toObservable()
+    }
+
     override fun fetchGameSearchNext(
         next: String?
     ): Observable<GameSearchResponse> {

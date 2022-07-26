@@ -14,6 +14,12 @@ interface GameSearchService {
     ): Single<GameSearchResponse>
 
     @GET("games?key=${Constants.API_KEY}")
+    fun fetchSearchGameByPlatform(
+        @Query("search") search: String?= null,
+        @Query("parent_platforms") parentPlatform: String?= null
+    ): Single<GameSearchResponse>
+
+    @GET("games?key=${Constants.API_KEY}")
     fun fetchSearchNextGame(
         @Query("page") page: Int?= null,
         @Query("search") search: String?= null,

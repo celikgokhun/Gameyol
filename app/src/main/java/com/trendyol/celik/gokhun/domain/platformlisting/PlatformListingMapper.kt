@@ -26,6 +26,7 @@ class PlatformListingMapper @Inject constructor() {
 
     private fun mapFromGameDetailResponseToPlatformDetail(response: PlatformListingPlatformResponse?): Platform {
         return Platform(
+            id = response?.id.toString(),
             name = response?.name.orEmpty()
         )
     }

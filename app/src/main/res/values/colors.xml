@@ -13,4 +13,5 @@
     <color name="yellow">#FFFF00</color>
     <color name="green">#00FF00</color>
     <color name="lightGray">#656565</color>
+    <color name="orange"> #FF5733 </color>
 </resources>

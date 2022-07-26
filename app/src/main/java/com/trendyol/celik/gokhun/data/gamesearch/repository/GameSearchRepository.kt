@@ -19,6 +19,15 @@ class GameSearchRepository @Inject constructor(
             .remote()
     }
 
+    fun fetchSearchGamesByPlatform(
+        search : String?,
+        parentPlatform : String?
+    ) : Observable<Resource<GameSearchResponse>> {
+        return gameSearchDataSource
+            .fetchGameSearchByPlatform(search,parentPlatform)
+            .remote()
+    }
+
     fun fetchSearchGameNext(
         next: String?
     ) : Observable<Resource<GameSearchResponse>> {

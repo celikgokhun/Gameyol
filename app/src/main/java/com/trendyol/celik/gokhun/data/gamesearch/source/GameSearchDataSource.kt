@@ -9,8 +9,15 @@ interface GameSearchDataSource {
             search: String?
         ): Observable<GameSearchResponse>
 
+        fun fetchGameSearchByPlatform(
+            search: String?,
+            parentPlatform: String?
+        ): Observable<GameSearchResponse>
+
         fun fetchGameSearchNext(
             next: String?
         ): Observable<GameSearchResponse>
+
+
     }
 }

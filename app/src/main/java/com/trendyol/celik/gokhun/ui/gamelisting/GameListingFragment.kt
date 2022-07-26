@@ -1,6 +1,8 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,11 +24,9 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private var fullGameList: MutableList<Game> = mutableListOf()
 
-    private var filteredGameList: MutableList<Game> = mutableListOf()
-
     private var isSearchedSomething : Boolean = false
 
-    private var platform : String =""
+    private var parentPlatformId : String= "empty"
 
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
@@ -46,9 +46,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 layoutManager =  GridLayoutManager(context,2)
                 adapter = gameListingAdapter
 
-                adapter = gameListingAdapter.apply {
-                    onGameClick = ::clearLists
-                }
                 addOnScrollListener(object : RecyclerView.OnScrollListener(){
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)
@@ -56,7 +53,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                             val layoutManager = layoutManager as GridLayoutManager
                             val visibleItemCount = layoutManager.findLastCompletelyVisibleItemPosition()+1
                             if (visibleItemCount == layoutManager.itemCount){
-
                                 if(searchView.query.isEmpty()){
                                     viewModel.onNextGamePage()
                                 }
@@ -76,7 +72,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     false)
 
                 adapter = platformListingAdapter.apply {
-                   onPlatformClick = ::filterGamesByPlatform
+                    onPlatformClick = ::filterGamesByPlatform
                 }
                 adapter = platformListingAdapter
             }
@@ -88,15 +84,23 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     override fun onQueryTextSubmit(key: String?): Boolean {
                         fullGameList.clear()
                         key?.let {
-                            fullGameList.clear()
-                            viewModel.searchGame(it)
+                            if(parentPlatformId == "empty"){
+                                fullGameList.clear()
+                                viewModel.searchGame(it)
+                            }else{
+                                fullGameList.clear()
+                                viewModel.searchGameByPlatform(it, parentPlatformId)
+                            }
                             isSearchedSomething = true
+                            toggleVisibilityBack()
                         }
                         return false
                     }
 
                     override fun onQueryTextChange(key: String): Boolean {
+                        fullGameList.clear()
                         isSearchedSomething = false
+                        parentPlatformId = "empty"
                         return true
                     }
                 })
@@ -104,6 +108,8 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
             with(swipeRefreshLayout){
                 setOnRefreshListener {
+                    fullGameList.clear()
+                    recyclerViewGameList.adapter?.notifyDataSetChanged()
                     init()
                     isRefreshing = false
                 }
@@ -113,6 +119,19 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 setOnClickListener {
                     activity?.onBackPressed()
                 }
+            }
+        }
+    }
+
+    private fun toggleVisibilityBack(){
+        with(binding){
+            if(isSearchedSomething){
+                buttonBack.visibility = View.VISIBLE
+                backText.visibility = View.VISIBLE
+            }
+            else{
+                buttonBack.visibility = View.INVISIBLE
+                backText.visibility = View.INVISIBLE
             }
         }
     }
@@ -131,12 +150,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         }
     }
 
-    private fun clearLists(){
-        if (fullGameList.size<8){
-            fullGameList.clear()
-            filteredGameList.clear()
-        }
-    }
 
     private fun renderStatusViewPlatformState(viewState: PlatformListingStatusViewState) = when (viewState) {
         is PlatformListingStatusViewState.Loading -> loadingInProgress()
@@ -177,7 +190,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private fun displayGames(games: List<Game>?) {
         games?.let {
-            println("log   : " + games[0].platforms)
             fullGameList = (fullGameList + it).toMutableList()
             with(gameListingAdapter){
                 submitList(fullGameList)
@@ -192,26 +204,19 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         }
     }
 
-    private fun filterGamesByPlatform(platformName: String) {
-        platform = platformName
-        filteredGameList.clear()
-
-        if(platform.isNotEmpty()){
-            for (item in fullGameList){
-                if (item.platforms.contains(platform)){
-                    filteredGameList.add(item)
-                }
-            }
-            with(gameListingAdapter){
-                submitList(filteredGameList)
-                notifyDataSetChanged()
-            }
-
+    var ids = mutableListOf<String>()
+    private fun filterGamesByPlatform(id: String) {
+        if (ids.contains(id)){
+            ids.remove(id)
         } else {
-            if (filteredGameList.isEmpty()){
-                emptyState()
-            }
+            ids.add(id)
         }
+        parentPlatformId = ids.toString()
+            .replace("[","")
+            .replace(" ","")
+            .replace("]","")
+
+        println("log for parent " + parentPlatformId)
     }
 
     private fun displayPlatforms(games: List<Platform>?) {

@@ -92,6 +92,24 @@ class GameListingViewModel @Inject constructor(
             .also { disposable.add(it)  }
     }
 
+    private fun fetchGameSearchByPlatform(search: String?, parentPlatform: String) {
+        gameSearchUseCase.fetchGameSearchByPlatform(search, parentPlatform)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                onSuccess = {
+                    onGameListingResponseReady(it)
+                },
+                onLoading = {
+                    onGameListingLoading()
+                },
+                onError = { throwable ->
+                    onGameListingResponseFail(throwable)
+                }
+            )
+            .also { disposable.add(it)  }
+    }
+
+
     private fun fetchPlatform() {
         platformListingUseCase.fetchPlatforms()
             .observeOn(AndroidSchedulers.mainThread())
@@ -170,6 +188,10 @@ class GameListingViewModel @Inject constructor(
 
     fun searchGame(search: String) {
         fetchGameSearch(search)
+    }
+
+    fun searchGameByPlatform(search: String, parentPlatform: String) {
+        fetchGameSearchByPlatform(search, parentPlatform)
     }
 
     fun onNextSearchGame() {

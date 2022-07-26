@@ -83,7 +83,7 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
         is GameDetailStatusViewState.Loading -> loadingInProgress()
         is GameDetailStatusViewState.Empty -> emptyState()
         is GameDetailStatusViewState.Success -> displayGame(viewState.game)
-        is GameDetailStatusViewState .Error -> errorHandle(viewState.throwable)
+        is GameDetailStatusViewState.Error -> errorHandle(viewState.throwable)
     }
 
     private fun loadingInProgress() {
@@ -97,7 +97,7 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
     private fun emptyState() {
         with(binding.errorTextView){
             visibility = View.VISIBLE
-            text = "Game Info Empty!" //// ???
+            text = "Game Info Empty!"
         }
     }
 
@@ -121,7 +121,7 @@ class GameDetailFragment : BaseFragment<FragmentGameDetailBinding>() {
                                 visibility = View.VISIBLE
                                 text =it.toString()
                                 setBackgroundResource(formatMetaCritic(it).first)
-                                setTextColor(ContextCompat.getColor(context!!,formatMetaCritic(it).second))
+                                setTextColor(ContextCompat.getColor(context,formatMetaCritic(it).second))
                             }
                         }
                 }

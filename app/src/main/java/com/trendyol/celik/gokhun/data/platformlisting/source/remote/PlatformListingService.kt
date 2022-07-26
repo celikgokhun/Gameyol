@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface PlatformListingService {
     // to get list
-    @GET("platforms?key=${Constants.API_KEY}")
+    @GET("platforms/lists/parents?key=${Constants.API_KEY}")
     fun fetchPlatformList(
     ): Single<PlatformListingResponse>
 

@@ -20,6 +20,14 @@ class GameSearchUseCase  @Inject constructor(
             }
     }
 
+    fun fetchGameSearchByPlatform(search: String?, parentPlatform: String?): Observable<Resource<GameListingGame>> {
+        return gameSearchRepository
+            .fetchSearchGamesByPlatform(search, parentPlatform)
+            .mapOnData {
+                gameSearchMapper.mapFromResponse(it)
+            }
+    }
+
     fun fetchGameSearchNext(next: String?): Observable<Resource<GameListingGame>> {
         return gameSearchRepository
             .fetchSearchGameNext(next)
