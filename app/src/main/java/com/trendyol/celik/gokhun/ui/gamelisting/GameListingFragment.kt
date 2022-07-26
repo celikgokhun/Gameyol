@@ -1,12 +1,14 @@
 package com.trendyol.celik.gokhun.ui.gamelisting
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.trendyol.celik.gokhun.R
 import com.trendyol.celik.gokhun.common.view.BaseFragment
 import com.trendyol.celik.gokhun.databinding.FragmentGameListingBinding
 import com.trendyol.celik.gokhun.domain.model.Game
@@ -26,7 +28,7 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
 
     private var isSearchedSomething : Boolean = false
 
-    private var parentPlatformId : String= "empty"
+    private var parentPlatformId : String= ""
 
     @Inject
     lateinit var gameListingAdapter: GameListingAdapter
@@ -71,9 +73,11 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     LinearLayoutManager.HORIZONTAL,
                     false)
 
-                adapter = platformListingAdapter.apply {
-                    onPlatformClick = ::filterGamesByPlatform
+                platformListingAdapter.setItemClickListenerByType {
+                    filterGamesByPlatform(it.id)
+                    queryPlatformsTextViewSetter(it.name)
                 }
+
                 adapter = platformListingAdapter
             }
 
@@ -84,10 +88,13 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     override fun onQueryTextSubmit(key: String?): Boolean {
                         fullGameList.clear()
                         key?.let {
-                            if(parentPlatformId == "empty"){
+                            if(parentPlatformId == ""){
+                                println("platform yok")
                                 fullGameList.clear()
+                                queryPlatformsTextView.visibility = View.GONE
                                 viewModel.searchGame(it)
                             }else{
+                                println("platform VAR")
                                 fullGameList.clear()
                                 viewModel.searchGameByPlatform(it, parentPlatformId)
                             }
@@ -100,7 +107,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                     override fun onQueryTextChange(key: String): Boolean {
                         fullGameList.clear()
                         isSearchedSomething = false
-                        parentPlatformId = "empty"
                         return true
                     }
                 })
@@ -121,6 +127,34 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
                 }
             }
         }
+    }
+
+    private var allPlatforms = mutableListOf<String>()
+    private fun queryPlatformsTextViewSetter(platform: String){
+        with(binding.queryPlatformsTextView){
+            visibility = View.VISIBLE
+            if (allPlatforms.contains(platform)){
+                allPlatforms.remove(platform)
+            } else {
+                allPlatforms.add(platform)
+            }
+            text = allPlatforms.toString()
+                .replace("[","")
+                .replace("]","")
+        }
+    }
+
+    private var ids = mutableListOf<String>()
+    private fun filterGamesByPlatform(id: String) {
+        if (ids.contains(id)){
+            ids.remove(id)
+        } else {
+            ids.add(id)
+        }
+        parentPlatformId = ids.toString()
+            .replace("[","")
+            .replace(" ","")
+            .replace("]","")
     }
 
     private fun toggleVisibilityBack(){
@@ -149,7 +183,6 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
             initializeViewModel()
         }
     }
-
 
     private fun renderStatusViewPlatformState(viewState: PlatformListingStatusViewState) = when (viewState) {
         is PlatformListingStatusViewState.Loading -> loadingInProgress()
@@ -204,24 +237,11 @@ class GameListingFragment : BaseFragment<FragmentGameListingBinding>() {
         }
     }
 
-    var ids = mutableListOf<String>()
-    private fun filterGamesByPlatform(id: String) {
-        if (ids.contains(id)){
-            ids.remove(id)
-        } else {
-            ids.add(id)
-        }
-        parentPlatformId = ids.toString()
-            .replace("[","")
-            .replace(" ","")
-            .replace("]","")
 
-        println("log for parent " + parentPlatformId)
-    }
 
     private fun displayPlatforms(games: List<Platform>?) {
         games?.let {
-            platformListingAdapter.submitList(it)
+            platformListingAdapter.setItems(it)
             binding.recyclerViewPlatformList.visibility = View.VISIBLE
         }
     }
